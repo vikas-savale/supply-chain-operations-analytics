@@ -105,12 +105,27 @@ Completed
 - Final master table count verified: 15
 - Master tables verified before adding data
 
+#### Procurement Transactions
+
+- `procurement.purchase_orders` table designed and created
+- `procurement.purchase_order_items` table designed and created
+- `procurement.goods_receipts` table designed and created
+- `procurement.goods_receipt_items` table designed and created
+- Purchase order foreign keys verified
+- Purchase order item foreign keys verified
+- Goods receipt foreign keys verified
+- Goods receipt item foreign keys verified
+- Purchase order status rules verified
+- Goods receipt quantity rules verified
+- Current procurement table count verified: 4
+- Procurement tables verified before adding data
+
 ### Current Focus
 
-Procurement transaction design
+Inventory flow and stock transaction design
 
 ### Next
 
-- Define the purchase order structure
-- Define the purchase order item structure
-- Define the goods receipt flow
+- Define the inventory flow from accepted goods receipts
+- Identify the required inventory data
+- Design the required inventory tables

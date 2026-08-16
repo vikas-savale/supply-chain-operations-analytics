@@ -44,13 +44,25 @@
 
 ---
 
-## Next
+## Procurement Transactions
 
-The next phase will start with procurement.
-
-Planned tables:
+### Purchase Orders
 
 - Purchase Orders
 - Purchase Order Items
+
+### Goods Receipts
+
 - Goods Receipts
 - Goods Receipt Items
+
+---
+
+## Procurement Flow
+
+Supplier
+→ Purchase Order
+→ Purchase Order Items
+→ Goods Receipt
+→ Goods Receipt Items
+→ Inventory

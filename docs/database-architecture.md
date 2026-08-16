@@ -8,7 +8,7 @@ The database is divided into different business areas.
 | ------------- | ------------------------------------------------------------- |
 | `master`      | Core business master and reference data                       |
 | `inventory`   | Inventory balances, stock movements and inventory adjustments |
-| `procurement` | Purchase orders, purchase order items and goods receipts      |
+| `procurement` | Purchase orders and goods receipts                            |
 | `warehouse`   | Warehouse operational activities                              |
 | `logistics`   | Transport, shipment and delivery activities                   |
 | `sales`       | Customer orders and sales transactions                        |
@@ -40,19 +40,50 @@ The master tables provide the basic data used by transaction tables.
 
 ---
 
-## Transaction Tables
+## Procurement Schema
 
-Transaction tables will be added based on the business process being implemented.
+The `procurement` schema currently contains 4 transaction tables:
 
-The immediate transaction focus is procurement:
+- `purchase_orders`
+- `purchase_order_items`
+- `goods_receipts`
+- `goods_receipt_items`
 
-- Purchase Orders
-- Purchase Order Items
-- Goods Receipts
-- Goods Receipt Items
+The procurement flow is:
+
+Purchase Order
+→ Purchase Order Items
+→ Goods Receipt
+→ Goods Receipt Items
+
+A purchase order can have multiple goods receipts.
+
+---
+
+## Inventory Schema
+
+Inventory tables will be added after the receiving flow is complete.
+
+---
+
+## Warehouse Schema
+
+Warehouse transaction tables will be added based on the warehouse processes being modeled.
+
+---
+
+## Logistics Schema
+
+Logistics transaction tables will be added based on transport and delivery processes.
+
+---
+
+## Sales Schema
+
+Sales transaction tables will be added after the required outbound processes are defined.
 
 ---
 
 ## Analytics Layer
 
-Analytics will be added after the transaction data is ready.
+Analytics will be added after the required transaction data is available.

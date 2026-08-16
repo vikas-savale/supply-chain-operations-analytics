@@ -24,10 +24,13 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 15 master/reference tables
 - Master data normalization and relationship refinement
 - PostgreSQL migrations and validation
+- Procurement transaction model
+- 4 procurement transaction tables
+- Purchase order and goods receipt flow
 
 ### Current Focus
 
-Procurement transaction design.
+Inventory flow and stock transaction design.
 
 ## Database Setup
 
@@ -59,6 +62,15 @@ The schema files are numbered for reference. They should be created in the follo
 13. `10_master_product_suppliers.sql`
 14. `02_master_customers.sql`
 15. `14_master_customer_locations.sql`
+
+### Procurement Tables
+
+After the master tables are created, the procurement tables can be created in this order:
+
+16. `16_procurement_purchase_orders.sql`
+17. `17_procurement_purchase_order_items.sql`
+18. `18_procurement_goods_receipts.sql`
+19. `19_procurement_goods_receipt_items.sql`
 
 ### Migrations
 
