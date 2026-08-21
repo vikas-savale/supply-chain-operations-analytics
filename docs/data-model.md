@@ -58,7 +58,15 @@
 
 ---
 
-## Procurement Flow
+## Inventory
+
+- Stock
+- Inventory Movements
+- Stock Audits
+
+---
+
+## Main Flow
 
 Supplier
 → Purchase Order

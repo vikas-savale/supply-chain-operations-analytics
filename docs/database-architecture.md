@@ -4,15 +4,15 @@
 
 The database is divided into different business areas.
 
-| Schema        | Purpose                                                       |
-| ------------- | ------------------------------------------------------------- |
-| `master`      | Core business master and reference data                       |
-| `inventory`   | Inventory balances, stock movements and inventory adjustments |
-| `procurement` | Purchase orders and goods receipts                            |
-| `warehouse`   | Warehouse operational activities                              |
-| `logistics`   | Transport, shipment and delivery activities                   |
-| `sales`       | Customer orders and sales transactions                        |
-| `analytics`   | Reports, views and KPI calculations                           |
+| Schema        | Purpose                                     |
+| ------------- | ------------------------------------------- |
+| `master`      | Core business master and reference data     |
+| `inventory`   | Stock, stock movements and stock audits     |
+| `procurement` | Purchase orders and goods receipts          |
+| `warehouse`   | Warehouse operational activities            |
+| `logistics`   | Transport, shipment and delivery activities |
+| `sales`       | Customer orders and sales transactions      |
+| `analytics`   | Reports, views and KPI calculations         |
 
 ---
 
@@ -62,7 +62,13 @@ A purchase order can have multiple goods receipts.
 
 ## Inventory Schema
 
-Inventory tables will be added after the receiving flow is complete.
+The `inventory` schema currently contains 3 tables:
+
+- `stock`
+- `movements`
+- `stock_audits`
+
+The inventory layer stores current stock, stock movement history and physical stock audit results.
 
 ---
 

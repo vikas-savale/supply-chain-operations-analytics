@@ -27,10 +27,12 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Procurement transaction model
 - 4 procurement transaction tables
 - Purchase order and goods receipt flow
+- Inventory transaction model
+- 3 inventory tables
 
 ### Current Focus
 
-Inventory flow and stock transaction design.
+Warehouse operations design.
 
 ## Database Setup
 
@@ -45,7 +47,9 @@ Run:
 
 ### Master Tables
 
-The schema files are numbered for reference. They should be created in the following order because some tables depend on others:
+The schema files contain the current master table definitions.
+
+They should be created in the following order because some tables depend on others:
 
 1. `11_master_brands.sql`
 2. `12_master_categories.sql`
@@ -72,11 +76,21 @@ After the master tables are created, the procurement tables can be created in th
 18. `18_procurement_goods_receipts.sql`
 19. `19_procurement_goods_receipt_items.sql`
 
+### Inventory Tables
+
+After the procurement tables, the inventory tables can be created in this order:
+
+20. `20_inventory_stock.sql`
+21. `21_inventory_movements.sql`
+22. `22_inventory_stock_audits.sql`
+
 ### Migrations
 
-The migration files contain changes made after the initial table definitions.
+The migration files show changes made during the database design process.
 
-Run them in order:
+They are kept as part of the project history and should not be run after the current schema files have been created.
+
+The migration files are:
 
 1. `database/migrations/01_refine_product_reference_model.sql`
 2. `database/migrations/02_refine_customer_operations_model.sql`

@@ -120,12 +120,25 @@ Completed
 - Current procurement table count verified: 4
 - Procurement tables verified before adding data
 
+#### Inventory Transactions
+
+- `inventory.stock` table designed and created
+- `inventory.movements` table designed and created
+- `inventory.stock_audits` table designed and created
+- Inventory foreign keys verified
+- Inventory stock status rules verified
+- Inventory movement rules verified
+- Stock audit quantity rules verified
+- Stock position unique rule verified
+- Current inventory table count verified: 3
+- Inventory tables verified before adding data
+
 ### Current Focus
 
-Inventory flow and stock transaction design
+Warehouse operations design
 
 ### Next
 
-- Define the inventory flow from accepted goods receipts
-- Identify the required inventory data
-- Design the required inventory tables
+- Define the warehouse receiving and putaway flow
+- Identify the required warehouse transaction data
+- Design the required warehouse tables
