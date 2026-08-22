@@ -29,10 +29,12 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Purchase order and goods receipt flow
 - Inventory transaction model
 - 3 inventory tables
+- Warehouse putaway model
+- 2 warehouse transaction tables
 
 ### Current Focus
 
-Warehouse operations design.
+Warehouse outbound operations design.
 
 ## Database Setup
 
@@ -43,7 +45,8 @@ The database files are organized into setup, schema and migration folders.
 Run:
 
 1. `database/setup/01_create_database.sql`
-2. `database/setup/02_create_schemas.sql`
+2. Connect to `supply_chain_operations_analytics`
+3. Run `database/setup/02_create_schemas.sql`
 
 ### Master Tables
 
@@ -84,6 +87,13 @@ After the procurement tables, the inventory tables can be created in this order:
 21. `21_inventory_movements.sql`
 22. `22_inventory_stock_audits.sql`
 
+### Warehouse Tables
+
+After the inventory tables, the warehouse tables can be created in this order:
+
+23. `23_warehouse_putaways.sql`
+24. `24_warehouse_putaway_items.sql`
+
 ### Migrations
 
 The migration files show changes made during the database design process.
@@ -95,6 +105,7 @@ The migration files are:
 1. `database/migrations/01_refine_product_reference_model.sql`
 2. `database/migrations/02_refine_customer_operations_model.sql`
 3. `database/migrations/03_refine_warehouse_logistics_model.sql`
+4. `database/migrations/04_add_batch_to_goods_receipt_items.sql`
 
 ## Project Structure
 

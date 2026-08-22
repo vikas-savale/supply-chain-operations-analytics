@@ -13,6 +13,7 @@ CREATE TABLE procurement.goods_receipt_items
     line_number SMALLINT NOT NULL,
 
     product_id BIGINT NOT NULL,
+    batch_code VARCHAR(50) NOT NULL,
     receipt_uom_id BIGINT NOT NULL,
 
     received_quantity NUMERIC(14,3) NOT NULL,

@@ -94,6 +94,7 @@ Completed
 - `database/migrations/01_refine_product_reference_model.sql` created and executed
 - `database/migrations/02_refine_customer_operations_model.sql` created and executed
 - `database/migrations/03_refine_warehouse_logistics_model.sql` created and executed
+- `database/migrations/04_add_batch_to_goods_receipt_items.sql` created and executed
 - Product foreign keys verified
 - Supplier payment-term foreign key verified
 - Customer payment-term foreign key verified
@@ -111,6 +112,7 @@ Completed
 - `procurement.purchase_order_items` table designed and created
 - `procurement.goods_receipts` table designed and created
 - `procurement.goods_receipt_items` table designed and created
+- Batch tracking added to `procurement.goods_receipt_items`
 - Purchase order foreign keys verified
 - Purchase order item foreign keys verified
 - Goods receipt foreign keys verified
@@ -133,12 +135,24 @@ Completed
 - Current inventory table count verified: 3
 - Inventory tables verified before adding data
 
+#### Warehouse Transactions
+
+- `warehouse.putaways` table designed and created
+- `warehouse.putaway_items` table designed and created
+- Putaway foreign keys verified
+- Putaway status rules verified
+- Putaway quantity check verified
+- Putaway line uniqueness verified
+- Source and destination location check verified
+- Current warehouse transaction table count verified: 2
+- Warehouse tables verified before adding data
+
 ### Current Focus
 
-Warehouse operations design
+Warehouse outbound operations design
 
 ### Next
 
-- Define the warehouse receiving and putaway flow
-- Identify the required warehouse transaction data
-- Design the required warehouse tables
+- Define the picking flow
+- Define the picking item structure
+- Define the packing flow

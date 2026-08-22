@@ -66,6 +66,15 @@
 
 ---
 
+## Warehouse Transactions
+
+### Putaway
+
+- Putaways
+- Putaway Items
+
+---
+
 ## Main Flow
 
 Supplier
@@ -73,4 +82,6 @@ Supplier
 → Purchase Order Items
 → Goods Receipt
 → Goods Receipt Items
-→ Inventory
+→ Receiving / Staging Inventory
+→ Putaway
+→ Storage / Picking Location
