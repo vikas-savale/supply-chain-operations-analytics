@@ -101,6 +101,10 @@
 
 - Shipment Documents
 
+### Shipment Events
+
+- Shipment Events
+
 ---
 
 ## Inbound Flow
@@ -125,3 +129,19 @@ Customer Order
 → Shipment
 → Delivery
 → Shipment Documents
+
+---
+
+## Shipment Event Timeline
+
+Shipment
+
+→ Vehicle Arrived
+
+→ Loading Started
+
+→ Loading Completed
+
+→ Departed
+
+→ Delivery Completed

@@ -105,13 +105,14 @@ A dispatch can contain items from more than one picking item.
 
 ## Logistics Schema
 
-The `logistics` schema currently contains 5 transaction tables:
+The `logistics` schema currently contains 6 transaction tables:
 
 - `shipments`
 - `shipment_items`
 - `deliveries`
 - `delivery_items`
 - `shipment_documents`
+- `shipment_events`
 
 The shipment flow connects warehouse dispatches to transport execution.
 
@@ -133,14 +134,8 @@ Shipment documents store document references associated with shipments.
 
 Supported document types include invoices, E-Way Bills, Lorry Receipts and proof of delivery.
 
----
+Shipment events store the operational timeline of a shipment.
 
-## Sales Schema
+Supported shipment events include vehicle arrival, loading start, loading completion, departure and delivery completion.
 
-Sales transaction tables will be added after the required outbound processes are defined.
-
----
-
-## Analytics Layer
-
-Analytics will be added after the required transaction data is available.
+The event timeline can support analysis of vehicle waiting time, loading time, dispatch turnaround time and transit time.

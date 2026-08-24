@@ -179,15 +179,20 @@ Completed
 - Shipment document type rules verified
 - Shipment document status rules verified
 - Shipment document reference uniqueness verified
-- Current logistics table count verified: 5
+- `logistics.shipment_events` table designed and created
+- Shipment event foreign key verified
+- Shipment event type rules verified
+- Shipment event timeline index verified
+- Current logistics table count verified: 6
 - Logistics tables verified before adding data
 
 ### Current Focus
 
-Transport events and logistics analytics design
+Architecture review and next-phase planning
 
 ### Next
 
-- Define the required transport events
-- Identify the logistics metrics that depend on event timestamps
-- Design the logistics analysis flow
+- Review the completed transaction model
+- Identify any remaining required business transactions
+- Define the sales and customer order flow
+- Prepare the model for synthetic data generation and analytics
