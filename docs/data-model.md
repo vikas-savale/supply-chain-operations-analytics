@@ -85,6 +85,15 @@
 
 ---
 
+## Logistics Transactions
+
+### Shipments
+
+- Shipments
+- Shipment Items
+
+---
+
 ## Inbound Flow
 
 Supplier

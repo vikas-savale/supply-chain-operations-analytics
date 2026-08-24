@@ -33,10 +33,12 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Warehouse picking model
 - Warehouse dispatch model
 - 6 warehouse transaction tables
+- Logistics shipment model
+- 2 logistics transaction tables
 
 ### Current Focus
 
-Logistics shipment design.
+Delivery and transport operations design.
 
 ## Database Setup
 
@@ -99,6 +101,13 @@ After the inventory tables, the warehouse tables can be created in this order:
 26. `26_warehouse_picking_items.sql`
 27. `27_warehouse_dispatches.sql`
 28. `28_warehouse_dispatch_items.sql`
+
+### Logistics Tables
+
+After the warehouse tables, the logistics tables can be created in this order:
+
+29. `29_logistics_shipments.sql`
+30. `30_logistics_shipment_items.sql`
 
 ### Migrations
 

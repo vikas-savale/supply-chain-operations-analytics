@@ -159,12 +159,24 @@ Completed
 - Current warehouse transaction table count verified: 6
 - Warehouse tables verified before adding data
 
+#### Logistics Transactions
+
+- `logistics.shipments` table designed and created
+- `logistics.shipment_items` table designed and created
+- Shipment foreign keys verified
+- Shipment status rules verified
+- Shipment date rules verified
+- Shipment item quantity check verified
+- Shipment item line uniqueness verified
+- Current logistics table count verified: 2
+- Logistics tables verified before adding data
+
 ### Current Focus
 
-Logistics shipment design
+Delivery and transport operations design
 
 ### Next
 
-- Define the shipment structure
-- Define the shipment item structure
+- Define the delivery structure
 - Define the transport and delivery flow
+- Identify the required logistics transaction data
