@@ -74,16 +74,24 @@ The inventory layer stores current stock, stock movement history and physical st
 
 ## Warehouse Schema
 
-The `warehouse` schema currently contains 2 transaction tables:
+The `warehouse` schema currently contains 4 transaction tables:
 
 - `putaways`
 - `putaway_items`
+- `pickings`
+- `picking_items`
 
 The putaway flow moves accepted stock from a receiving or staging location to a storage or picking location.
 
 One putaway can contain multiple putaway items.
 
 A goods receipt item can be split across multiple putaway items when stock is placed in more than one location.
+
+The picking flow moves required stock from warehouse locations for outbound orders.
+
+One picking can contain multiple picking items.
+
+A picking can use stock from more than one location.
 
 ---
 

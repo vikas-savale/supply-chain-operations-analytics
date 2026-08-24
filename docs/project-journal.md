@@ -144,15 +144,21 @@ Completed
 - Putaway quantity check verified
 - Putaway line uniqueness verified
 - Source and destination location check verified
-- Current warehouse transaction table count verified: 2
+- `warehouse.pickings` table designed and created
+- `warehouse.picking_items` table designed and created
+- Picking foreign keys verified
+- Picking status rules verified
+- Picking quantity check verified
+- Picking line uniqueness verified
+- Current warehouse transaction table count verified: 4
 - Warehouse tables verified before adding data
 
 ### Current Focus
 
-Warehouse outbound operations design
+Warehouse dispatch and loading design
 
 ### Next
 
-- Define the picking flow
-- Define the picking item structure
-- Define the packing flow
+- Define the dispatch flow
+- Define the dispatch item structure
+- Define the shipment handoff

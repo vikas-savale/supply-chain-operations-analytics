@@ -73,9 +73,14 @@
 - Putaways
 - Putaway Items
 
+### Picking
+
+- Pickings
+- Picking Items
+
 ---
 
-## Main Flow
+## Inbound Flow
 
 Supplier
 → Purchase Order
@@ -85,3 +90,13 @@ Supplier
 → Receiving / Staging Inventory
 → Putaway
 → Storage / Picking Location
+
+---
+
+## Outbound Flow
+
+Customer Order
+→ Allocation / Reserved Stock
+→ Picking
+→ Dispatch / Loading
+→ Shipment

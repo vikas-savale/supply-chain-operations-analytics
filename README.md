@@ -30,11 +30,12 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Inventory transaction model
 - 3 inventory tables
 - Warehouse putaway model
-- 2 warehouse transaction tables
+- Warehouse picking model
+- 4 warehouse transaction tables
 
 ### Current Focus
 
-Warehouse outbound operations design.
+Warehouse dispatch and loading design.
 
 ## Database Setup
 
@@ -93,6 +94,8 @@ After the inventory tables, the warehouse tables can be created in this order:
 
 23. `23_warehouse_putaways.sql`
 24. `24_warehouse_putaway_items.sql`
+25. `25_warehouse_pickings.sql`
+26. `26_warehouse_picking_items.sql`
 
 ### Migrations
 
