@@ -78,6 +78,11 @@
 - Pickings
 - Picking Items
 
+### Dispatch
+
+- Dispatches
+- Dispatch Items
+
 ---
 
 ## Inbound Flow

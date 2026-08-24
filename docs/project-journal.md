@@ -150,15 +150,21 @@ Completed
 - Picking status rules verified
 - Picking quantity check verified
 - Picking line uniqueness verified
-- Current warehouse transaction table count verified: 4
+- `warehouse.dispatches` table designed and created
+- `warehouse.dispatch_items` table designed and created
+- Dispatch foreign keys verified
+- Dispatch status rules verified
+- Dispatch quantity check verified
+- Dispatch line uniqueness verified
+- Current warehouse transaction table count verified: 6
 - Warehouse tables verified before adding data
 
 ### Current Focus
 
-Warehouse dispatch and loading design
+Logistics shipment design
 
 ### Next
 
-- Define the dispatch flow
-- Define the dispatch item structure
-- Define the shipment handoff
+- Define the shipment structure
+- Define the shipment item structure
+- Define the transport and delivery flow
