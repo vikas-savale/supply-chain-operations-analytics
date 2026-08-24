@@ -92,6 +92,11 @@
 - Shipments
 - Shipment Items
 
+### Deliveries
+
+- Deliveries
+- Delivery Items
+
 ---
 
 ## Inbound Flow
@@ -114,3 +119,4 @@ Customer Order
 → Picking
 → Dispatch / Loading
 → Shipment
+→ Delivery

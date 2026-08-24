@@ -105,10 +105,12 @@ A dispatch can contain items from more than one picking item.
 
 ## Logistics Schema
 
-The `logistics` schema currently contains 2 transaction tables:
+The `logistics` schema currently contains 4 transaction tables:
 
 - `shipments`
 - `shipment_items`
+- `deliveries`
+- `delivery_items`
 
 The shipment flow connects warehouse dispatches to transport execution.
 
@@ -117,6 +119,14 @@ A shipment is linked to a warehouse dispatch, transporter and vehicle.
 One shipment can contain multiple shipment items.
 
 Shipment items are linked to dispatch items to keep the outbound transaction flow traceable.
+
+The delivery flow records the completion of a shipment at the delivery stage.
+
+A delivery is linked to a shipment.
+
+One delivery can contain multiple delivery items.
+
+Delivery items are linked to shipment items to maintain quantity and transaction traceability.
 
 ---
 
