@@ -174,15 +174,20 @@ Completed
 - Delivery status rules verified
 - Delivery item quantity check verified
 - Delivery item line uniqueness verified
-- Current logistics table count verified: 4
+- `logistics.shipment_documents` table designed and created
+- Shipment document foreign key verified
+- Shipment document type rules verified
+- Shipment document status rules verified
+- Shipment document reference uniqueness verified
+- Current logistics table count verified: 5
 - Logistics tables verified before adding data
 
 ### Current Focus
 
-Transport operations and delivery documentation design
+Transport events and logistics analytics design
 
 ### Next
 
-- Define the required transport operations
-- Define the required delivery documents
-- Identify the logistics events needed for analysis
+- Define the required transport events
+- Identify the logistics metrics that depend on event timestamps
+- Design the logistics analysis flow

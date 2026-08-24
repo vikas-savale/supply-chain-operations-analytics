@@ -97,6 +97,10 @@
 - Deliveries
 - Delivery Items
 
+### Shipment Documents
+
+- Shipment Documents
+
 ---
 
 ## Inbound Flow
@@ -120,3 +124,4 @@ Customer Order
 → Dispatch / Loading
 → Shipment
 → Delivery
+→ Shipment Documents
