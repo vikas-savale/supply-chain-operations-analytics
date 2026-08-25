@@ -46,7 +46,7 @@
 
 ## Product Packaging
 
-The product master stores the packaging information for each stockable material.
+The product master stores packaging information for each stockable material.
 
 - Material code identifies the stockable material and pack variant
 - Pack type identifies the packaging form
@@ -77,6 +77,33 @@ PAC quantity is material-specific because different material codes can have diff
 - Stock
 - Inventory Movements
 - Stock Audits
+
+### Inventory Measures
+
+Inventory transactions store both package quantity and normalized base quantity.
+
+- PAC quantity stores the number of packages
+- Base quantity stores the corresponding quantity in the product base UOM
+- The product master defines the base quantity represented by one PAC
+
+### Stock Location
+
+Inventory stock stores the SAP storage location code along with the physical warehouse location.
+
+- `FGST` represents good finished stock
+- `RJCT` represents rejected stock
+
+The SAP storage location and physical warehouse location are kept together in the stock model.
+
+### Stock Audits
+
+Stock audits store separate physical quantities for:
+
+- Good stock
+- Damaged stock
+- Leakage
+
+The variance is calculated from the physical quantities and the system base quantity.
 
 ---
 

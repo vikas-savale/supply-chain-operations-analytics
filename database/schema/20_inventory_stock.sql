@@ -1,6 +1,6 @@
 /*
 Creates the inventory.stock table.
-Stores current stock by product, warehouse, location, batch and status.
+Stores current stock by product, warehouse, SLOC, location, batch and status.
 */
 
 CREATE TABLE inventory.stock
@@ -9,13 +9,16 @@ CREATE TABLE inventory.stock
 
     product_id BIGINT NOT NULL,
     warehouse_id BIGINT NOT NULL,
+
+    sloc_code VARCHAR(10) NOT NULL,
     location_id BIGINT NOT NULL,
 
     batch_code VARCHAR(50) NOT NULL,
 
     stock_status VARCHAR(20) NOT NULL DEFAULT 'available',
 
-    quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    pac_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    base_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
 
     created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(100) NOT NULL DEFAULT 'system',
@@ -44,6 +47,7 @@ CREATE TABLE inventory.stock
         UNIQUE (
             product_id,
             warehouse_id,
+            sloc_code,
             location_id,
             batch_code,
             stock_status
@@ -60,6 +64,9 @@ CREATE TABLE inventory.stock
             )
         ),
 
-    CONSTRAINT chk_inventory_stock_quantity
-        CHECK (quantity >= 0)
+    CONSTRAINT chk_inventory_stock_pac_quantity
+        CHECK (pac_quantity >= 0),
+
+    CONSTRAINT chk_inventory_stock_base_quantity
+        CHECK (base_quantity >= 0)
 );

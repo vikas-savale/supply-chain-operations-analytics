@@ -98,6 +98,8 @@ Completed
 - `database/migrations/03_refine_warehouse_logistics_model.sql` created and executed
 - `database/migrations/04_add_batch_to_goods_receipt_items.sql` created and executed
 - `database/migrations/05_refine_product_packaging_model.sql` created and executed
+- `database/migrations/06_refine_inventory_measurement_model.sql` created and executed
+- `database/migrations/07_refine_inventory_audit_sloc.sql` created and executed
 - Product foreign keys verified
 - Supplier payment-term foreign key verified
 - Customer payment-term foreign key verified
@@ -137,6 +139,10 @@ Completed
 - Inventory movement rules verified
 - Stock audit quantity rules verified
 - Stock position unique rule verified
+- PAC and base quantity fields verified
+- SLOC tracking verified
+- Physical leakage tracking verified
+- Stock audit variance rule verified
 - Current inventory table count verified: 3
 - Inventory tables verified before adding data
 
@@ -193,11 +199,11 @@ Completed
 
 ### Current Focus
 
-Inventory measurement and stock-location refinement
+Sales and customer order model
 
 ### Next
 
-- Define PAC and base quantity fields for inventory transactions
-- Refine SLOC and physical stock location handling
-- Add physical leakage tracking to stock audits
-- Propagate quantity measures through warehouse and logistics transactions
+- Define the customer order structure
+- Define customer order items
+- Define the outbound allocation flow
+- Connect allocations to warehouse picking

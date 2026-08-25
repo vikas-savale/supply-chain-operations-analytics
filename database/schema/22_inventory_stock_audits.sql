@@ -11,15 +11,17 @@ CREATE TABLE inventory.stock_audits
 
     product_id BIGINT NOT NULL,
     warehouse_id BIGINT NOT NULL,
+    sloc_code VARCHAR(10) NOT NULL,
     location_id BIGINT NOT NULL,
 
     batch_code VARCHAR(50) NOT NULL,
 
-    system_quantity NUMERIC(14,3) NOT NULL,
-    physical_good_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
-    physical_damaged_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    system_base_quantity NUMERIC(14,3) NOT NULL,
+    physical_good_base_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    physical_damaged_base_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    physical_leakage_base_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
 
-    variance_quantity NUMERIC(14,3) NOT NULL,
+    variance_base_quantity NUMERIC(14,3) NOT NULL,
 
     adjustment_reason VARCHAR(30),
 
@@ -46,21 +48,25 @@ CREATE TABLE inventory.stock_audits
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT chk_inventory_stock_audits_system_quantity
-        CHECK (system_quantity >= 0),
+    CONSTRAINT chk_inventory_stock_audits_system_base_quantity
+        CHECK (system_base_quantity >= 0),
 
-    CONSTRAINT chk_inventory_stock_audits_good_quantity
-        CHECK (physical_good_quantity >= 0),
+    CONSTRAINT chk_inventory_stock_audits_good_base_quantity
+        CHECK (physical_good_base_quantity >= 0),
 
-    CONSTRAINT chk_inventory_stock_audits_damaged_quantity
-        CHECK (physical_damaged_quantity >= 0),
+    CONSTRAINT chk_inventory_stock_audits_damaged_base_quantity
+        CHECK (physical_damaged_base_quantity >= 0),
+
+    CONSTRAINT chk_inventory_stock_audits_leakage_base_quantity
+        CHECK (physical_leakage_base_quantity >= 0),
 
     CONSTRAINT chk_inventory_stock_audits_variance
         CHECK (
-            variance_quantity =
-            physical_good_quantity
-            + physical_damaged_quantity
-            - system_quantity
+            variance_base_quantity =
+            physical_good_base_quantity
+            + physical_damaged_base_quantity
+            + physical_leakage_base_quantity
+            - system_base_quantity
         ),
 
     CONSTRAINT chk_inventory_stock_audits_adjustment_reason

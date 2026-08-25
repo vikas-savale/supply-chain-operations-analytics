@@ -38,7 +38,7 @@ The `master` schema currently contains 15 master/reference tables:
 
 The `master` schema provides the reference data used by transaction tables.
 
-The `products` table also stores material-level packaging attributes including pack type, pack size and the base quantity represented by one PAC.
+The `products` table stores material-level packaging attributes including pack type, pack size and the base quantity represented by one PAC.
 
 ---
 
@@ -71,6 +71,38 @@ The `inventory` schema currently contains 3 tables:
 - `stock_audits`
 
 The inventory layer stores current stock, stock movement history and physical stock audit results.
+
+### Inventory Measurement
+
+Inventory stock and movement records store:
+
+- PAC quantity
+- Base quantity
+- SAP storage location code
+- Physical warehouse location
+- Batch
+- Stock status
+
+PAC quantity records the package count, while base quantity records the corresponding quantity in the product base UOM.
+
+### Stock Location
+
+The inventory model stores the SAP storage location code separately from the physical warehouse location.
+
+`FGST` represents good finished stock and `RJCT` represents rejected stock.
+
+### Stock Audits
+
+Stock audits store system base quantity and separate physical quantities for good stock, damaged stock and leakage.
+
+Variance is calculated as:
+
+Physical Good
+
+- Physical Damaged
+- Physical Leakage
+
+* System Base Quantity
 
 ---
 

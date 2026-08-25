@@ -11,13 +11,16 @@ CREATE TABLE inventory.movements
 
     product_id BIGINT NOT NULL,
     warehouse_id BIGINT NOT NULL,
+
+    sloc_code VARCHAR(10) NOT NULL,
     location_id BIGINT NOT NULL,
 
     batch_code VARCHAR(50) NOT NULL,
 
     movement_type VARCHAR(20) NOT NULL,
 
-    quantity NUMERIC(14,3) NOT NULL,
+    pac_quantity NUMERIC(14,3) NOT NULL,
+    base_quantity NUMERIC(14,3) NOT NULL,
 
     stock_status VARCHAR(20) NOT NULL,
 
@@ -60,8 +63,11 @@ CREATE TABLE inventory.movements
             )
         ),
 
-    CONSTRAINT chk_inventory_movements_quantity
-        CHECK (quantity > 0),
+    CONSTRAINT chk_inventory_movements_pac_quantity
+        CHECK (pac_quantity > 0),
+
+    CONSTRAINT chk_inventory_movements_base_quantity
+        CHECK (base_quantity > 0),
 
     CONSTRAINT chk_inventory_movements_status
         CHECK (

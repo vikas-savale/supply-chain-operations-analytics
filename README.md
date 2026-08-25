@@ -30,6 +30,9 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Purchase order and goods receipt flow
 - Inventory transaction model
 - 3 inventory tables
+- Inventory PAC and base quantity model
+- Inventory SLOC tracking
+- Inventory physical damage and leakage tracking
 - Warehouse putaway model
 - Warehouse picking model
 - Warehouse dispatch model
@@ -42,7 +45,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 
 ### Current Focus
 
-Inventory measurement and stock-location refinement.
+Sales and customer order model.
 
 ## Database Setup
 
@@ -130,6 +133,8 @@ The migration files are:
 3. `database/migrations/03_refine_warehouse_logistics_model.sql`
 4. `database/migrations/04_add_batch_to_goods_receipt_items.sql`
 5. `database/migrations/05_refine_product_packaging_model.sql`
+6. `database/migrations/06_refine_inventory_measurement_model.sql`
+7. `database/migrations/07_refine_inventory_audit_sloc.sql`
 
 ## Project Structure
 
