@@ -12,7 +12,8 @@ CREATE TABLE logistics.shipment_items
 
     line_number SMALLINT NOT NULL,
 
-    quantity NUMERIC(14,3) NOT NULL,
+    pac_quantity NUMERIC(14,3) NOT NULL,
+    base_quantity NUMERIC(14,3) NOT NULL,
 
     notes TEXT,
 
@@ -39,6 +40,9 @@ CREATE TABLE logistics.shipment_items
     CONSTRAINT chk_shipment_items_line_number
         CHECK (line_number > 0),
 
-    CONSTRAINT chk_shipment_items_quantity
-        CHECK (quantity > 0)
+    CONSTRAINT chk_shipment_items_pac_quantity
+        CHECK (pac_quantity > 0),
+
+    CONSTRAINT chk_shipment_items_base_quantity
+        CHECK (base_quantity > 0)
 );

@@ -28,6 +28,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Procurement transaction model
 - 4 procurement transaction tables
 - Purchase order and goods receipt flow
+- Procurement PAC and base quantity model
 - Inventory transaction model
 - 3 inventory tables
 - Inventory PAC and base quantity model
@@ -37,11 +38,13 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Warehouse picking model
 - Warehouse dispatch model
 - 6 warehouse transaction tables
+- Warehouse PAC and base quantity model
 - Logistics shipment model
 - Logistics delivery model
 - Shipment document tracking
 - Logistics shipment event tracking
 - 6 logistics transaction tables
+- Logistics PAC and base quantity model
 
 ### Current Focus
 
@@ -135,6 +138,7 @@ The migration files are:
 5. `database/migrations/05_refine_product_packaging_model.sql`
 6. `database/migrations/06_refine_inventory_measurement_model.sql`
 7. `database/migrations/07_refine_inventory_audit_sloc.sql`
+8. `database/migrations/08_refine_transaction_quantity_model.sql`
 
 ## Project Structure
 

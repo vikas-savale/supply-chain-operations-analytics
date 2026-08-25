@@ -100,6 +100,7 @@ Completed
 - `database/migrations/05_refine_product_packaging_model.sql` created and executed
 - `database/migrations/06_refine_inventory_measurement_model.sql` created and executed
 - `database/migrations/07_refine_inventory_audit_sloc.sql` created and executed
+- `database/migrations/08_refine_transaction_quantity_model.sql` created and executed
 - Product foreign keys verified
 - Supplier payment-term foreign key verified
 - Customer payment-term foreign key verified
@@ -110,6 +111,8 @@ Completed
 - Customer-location default index verified
 - Product packaging fields verified
 - Product PAC quantity check verified
+- Transaction quantity fields verified
+- Generic `quantity` fields removed from affected transaction lines
 - Final master table count verified: 15
 - Master tables verified before adding data
 
@@ -126,6 +129,7 @@ Completed
 - Goods receipt item foreign keys verified
 - Purchase order status rules verified
 - Goods receipt quantity rules verified
+- PAC and base quantities verified across procurement transaction lines
 - Current procurement table count verified: 4
 - Procurement tables verified before adding data
 
@@ -167,6 +171,7 @@ Completed
 - Dispatch status rules verified
 - Dispatch quantity check verified
 - Dispatch line uniqueness verified
+- PAC and base quantities verified across warehouse transaction lines
 - Current warehouse transaction table count verified: 6
 - Warehouse tables verified before adding data
 
@@ -194,6 +199,7 @@ Completed
 - Shipment event foreign key verified
 - Shipment event type rules verified
 - Shipment event timeline index verified
+- PAC and base quantities verified across logistics transaction lines
 - Current logistics table count verified: 6
 - Logistics tables verified before adding data
 

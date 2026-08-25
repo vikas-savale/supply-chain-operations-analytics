@@ -1,6 +1,6 @@
 /*
 Creates the procurement.goods_receipt_items table.
-Stores product lines received against a goods receipt.
+Stores product quantities received against a goods receipt.
 */
 
 CREATE TABLE procurement.goods_receipt_items
@@ -16,9 +16,13 @@ CREATE TABLE procurement.goods_receipt_items
     batch_code VARCHAR(50) NOT NULL,
     receipt_uom_id BIGINT NOT NULL,
 
-    received_quantity NUMERIC(14,3) NOT NULL,
-    accepted_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
-    rejected_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    received_pac_quantity NUMERIC(14,3) NOT NULL,
+    accepted_pac_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    rejected_pac_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+
+    received_base_quantity NUMERIC(14,3) NOT NULL,
+    accepted_base_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
+    rejected_base_quantity NUMERIC(14,3) NOT NULL DEFAULT 0,
 
     notes TEXT,
 
@@ -57,15 +61,35 @@ CREATE TABLE procurement.goods_receipt_items
     CONSTRAINT chk_goods_receipt_items_line_number
         CHECK (line_number > 0),
 
-    CONSTRAINT chk_goods_receipt_items_received_quantity
-        CHECK (received_quantity > 0),
+    CONSTRAINT chk_goods_receipt_items_received_pac_quantity
+        CHECK (received_pac_quantity > 0),
 
-    CONSTRAINT chk_goods_receipt_items_accepted_quantity
-        CHECK (accepted_quantity >= 0),
+    CONSTRAINT chk_goods_receipt_items_accepted_pac_quantity
+        CHECK (accepted_pac_quantity >= 0),
 
-    CONSTRAINT chk_goods_receipt_items_rejected_quantity
-        CHECK (rejected_quantity >= 0),
+    CONSTRAINT chk_goods_receipt_items_rejected_pac_quantity
+        CHECK (rejected_pac_quantity >= 0),
 
-    CONSTRAINT chk_goods_receipt_items_quantity_split
-        CHECK (accepted_quantity + rejected_quantity = received_quantity)
+    CONSTRAINT chk_goods_receipt_items_pac_quantity_split
+        CHECK (
+            accepted_pac_quantity
+            + rejected_pac_quantity
+            = received_pac_quantity
+        ),
+
+    CONSTRAINT chk_goods_receipt_items_received_base_quantity
+        CHECK (received_base_quantity > 0),
+
+    CONSTRAINT chk_goods_receipt_items_accepted_base_quantity
+        CHECK (accepted_base_quantity >= 0),
+
+    CONSTRAINT chk_goods_receipt_items_rejected_base_quantity
+        CHECK (rejected_base_quantity >= 0),
+
+    CONSTRAINT chk_goods_receipt_items_base_quantity_split
+        CHECK (
+            accepted_base_quantity
+            + rejected_base_quantity
+            = received_base_quantity
+        )
 );

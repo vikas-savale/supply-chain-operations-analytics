@@ -13,7 +13,9 @@ CREATE TABLE procurement.purchase_order_items
     product_id BIGINT NOT NULL,
     purchase_uom_id BIGINT NOT NULL,
 
-    ordered_quantity NUMERIC(14,3) NOT NULL,
+    ordered_pac_quantity NUMERIC(14,3) NOT NULL,
+    ordered_base_quantity NUMERIC(14,3) NOT NULL,
+
     unit_cost NUMERIC(14,2) NOT NULL,
 
     notes TEXT,
@@ -47,8 +49,11 @@ CREATE TABLE procurement.purchase_order_items
     CONSTRAINT chk_purchase_order_items_line_number
         CHECK (line_number > 0),
 
-    CONSTRAINT chk_purchase_order_items_quantity
-        CHECK (ordered_quantity > 0),
+    CONSTRAINT chk_purchase_order_items_pac_quantity
+        CHECK (ordered_pac_quantity > 0),
+
+    CONSTRAINT chk_purchase_order_items_base_quantity
+        CHECK (ordered_base_quantity > 0),
 
     CONSTRAINT chk_purchase_order_items_unit_cost
         CHECK (unit_cost >= 0)

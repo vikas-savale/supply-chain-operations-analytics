@@ -60,6 +60,12 @@ Purchase Order
 
 A purchase order can have multiple goods receipts.
 
+Procurement transaction lines store both PAC quantity and base quantity.
+
+Purchase order items store ordered PAC and base quantities.
+
+Goods receipt items store received, accepted and rejected quantities in both PAC and base measures.
+
 ---
 
 ## Inventory Schema
@@ -135,6 +141,8 @@ One dispatch can contain multiple dispatch items.
 
 A dispatch can contain items from more than one picking item.
 
+Warehouse transaction lines store both PAC quantity and base quantity.
+
 ---
 
 ## Logistics Schema
@@ -173,6 +181,8 @@ Shipment events store the operational timeline of a shipment.
 Supported shipment events include vehicle arrival, loading start, loading completion, departure and delivery completion.
 
 The event timeline can support analysis of vehicle waiting time, loading time, dispatch turnaround time and transit time.
+
+Logistics transaction lines store both PAC quantity and base quantity.
 
 ---
 

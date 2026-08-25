@@ -70,6 +70,26 @@ PAC quantity is material-specific because different material codes can have diff
 - Goods Receipts
 - Goods Receipt Items
 
+### Transaction Quantities
+
+Procurement transaction lines store package quantity and normalized base quantity.
+
+Purchase order items store:
+
+- Ordered PAC quantity
+- Ordered base quantity
+
+Goods receipt items store:
+
+- Received PAC quantity
+- Accepted PAC quantity
+- Rejected PAC quantity
+- Received base quantity
+- Accepted base quantity
+- Rejected base quantity
+
+Accepted and rejected quantities are tracked separately for both measures.
+
 ---
 
 ## Inventory
@@ -124,6 +144,14 @@ The variance is calculated from the physical quantities and the system base quan
 - Dispatches
 - Dispatch Items
 
+### Warehouse Transaction Quantities
+
+Warehouse transaction lines store both PAC quantity and base quantity.
+
+- Putaway items store PAC and base quantities moved during putaway
+- Picking items store PAC and base quantities picked from stock
+- Dispatch items store PAC and base quantities loaded and dispatched
+
 ---
 
 ## Logistics Transactions
@@ -146,17 +174,31 @@ The variance is calculated from the physical quantities and the system base quan
 
 - Shipment Events
 
+### Logistics Transaction Quantities
+
+Logistics transaction lines store both PAC quantity and base quantity.
+
+- Shipment items store PAC and base quantities shipped
+- Delivery items store PAC and base quantities delivered
+
 ---
 
 ## Inbound Flow
 
 Supplier
+
 → Purchase Order
+
 → Purchase Order Items
+
 → Goods Receipt
+
 → Goods Receipt Items
+
 → Receiving / Staging Inventory
+
 → Putaway
+
 → Storage / Picking Location
 
 ---
@@ -164,11 +206,17 @@ Supplier
 ## Outbound Flow
 
 Customer Order
+
 → Allocation / Reserved Stock
+
 → Picking
+
 → Dispatch / Loading
+
 → Shipment
+
 → Delivery
+
 → Shipment Documents
 
 ---
@@ -176,8 +224,13 @@ Customer Order
 ## Shipment Event Timeline
 
 Shipment
+
 → Vehicle Arrived
+
 → Loading Started
+
 → Loading Completed
+
 → Departed
+
 → Delivery Completed
