@@ -23,6 +23,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Master data model
 - 15 master/reference tables
 - Master data normalization and relationship refinement
+- Material-level product and packaging model
 - PostgreSQL migrations and validation
 - Procurement transaction model
 - 4 procurement transaction tables
@@ -41,7 +42,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 
 ### Current Focus
 
-Architecture review and next-phase planning.
+Inventory measurement and stock-location refinement.
 
 ## Database Setup
 
@@ -128,6 +129,7 @@ The migration files are:
 2. `database/migrations/02_refine_customer_operations_model.sql`
 3. `database/migrations/03_refine_warehouse_logistics_model.sql`
 4. `database/migrations/04_add_batch_to_goods_receipt_items.sql`
+5. `database/migrations/05_refine_product_packaging_model.sql`
 
 ## Project Structure
 

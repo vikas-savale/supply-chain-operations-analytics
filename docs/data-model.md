@@ -44,6 +44,20 @@
 
 ---
 
+## Product Packaging
+
+The product master stores the packaging information for each stockable material.
+
+- Material code identifies the stockable material and pack variant
+- Pack type identifies the packaging form
+- Pack size stores the descriptive pack configuration
+- Base UOM defines the normalized measurement unit
+- Base quantity per PAC stores the quantity represented by one PAC
+
+PAC quantity is material-specific because different material codes can have different pack sizes.
+
+---
+
 ## Procurement Transactions
 
 ### Purchase Orders
@@ -135,13 +149,8 @@ Customer Order
 ## Shipment Event Timeline
 
 Shipment
-
 → Vehicle Arrived
-
 → Loading Started
-
 → Loading Completed
-
 → Departed
-
 → Delivery Completed

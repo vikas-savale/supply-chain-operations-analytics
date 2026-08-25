@@ -79,6 +79,8 @@ Completed
 - Product reference fields normalized
 - Category hierarchy simplified to `categories → sub_categories → products`
 - Product master connected to brands, sub-categories and UOMs
+- Product material variants represented at SKU level
+- Product packaging attributes refined to include pack type, pack size and base quantity per PAC
 - Supplier master connected to reusable payment terms
 - Customer master connected to reusable payment terms
 - Multiple customer ship-to locations supported
@@ -95,6 +97,7 @@ Completed
 - `database/migrations/02_refine_customer_operations_model.sql` created and executed
 - `database/migrations/03_refine_warehouse_logistics_model.sql` created and executed
 - `database/migrations/04_add_batch_to_goods_receipt_items.sql` created and executed
+- `database/migrations/05_refine_product_packaging_model.sql` created and executed
 - Product foreign keys verified
 - Supplier payment-term foreign key verified
 - Customer payment-term foreign key verified
@@ -103,6 +106,8 @@ Completed
 - Product-supplier relationships verified
 - Primary-source index verified
 - Customer-location default index verified
+- Product packaging fields verified
+- Product PAC quantity check verified
 - Final master table count verified: 15
 - Master tables verified before adding data
 
@@ -188,11 +193,11 @@ Completed
 
 ### Current Focus
 
-Architecture review and next-phase planning
+Inventory measurement and stock-location refinement
 
 ### Next
 
-- Review the completed transaction model
-- Identify any remaining required business transactions
-- Define the sales and customer order flow
-- Prepare the model for synthetic data generation and analytics
+- Define PAC and base quantity fields for inventory transactions
+- Refine SLOC and physical stock location handling
+- Add physical leakage tracking to stock audits
+- Propagate quantity measures through warehouse and logistics transactions

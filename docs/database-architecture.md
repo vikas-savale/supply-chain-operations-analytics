@@ -36,7 +36,9 @@ The `master` schema currently contains 15 master/reference tables:
 - `transporters`
 - `vehicles`
 
-The master tables provide the basic data used by transaction tables.
+The `master` schema provides the reference data used by transaction tables.
+
+The `products` table also stores material-level packaging attributes including pack type, pack size and the base quantity represented by one PAC.
 
 ---
 
@@ -139,3 +141,15 @@ Shipment events store the operational timeline of a shipment.
 Supported shipment events include vehicle arrival, loading start, loading completion, departure and delivery completion.
 
 The event timeline can support analysis of vehicle waiting time, loading time, dispatch turnaround time and transit time.
+
+---
+
+## Sales Schema
+
+Sales transaction tables will be added after the customer order and outbound allocation process is defined.
+
+---
+
+## Analytics Layer
+
+Analytics will be added after the required transaction data is available.

@@ -14,7 +14,10 @@ CREATE TABLE master.products
     sub_category_id BIGINT NOT NULL,
     base_uom_id BIGINT NOT NULL,
 
+    pack_type VARCHAR(30) NOT NULL,
     pack_size VARCHAR(30) NOT NULL,
+    base_quantity_per_pac NUMERIC(14,3) NOT NULL,
+
     viscosity_grade VARCHAR(20),
 
     product_status VARCHAR(20) NOT NULL DEFAULT 'active',
@@ -35,6 +38,9 @@ CREATE TABLE master.products
     CONSTRAINT fk_products_base_uom
         FOREIGN KEY (base_uom_id)
         REFERENCES master.uoms (uom_id),
+
+    CONSTRAINT chk_products_base_quantity_per_pac
+        CHECK (base_quantity_per_pac > 0),
 
     CONSTRAINT chk_products_status
         CHECK (product_status IN ('active', 'inactive', 'discontinued'))
