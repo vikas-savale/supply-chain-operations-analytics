@@ -203,13 +203,26 @@ Completed
 - Current logistics table count verified: 6
 - Logistics tables verified before adding data
 
+#### Sales Transactions
+
+- `sales.sales_orders` table designed and created
+- `sales.sales_order_items` table designed and created
+- Sales order foreign keys verified
+- Sales order status rules verified
+- Sales order number uniqueness verified
+- Sales order item foreign keys verified
+- Sales order item line uniqueness verified
+- Sales order PAC and base quantity fields verified
+- Sales table count verified: 2
+- Sales tables verified before adding data
+
 ### Current Focus
 
-Sales and customer order model
+Outbound allocation and stock reservation model
 
 ### Next
 
-- Define the customer order structure
-- Define customer order items
-- Define the outbound allocation flow
+- Define the allocation structure
+- Define stock reservation rules
+- Connect sales order items to inventory stock
 - Connect allocations to warehouse picking

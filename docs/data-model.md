@@ -183,6 +183,25 @@ Logistics transaction lines store both PAC quantity and base quantity.
 
 ---
 
+## Sales Transactions
+
+### Sales Orders
+
+- Sales Orders
+- Sales Order Items
+
+A sales order is created for a customer and a selected customer ship-to location.
+
+A customer can have multiple ship-to locations.
+
+Sales order items store the ordered product, PAC quantity, base quantity and commercial rate information.
+
+One sales order can contain multiple sales order items.
+
+A sales order can be fulfilled from multiple warehouses through the allocation process.
+
+---
+
 ## Inbound Flow
 
 Supplier
@@ -206,6 +225,10 @@ Supplier
 ## Outbound Flow
 
 Customer Order
+
+→ Sales Order
+
+→ Sales Order Items
 
 → Allocation / Reserved Stock
 

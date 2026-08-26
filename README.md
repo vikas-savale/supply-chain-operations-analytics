@@ -45,10 +45,13 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Logistics shipment event tracking
 - 6 logistics transaction tables
 - Logistics PAC and base quantity model
+- Sales order model
+- 2 sales transaction tables
+- Customer and ship-to order structure
 
 ### Current Focus
 
-Sales and customer order model.
+Outbound allocation and stock reservation model.
 
 ## Database Setup
 
@@ -122,6 +125,13 @@ After the warehouse tables, the logistics tables can be created in this order:
 32. `32_logistics_delivery_items.sql`
 33. `33_logistics_shipment_documents.sql`
 34. `34_logistics_shipment_events.sql`
+
+### Sales Tables
+
+After the master tables are created, the sales tables can be created after the customer and product tables are available:
+
+35. `35_sales_sales_orders.sql`
+36. `36_sales_sales_order_items.sql`
 
 ### Migrations
 

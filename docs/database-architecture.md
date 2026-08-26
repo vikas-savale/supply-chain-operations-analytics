@@ -188,7 +188,27 @@ Logistics transaction lines store both PAC quantity and base quantity.
 
 ## Sales Schema
 
-Sales transaction tables will be added after the customer order and outbound allocation process is defined.
+The `sales` schema currently contains 2 transaction tables:
+
+- `sales_orders`
+- `sales_order_items`
+
+The sales order flow is:
+
+Sales Order
+→ Sales Order Items
+
+A sales order is linked to a customer and a selected customer ship-to location.
+
+A customer can have multiple ship-to locations.
+
+Sales order items are linked to products and store ordered PAC and base quantities.
+
+Sales order items also store commercial rate information.
+
+One sales order can contain multiple sales order items.
+
+A sales order can be fulfilled from multiple warehouses through the allocation process.
 
 ---
 
