@@ -152,6 +152,16 @@ Warehouse transaction lines store both PAC quantity and base quantity.
 - Picking items store PAC and base quantities picked from stock
 - Dispatch items store PAC and base quantities loaded and dispatched
 
+### Picking and Sales Allocation
+
+Picking items are linked to sales order allocations.
+
+A picking item identifies the allocation being fulfilled and the inventory stock position being picked.
+
+An allocation can be fulfilled through multiple picking items.
+
+The stock reference in the picking item is kept together with the allocation stock reference.
+
 ---
 
 ## Logistics Transactions
@@ -211,6 +221,8 @@ An allocation stores the stock position used for the allocation along with alloc
 One sales order item can have multiple allocations.
 
 A sales order can be fulfilled from multiple warehouses through multiple stock allocations.
+
+Allocations are connected to warehouse picking items when allocated stock is picked.
 
 ---
 

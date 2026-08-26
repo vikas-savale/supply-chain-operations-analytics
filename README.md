@@ -39,6 +39,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Warehouse dispatch model
 - 6 warehouse transaction tables
 - Warehouse PAC and base quantity model
+- Sales order allocation connection to warehouse picking
 - Logistics shipment model
 - Logistics delivery model
 - Shipment document tracking
@@ -152,6 +153,7 @@ The migration files are:
 6. `database/migrations/06_refine_inventory_measurement_model.sql`
 7. `database/migrations/07_refine_inventory_audit_sloc.sql`
 8. `database/migrations/08_refine_transaction_quantity_model.sql`
+9. `database/migrations/09_connect_sales_allocations_to_picking.sql`
 
 ## Project Structure
 

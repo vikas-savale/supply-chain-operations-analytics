@@ -101,6 +101,7 @@ Completed
 - `database/migrations/06_refine_inventory_measurement_model.sql` created and executed
 - `database/migrations/07_refine_inventory_audit_sloc.sql` created and executed
 - `database/migrations/08_refine_transaction_quantity_model.sql` created and executed
+- `database/migrations/09_connect_sales_allocations_to_picking.sql` created and executed
 - Product foreign keys verified
 - Supplier payment-term foreign key verified
 - Customer payment-term foreign key verified
@@ -172,6 +173,9 @@ Completed
 - Dispatch quantity check verified
 - Dispatch line uniqueness verified
 - PAC and base quantities verified across warehouse transaction lines
+- Sales order allocation reference added to `warehouse.picking_items`
+- Picking allocation foreign key verified
+- Picking stock and allocation consistency verified
 - Current warehouse transaction table count verified: 6
 - Warehouse tables verified before adding data
 
@@ -187,7 +191,6 @@ Completed
 - `logistics.deliveries` table designed and created
 - `logistics.delivery_items` table designed and created
 - Delivery foreign keys verified
-- Delivery status rules verified
 - Delivery item quantity check verified
 - Delivery item line uniqueness verified
 - `logistics.shipment_documents` table designed and created

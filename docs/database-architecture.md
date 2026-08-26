@@ -135,6 +135,12 @@ One picking can contain multiple picking items.
 
 A picking can use stock from more than one location.
 
+Picking items are linked to sales order allocations.
+
+A picking item identifies the allocation being fulfilled and the inventory stock position being picked.
+
+An allocation can be fulfilled through multiple picking items.
+
 The dispatch flow records warehouse loading and dispatch of picked stock.
 
 One dispatch can contain multiple dispatch items.
@@ -217,6 +223,8 @@ One sales order item can have multiple allocations.
 Allocations store PAC and base quantities allocated from inventory stock.
 
 A sales order can be fulfilled from multiple warehouses through multiple stock allocations.
+
+Sales order allocations are connected to warehouse picking items when allocated stock is picked.
 
 ---
 
