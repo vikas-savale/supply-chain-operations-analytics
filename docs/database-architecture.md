@@ -188,15 +188,17 @@ Logistics transaction lines store both PAC quantity and base quantity.
 
 ## Sales Schema
 
-The `sales` schema currently contains 2 transaction tables:
+The `sales` schema currently contains 3 transaction tables:
 
 - `sales_orders`
 - `sales_order_items`
+- `sales_order_allocations`
 
 The sales order flow is:
 
 Sales Order
 → Sales Order Items
+→ Stock Allocation
 
 A sales order is linked to a customer and a selected customer ship-to location.
 
@@ -208,7 +210,13 @@ Sales order items also store commercial rate information.
 
 One sales order can contain multiple sales order items.
 
-A sales order can be fulfilled from multiple warehouses through the allocation process.
+Sales order allocations link sales order items to specific inventory stock positions.
+
+One sales order item can have multiple allocations.
+
+Allocations store PAC and base quantities allocated from inventory stock.
+
+A sales order can be fulfilled from multiple warehouses through multiple stock allocations.
 
 ---
 

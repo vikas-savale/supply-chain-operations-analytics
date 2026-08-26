@@ -213,16 +213,19 @@ Completed
 - Sales order item foreign keys verified
 - Sales order item line uniqueness verified
 - Sales order PAC and base quantity fields verified
-- Sales table count verified: 2
+- `sales.sales_order_allocations` table designed and created
+- Sales order allocation foreign keys verified
+- Sales order allocation quantity checks verified
+- Sales order allocation status rules verified
+- Sales table count verified: 3
 - Sales tables verified before adding data
 
 ### Current Focus
 
-Outbound allocation and stock reservation model
+Warehouse picking and sales order fulfillment model
 
 ### Next
 
-- Define the allocation structure
-- Define stock reservation rules
-- Connect sales order items to inventory stock
-- Connect allocations to warehouse picking
+- Connect sales order allocations to warehouse picking
+- Define picking fulfillment from allocated stock
+- Refine outbound execution flow

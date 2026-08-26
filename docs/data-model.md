@@ -198,7 +198,19 @@ Sales order items store the ordered product, PAC quantity, base quantity and com
 
 One sales order can contain multiple sales order items.
 
-A sales order can be fulfilled from multiple warehouses through the allocation process.
+A sales order can be fulfilled from multiple warehouses through stock allocation.
+
+### Sales Order Allocation
+
+- Sales Order Allocations
+
+Sales order allocations connect sales order items to specific inventory stock positions.
+
+An allocation stores the stock position used for the allocation along with allocated PAC and base quantities.
+
+One sales order item can have multiple allocations.
+
+A sales order can be fulfilled from multiple warehouses through multiple stock allocations.
 
 ---
 
@@ -230,7 +242,7 @@ Customer Order
 
 → Sales Order Items
 
-→ Allocation / Reserved Stock
+→ Stock Allocation
 
 → Picking
 
