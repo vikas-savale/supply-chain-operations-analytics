@@ -54,8 +54,11 @@ The `procurement` schema currently contains 4 transaction tables:
 The procurement flow is:
 
 Purchase Order
+
 → Purchase Order Items
+
 → Goods Receipt
+
 → Goods Receipt Items
 
 A purchase order can have multiple goods receipts.
@@ -96,6 +99,8 @@ PAC quantity records the package count, while base quantity records the correspo
 The inventory model stores the SAP storage location code separately from the physical warehouse location.
 
 `FGST` represents good finished stock and `RJCT` represents rejected stock.
+
+Stock, movement and stock audit records keep the SAP storage location and physical warehouse location consistent with the selected warehouse.
 
 ### Stock Audits
 
@@ -141,6 +146,10 @@ A picking item identifies the allocation being fulfilled and the inventory stock
 
 An allocation can be fulfilled through multiple picking items.
 
+The picking item stock must match the stock assigned to its sales order allocation.
+
+The picking source location must match the physical location of the selected stock.
+
 The dispatch flow records warehouse loading and dispatch of picked stock.
 
 One dispatch can contain multiple dispatch items.
@@ -168,7 +177,7 @@ A shipment is linked to a warehouse dispatch, transporter and vehicle.
 
 One shipment can contain multiple shipment items.
 
-Shipment items are linked to dispatch items to keep the outbound transaction flow traceable.
+Shipment items are linked to dispatch items from the shipment dispatch to keep the outbound transaction flow consistent.
 
 The delivery flow records the completion of a shipment at the delivery stage.
 
@@ -176,7 +185,7 @@ A delivery is linked to a shipment.
 
 One delivery can contain multiple delivery items.
 
-Delivery items are linked to shipment items to maintain quantity and transaction traceability.
+Delivery items are linked to shipment items from the delivery shipment to keep the transaction flow consistent.
 
 Shipment documents store document references associated with shipments.
 
@@ -203,12 +212,16 @@ The `sales` schema currently contains 3 transaction tables:
 The sales order flow is:
 
 Sales Order
+
 → Sales Order Items
+
 → Stock Allocation
 
 A sales order is linked to a customer and a selected customer ship-to location.
 
 A customer can have multiple ship-to locations.
+
+The selected ship-to location must belong to the same customer as the sales order.
 
 Sales order items are linked to products and store ordered PAC and base quantities.
 
@@ -222,9 +235,109 @@ One sales order item can have multiple allocations.
 
 Allocations store PAC and base quantities allocated from inventory stock.
 
+The product in the sales order item must match the product in the allocated stock.
+
 A sales order can be fulfilled from multiple warehouses through multiple stock allocations.
 
 Sales order allocations are connected to warehouse picking items when allocated stock is picked.
+
+---
+
+## Schema Build Order
+
+The current schema files define 37 business tables and 2 supporting schema files.
+
+They should be created in the following order because some tables depend on others:
+
+### Master Tables
+
+1. `11_master_brands.sql`
+2. `12_master_categories.sql`
+3. `09_master_payment_terms.sql`
+4. `04_master_transporters.sql`
+5. `08_master_uoms.sql`
+6. `05_master_warehouses.sql`
+7. `13_master_sub_categories.sql`
+8. `03_master_suppliers.sql`
+9. `06_master_locations.sql`
+10. `07_master_vehicles.sql`
+11. `15_master_employees.sql`
+12. `01_master_products.sql`
+13. `10_master_product_suppliers.sql`
+14. `02_master_customers.sql`
+15. `14_master_customer_locations.sql`
+
+### Procurement Tables
+
+16. `16_procurement_purchase_orders.sql`
+17. `17_procurement_purchase_order_items.sql`
+18. `18_procurement_goods_receipts.sql`
+19. `19_procurement_goods_receipt_items.sql`
+
+### Inventory Tables
+
+20. `20_inventory_stock.sql`
+21. `21_inventory_movements.sql`
+22. `22_inventory_stock_audits.sql`
+
+### Warehouse Tables
+
+23. `23_warehouse_putaways.sql`
+24. `24_warehouse_putaway_items.sql`
+25. `25_warehouse_pickings.sql`
+26. `26_warehouse_picking_items.sql`
+27. `27_warehouse_dispatches.sql`
+28. `28_warehouse_dispatch_items.sql`
+
+### Logistics Tables
+
+29. `29_logistics_shipments.sql`
+30. `30_logistics_shipment_items.sql`
+31. `31_logistics_deliveries.sql`
+32. `32_logistics_delivery_items.sql`
+33. `33_logistics_shipment_documents.sql`
+34. `34_logistics_shipment_events.sql`
+
+### Sales Tables
+
+35. `35_sales_sales_orders.sql`
+36. `36_sales_sales_order_items.sql`
+37. `37_sales_sales_order_allocations.sql`
+
+### Final Schema Links
+
+38. `38_sales_allocations_to_picking.sql`
+
+This file adds the sales order allocation reference to `warehouse.picking_items` after the sales allocation table has been created.
+
+39. `39_transaction_integrity.sql`
+
+This file adds consistency rules between related transaction records.
+
+---
+
+## Migrations
+
+The migration files show changes made during the database design process.
+
+They are kept as part of the project history and should not be run after the current schema files have been created.
+
+The migration files are:
+
+1. `database/migrations/01_refine_product_reference_model.sql`
+2. `database/migrations/02_refine_customer_operations_model.sql`
+3. `database/migrations/03_refine_warehouse_logistics_model.sql`
+4. `database/migrations/04_add_batch_to_goods_receipt_items.sql`
+5. `database/migrations/05_refine_product_packaging_model.sql`
+6. `database/migrations/06_refine_inventory_measurement_model.sql`
+7. `database/migrations/07_refine_inventory_audit_sloc.sql`
+8. `database/migrations/08_refine_transaction_quantity_model.sql`
+9. `database/migrations/09_connect_sales_allocations_to_picking.sql`
+10. `database/migrations/10_refine_transaction_integrity.sql`
+
+Migration 09 connects sales order allocations to warehouse picking.
+
+Migration 10 adds consistency rules between related transaction records.
 
 ---
 

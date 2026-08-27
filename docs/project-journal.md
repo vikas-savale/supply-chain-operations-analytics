@@ -102,6 +102,7 @@ Completed
 - `database/migrations/07_refine_inventory_audit_sloc.sql` created and executed
 - `database/migrations/08_refine_transaction_quantity_model.sql` created and executed
 - `database/migrations/09_connect_sales_allocations_to_picking.sql` created and executed
+- `database/migrations/10_refine_transaction_integrity.sql` created and executed
 - Product foreign keys verified
 - Supplier payment-term foreign key verified
 - Customer payment-term foreign key verified
@@ -148,6 +149,7 @@ Completed
 - SLOC tracking verified
 - Physical leakage tracking verified
 - Stock audit variance rule verified
+- Warehouse and physical location consistency verified
 - Current inventory table count verified: 3
 - Inventory tables verified before adding data
 
@@ -176,6 +178,7 @@ Completed
 - Sales order allocation reference added to `warehouse.picking_items`
 - Picking allocation foreign key verified
 - Picking stock and allocation consistency verified
+- Picking stock and source location consistency verified
 - Current warehouse transaction table count verified: 6
 - Warehouse tables verified before adding data
 
@@ -202,6 +205,8 @@ Completed
 - Shipment event foreign key verified
 - Shipment event type rules verified
 - Shipment event timeline index verified
+- Shipment and dispatch consistency verified
+- Delivery and shipment consistency verified
 - PAC and base quantities verified across logistics transaction lines
 - Current logistics table count verified: 6
 - Logistics tables verified before adding data
@@ -220,15 +225,19 @@ Completed
 - Sales order allocation foreign keys verified
 - Sales order allocation quantity checks verified
 - Sales order allocation status rules verified
+- Sales order item and stock product consistency verified
+- Sales order and customer ship-to consistency verified
 - Sales table count verified: 3
 - Sales tables verified before adding data
 
 ### Current Focus
 
-Warehouse picking and sales order fulfillment model
+Synthetic data model and data generation
 
 ### Next
 
-- Connect sales order allocations to warehouse picking
-- Define picking fulfillment from allocated stock
-- Refine outbound execution flow
+- Define master seed data
+- Define transaction data generation rules
+- Generate linked procurement, inventory, warehouse, logistics and sales data
+- Validate transaction quantities and business relationships
+- Prepare data for SQL analysis

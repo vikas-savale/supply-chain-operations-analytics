@@ -125,6 +125,15 @@ Stock audits store separate physical quantities for:
 
 The variance is calculated from the physical quantities and the system base quantity.
 
+Variance:
+
+Physical Good
+
+- Physical Damaged
+- Physical Leakage
+
+* System Base Quantity
+
 ---
 
 ## Warehouse Transactions
@@ -160,7 +169,9 @@ A picking item identifies the allocation being fulfilled and the inventory stock
 
 An allocation can be fulfilled through multiple picking items.
 
-The stock reference in the picking item is kept together with the allocation stock reference.
+The stock reference in the picking item is kept consistent with the allocation stock reference.
+
+The picking source location is kept consistent with the selected stock location.
 
 ---
 
@@ -191,6 +202,10 @@ Logistics transaction lines store both PAC quantity and base quantity.
 - Shipment items store PAC and base quantities shipped
 - Delivery items store PAC and base quantities delivered
 
+Shipment items are connected to dispatch items from the same warehouse dispatch.
+
+Delivery items are connected to shipment items from the same shipment.
+
 ---
 
 ## Sales Transactions
@@ -203,6 +218,8 @@ Logistics transaction lines store both PAC quantity and base quantity.
 A sales order is created for a customer and a selected customer ship-to location.
 
 A customer can have multiple ship-to locations.
+
+The selected ship-to location must belong to the same customer as the sales order.
 
 Sales order items store the ordered product, PAC quantity, base quantity and commercial rate information.
 
@@ -218,11 +235,27 @@ Sales order allocations connect sales order items to specific inventory stock po
 
 An allocation stores the stock position used for the allocation along with allocated PAC and base quantities.
 
+The product in the sales order item must match the product in the allocated stock.
+
 One sales order item can have multiple allocations.
 
 A sales order can be fulfilled from multiple warehouses through multiple stock allocations.
 
 Allocations are connected to warehouse picking items when allocated stock is picked.
+
+---
+
+## Data Consistency
+
+The database includes consistency rules for related records.
+
+- A customer order must use a ship-to location belonging to the same customer
+- Inventory stock, movements and stock audits must use a location belonging to the same warehouse
+- An allocation must use stock for the same product as the sales order item
+- A picking item must use the stock assigned to its allocation
+- A picking item must use the actual location of the selected stock
+- A shipment item must use a dispatch item from the shipment dispatch
+- A delivery item must use a shipment item from the delivery shipment
 
 ---
 

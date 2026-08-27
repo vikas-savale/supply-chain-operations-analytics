@@ -40,6 +40,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 6 warehouse transaction tables
 - Warehouse PAC and base quantity model
 - Sales order allocation connection to warehouse picking
+- Transaction consistency checks across related records
 - Logistics shipment model
 - Logistics delivery model
 - Shipment document tracking
@@ -54,7 +55,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 
 ### Current Focus
 
-Warehouse picking and sales order fulfillment model.
+Synthetic data model and data generation.
 
 ## Database Setup
 
@@ -137,6 +138,17 @@ After the required inventory and sales order tables are available, the sales tab
 36. `36_sales_sales_order_items.sql`
 37. `37_sales_sales_order_allocations.sql`
 
+### Final Schema Links
+
+After the sales allocation table is created:
+
+38. `38_sales_allocations_to_picking.sql`
+39. `39_transaction_integrity.sql`
+
+Schema file 38 adds the sales order allocation reference to warehouse picking items.
+
+Schema file 39 adds consistency rules between related transaction records.
+
 ### Migrations
 
 The migration files show changes made during the database design process.
@@ -154,6 +166,11 @@ The migration files are:
 7. `database/migrations/07_refine_inventory_audit_sloc.sql`
 8. `database/migrations/08_refine_transaction_quantity_model.sql`
 9. `database/migrations/09_connect_sales_allocations_to_picking.sql`
+10. `database/migrations/10_refine_transaction_integrity.sql`
+
+Migration 09 connects sales order allocations to warehouse picking.
+
+Migration 10 adds consistency rules between related transaction records.
 
 ## Project Structure
 
