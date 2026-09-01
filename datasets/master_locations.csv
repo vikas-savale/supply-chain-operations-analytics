@@ -1,0 +1,501 @@
+location_id,warehouse_id,location_code,location_name,zone_code,aisle_no,rack_no,bin_no,location_type,storage_mode,max_capacity_ltr,location_status,created_date,created_by,updated_date,updated_by
+1,1,REC-01,Receiving Bay 01,REC,,,,receiving,covered,8512.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,1,REC-02,Receiving Bay 02,REC,,,,receiving,covered,8512.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,1,REC-03,Receiving Bay 03,REC,,,,receiving,covered,8512.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,1,REC-04,Receiving Bay 04,REC,,,,receiving,covered,8512.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,1,REC-05,Receiving Bay 05,REC,,,,receiving,covered,8512.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,1,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+7,1,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+8,1,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+9,1,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+10,1,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+11,1,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+12,1,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+13,1,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+14,1,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+15,1,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+16,1,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+17,1,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+18,1,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+19,1,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+20,1,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+21,1,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+22,1,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+23,1,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+24,1,Z01-A04-R04-B01,Storage Z01 A04 R04 B01,Z01,A04,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+25,1,Z01-A04-R05-B01,Storage Z01 A04 R05 B01,Z01,A04,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+26,1,Z02-A01-R01-B01,Storage Z02 A01 R01 B01,Z02,A01,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+27,1,Z02-A01-R02-B01,Storage Z02 A01 R02 B01,Z02,A01,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+28,1,Z02-A01-R03-B01,Storage Z02 A01 R03 B01,Z02,A01,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+29,1,Z02-A01-R04-B01,Storage Z02 A01 R04 B01,Z02,A01,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+30,1,Z02-A01-R05-B01,Storage Z02 A01 R05 B01,Z02,A01,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+31,1,Z02-A02-R01-B01,Storage Z02 A02 R01 B01,Z02,A02,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+32,1,Z02-A02-R02-B01,Storage Z02 A02 R02 B01,Z02,A02,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+33,1,Z02-A02-R03-B01,Storage Z02 A02 R03 B01,Z02,A02,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+34,1,Z02-A02-R04-B01,Storage Z02 A02 R04 B01,Z02,A02,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+35,1,Z02-A02-R05-B01,Storage Z02 A02 R05 B01,Z02,A02,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+36,1,Z02-A03-R01-B01,Storage Z02 A03 R01 B01,Z02,A03,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+37,1,Z02-A03-R02-B01,Storage Z02 A03 R02 B01,Z02,A03,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+38,1,Z02-A03-R03-B01,Storage Z02 A03 R03 B01,Z02,A03,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+39,1,Z02-A03-R04-B01,Storage Z02 A03 R04 B01,Z02,A03,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+40,1,Z02-A03-R05-B01,Storage Z02 A03 R05 B01,Z02,A03,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+41,1,Z02-A04-R01-B01,Storage Z02 A04 R01 B01,Z02,A04,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+42,1,Z02-A04-R02-B01,Storage Z02 A04 R02 B01,Z02,A04,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+43,1,Z02-A04-R03-B01,Storage Z02 A04 R03 B01,Z02,A04,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+44,1,Z02-A04-R04-B01,Storage Z02 A04 R04 B01,Z02,A04,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+45,1,Z02-A04-R05-B01,Storage Z02 A04 R05 B01,Z02,A04,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+46,1,Z03-A01-R01-B01,Storage Z03 A01 R01 B01,Z03,A01,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+47,1,Z03-A01-R02-B01,Storage Z03 A01 R02 B01,Z03,A01,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+48,1,Z03-A01-R03-B01,Storage Z03 A01 R03 B01,Z03,A01,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+49,1,Z03-A01-R04-B01,Storage Z03 A01 R04 B01,Z03,A01,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+50,1,Z03-A01-R05-B01,Storage Z03 A01 R05 B01,Z03,A01,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+51,1,Z03-A02-R01-B01,Storage Z03 A02 R01 B01,Z03,A02,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+52,1,Z03-A02-R02-B01,Storage Z03 A02 R02 B01,Z03,A02,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+53,1,Z03-A02-R03-B01,Storage Z03 A02 R03 B01,Z03,A02,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+54,1,Z03-A02-R04-B01,Storage Z03 A02 R04 B01,Z03,A02,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+55,1,Z03-A02-R05-B01,Storage Z03 A02 R05 B01,Z03,A02,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+56,1,Z03-A03-R01-B01,Storage Z03 A03 R01 B01,Z03,A03,R01,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+57,1,Z03-A03-R02-B01,Storage Z03 A03 R02 B01,Z03,A03,R02,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+58,1,Z03-A03-R03-B01,Storage Z03 A03 R03 B01,Z03,A03,R03,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+59,1,Z03-A03-R04-B01,Storage Z03 A03 R04 B01,Z03,A03,R04,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+60,1,Z03-A03-R05-B01,Storage Z03 A03 R05 B01,Z03,A03,R05,B01,storage,mixed,4836.36,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+61,1,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+62,1,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+63,1,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+64,1,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+65,1,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+66,1,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+67,1,P01-A02-R02-B01,Picking P01 A02 R02 B01,P01,A02,R02,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+68,1,P01-A02-R03-B01,Picking P01 A02 R03 B01,P01,A02,R03,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+69,1,P01-A02-R04-B01,Picking P01 A02 R04 B01,P01,A02,R04,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+70,1,P01-A02-R05-B01,Picking P01 A02 R05 B01,P01,A02,R05,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+71,1,P02-A01-R01-B01,Picking P02 A01 R01 B01,P02,A01,R01,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+72,1,P02-A01-R02-B01,Picking P02 A01 R02 B01,P02,A01,R02,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+73,1,P02-A01-R03-B01,Picking P02 A01 R03 B01,P02,A01,R03,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+74,1,P02-A01-R04-B01,Picking P02 A01 R04 B01,P02,A01,R04,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+75,1,P02-A01-R05-B01,Picking P02 A01 R05 B01,P02,A01,R05,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+76,1,P02-A02-R01-B01,Picking P02 A02 R01 B01,P02,A02,R01,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+77,1,P02-A02-R02-B01,Picking P02 A02 R02 B01,P02,A02,R02,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+78,1,P02-A02-R03-B01,Picking P02 A02 R03 B01,P02,A02,R03,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+79,1,P02-A02-R04-B01,Picking P02 A02 R04 B01,P02,A02,R04,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+80,1,P02-A02-R05-B01,Picking P02 A02 R05 B01,P02,A02,R05,B01,picking,mixed,4788.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+81,1,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,5320.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+82,1,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,5320.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+83,1,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,5320.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+84,1,DSP-04,Dispatch Staging 04,DSP,,,,dispatch,covered,5320.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+85,1,DSP-05,Dispatch Staging 05,DSP,,,,dispatch,covered,5320.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+86,1,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+87,1,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+88,1,QTN-03,Quarantine Area 03,QTN,,,,quarantine,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+89,1,QTN-04,Quarantine Area 04,QTN,,,,quarantine,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+90,1,RET-01,Returns Area 01,RET,,,,returns,covered,6206.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+91,1,RET-02,Returns Area 02,RET,,,,returns,covered,6206.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+92,1,RET-03,Returns Area 03,RET,,,,returns,covered,6206.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+93,1,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,6206.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+94,1,DMG-02,Damage Hold Area 02,DMG,,,,damage,covered,6206.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+95,1,DMG-03,Damage Hold Area 03,DMG,,,,damage,covered,6206.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+96,1,STG-01,Staging Area 01,STG,,,,staging,covered,7448.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+97,1,STG-02,Staging Area 02,STG,,,,staging,covered,7448.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+98,1,STG-03,Staging Area 03,STG,,,,staging,covered,7448.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+99,1,STG-04,Staging Area 04,STG,,,,staging,covered,7448.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+100,1,STG-05,Staging Area 05,STG,,,,staging,covered,7448.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+101,2,REC-01,Receiving Bay 01,REC,,,,receiving,covered,7410.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+102,2,REC-02,Receiving Bay 02,REC,,,,receiving,covered,7410.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+103,2,REC-03,Receiving Bay 03,REC,,,,receiving,covered,7410.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+104,2,REC-04,Receiving Bay 04,REC,,,,receiving,covered,7410.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+105,2,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+106,2,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+107,2,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+108,2,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+109,2,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+110,2,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+111,2,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+112,2,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+113,2,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+114,2,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+115,2,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+116,2,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+117,2,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+118,2,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+119,2,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+120,2,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+121,2,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+122,2,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+123,2,Z01-A04-R04-B01,Storage Z01 A04 R04 B01,Z01,A04,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+124,2,Z01-A04-R05-B01,Storage Z01 A04 R05 B01,Z01,A04,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+125,2,Z02-A01-R01-B01,Storage Z02 A01 R01 B01,Z02,A01,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+126,2,Z02-A01-R02-B01,Storage Z02 A01 R02 B01,Z02,A01,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+127,2,Z02-A01-R03-B01,Storage Z02 A01 R03 B01,Z02,A01,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+128,2,Z02-A01-R04-B01,Storage Z02 A01 R04 B01,Z02,A01,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+129,2,Z02-A01-R05-B01,Storage Z02 A01 R05 B01,Z02,A01,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+130,2,Z02-A02-R01-B01,Storage Z02 A02 R01 B01,Z02,A02,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+131,2,Z02-A02-R02-B01,Storage Z02 A02 R02 B01,Z02,A02,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+132,2,Z02-A02-R03-B01,Storage Z02 A02 R03 B01,Z02,A02,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+133,2,Z02-A02-R04-B01,Storage Z02 A02 R04 B01,Z02,A02,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+134,2,Z02-A02-R05-B01,Storage Z02 A02 R05 B01,Z02,A02,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+135,2,Z02-A03-R01-B01,Storage Z02 A03 R01 B01,Z02,A03,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+136,2,Z02-A03-R02-B01,Storage Z02 A03 R02 B01,Z02,A03,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+137,2,Z02-A03-R03-B01,Storage Z02 A03 R03 B01,Z02,A03,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+138,2,Z02-A03-R04-B01,Storage Z02 A03 R04 B01,Z02,A03,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+139,2,Z02-A03-R05-B01,Storage Z02 A03 R05 B01,Z02,A03,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+140,2,Z02-A04-R01-B01,Storage Z02 A04 R01 B01,Z02,A04,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+141,2,Z02-A04-R02-B01,Storage Z02 A04 R02 B01,Z02,A04,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+142,2,Z02-A04-R03-B01,Storage Z02 A04 R03 B01,Z02,A04,R03,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+143,2,Z02-A04-R04-B01,Storage Z02 A04 R04 B01,Z02,A04,R04,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+144,2,Z02-A04-R05-B01,Storage Z02 A04 R05 B01,Z02,A04,R05,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+145,2,Z03-A01-R01-B01,Storage Z03 A01 R01 B01,Z03,A01,R01,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+146,2,Z03-A01-R02-B01,Storage Z03 A01 R02 B01,Z03,A01,R02,B01,storage,covered,4410.71,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+147,2,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+148,2,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+149,2,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+150,2,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+151,2,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+152,2,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+153,2,P01-A02-R02-B01,Picking P01 A02 R02 B01,P01,A02,R02,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+154,2,P01-A02-R03-B01,Picking P01 A02 R03 B01,P01,A02,R03,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+155,2,P01-A02-R04-B01,Picking P01 A02 R04 B01,P01,A02,R04,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+156,2,P01-A02-R05-B01,Picking P01 A02 R05 B01,P01,A02,R05,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+157,2,P02-A01-R01-B01,Picking P02 A01 R01 B01,P02,A01,R01,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+158,2,P02-A01-R02-B01,Picking P02 A01 R02 B01,P02,A01,R02,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+159,2,P02-A01-R03-B01,Picking P02 A01 R03 B01,P02,A01,R03,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+160,2,P02-A01-R04-B01,Picking P02 A01 R04 B01,P02,A01,R04,B01,picking,covered,4763.57,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+161,2,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,4631.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+162,2,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,4631.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+163,2,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,4631.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+164,2,DSP-04,Dispatch Staging 04,DSP,,,,dispatch,covered,4631.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+165,2,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,6175.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+166,2,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,6175.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+167,2,QTN-03,Quarantine Area 03,QTN,,,,quarantine,covered,6175.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+168,2,RET-01,Returns Area 01,RET,,,,returns,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+169,2,RET-02,Returns Area 02,RET,,,,returns,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+170,2,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+171,2,DMG-02,Damage Hold Area 02,DMG,,,,damage,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+172,2,STG-01,Staging Area 01,STG,,,,staging,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+173,2,STG-02,Staging Area 02,STG,,,,staging,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+174,2,STG-03,Staging Area 03,STG,,,,staging,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+175,2,STG-04,Staging Area 04,STG,,,,staging,covered,6483.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+176,3,REC-01,Receiving Bay 01,REC,,,,receiving,covered,6840.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+177,3,REC-02,Receiving Bay 02,REC,,,,receiving,covered,6840.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+178,3,REC-03,Receiving Bay 03,REC,,,,receiving,covered,6840.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+179,3,REC-04,Receiving Bay 04,REC,,,,receiving,covered,6840.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+180,3,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+181,3,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+182,3,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+183,3,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+184,3,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+185,3,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+186,3,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+187,3,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+188,3,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+189,3,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+190,3,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+191,3,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+192,3,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+193,3,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+194,3,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+195,3,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+196,3,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+197,3,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+198,3,Z01-A04-R04-B01,Storage Z01 A04 R04 B01,Z01,A04,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+199,3,Z01-A04-R05-B01,Storage Z01 A04 R05 B01,Z01,A04,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+200,3,Z02-A01-R01-B01,Storage Z02 A01 R01 B01,Z02,A01,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+201,3,Z02-A01-R02-B01,Storage Z02 A01 R02 B01,Z02,A01,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+202,3,Z02-A01-R03-B01,Storage Z02 A01 R03 B01,Z02,A01,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+203,3,Z02-A01-R04-B01,Storage Z02 A01 R04 B01,Z02,A01,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+204,3,Z02-A01-R05-B01,Storage Z02 A01 R05 B01,Z02,A01,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+205,3,Z02-A02-R01-B01,Storage Z02 A02 R01 B01,Z02,A02,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+206,3,Z02-A02-R02-B01,Storage Z02 A02 R02 B01,Z02,A02,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+207,3,Z02-A02-R03-B01,Storage Z02 A02 R03 B01,Z02,A02,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+208,3,Z02-A02-R04-B01,Storage Z02 A02 R04 B01,Z02,A02,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+209,3,Z02-A02-R05-B01,Storage Z02 A02 R05 B01,Z02,A02,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+210,3,Z02-A03-R01-B01,Storage Z02 A03 R01 B01,Z02,A03,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+211,3,Z02-A03-R02-B01,Storage Z02 A03 R02 B01,Z02,A03,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+212,3,Z02-A03-R03-B01,Storage Z02 A03 R03 B01,Z02,A03,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+213,3,Z02-A03-R04-B01,Storage Z02 A03 R04 B01,Z02,A03,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+214,3,Z02-A03-R05-B01,Storage Z02 A03 R05 B01,Z02,A03,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+215,3,Z02-A04-R01-B01,Storage Z02 A04 R01 B01,Z02,A04,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+216,3,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+217,3,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+218,3,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+219,3,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+220,3,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+221,3,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+222,3,P01-A02-R02-B01,Picking P01 A02 R02 B01,P01,A02,R02,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+223,3,P01-A02-R03-B01,Picking P01 A02 R03 B01,P01,A02,R03,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+224,3,P01-A02-R04-B01,Picking P01 A02 R04 B01,P01,A02,R04,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+225,3,P01-A02-R05-B01,Picking P01 A02 R05 B01,P01,A02,R05,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+226,3,P02-A01-R01-B01,Picking P02 A01 R01 B01,P02,A01,R01,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+227,3,P02-A01-R02-B01,Picking P02 A01 R02 B01,P02,A01,R02,B01,picking,covered,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+228,3,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,4275.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+229,3,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,4275.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+230,3,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,4275.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+231,3,DSP-04,Dispatch Staging 04,DSP,,,,dispatch,covered,4275.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+232,3,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,8550.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+233,3,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,8550.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+234,3,RET-01,Returns Area 01,RET,,,,returns,covered,5985.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+235,3,RET-02,Returns Area 02,RET,,,,returns,covered,5985.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+236,3,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,5985.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+237,3,DMG-02,Damage Hold Area 02,DMG,,,,damage,covered,5985.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+238,3,STG-01,Staging Area 01,STG,,,,staging,covered,7980.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+239,3,STG-02,Staging Area 02,STG,,,,staging,covered,7980.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+240,3,STG-03,Staging Area 03,STG,,,,staging,covered,7980.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+241,4,REC-01,Receiving Bay 01,REC,,,,receiving,covered,7600.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+242,4,REC-02,Receiving Bay 02,REC,,,,receiving,covered,7600.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+243,4,REC-03,Receiving Bay 03,REC,,,,receiving,covered,7600.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+244,4,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+245,4,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+246,4,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+247,4,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+248,4,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+249,4,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+250,4,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+251,4,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+252,4,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+253,4,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+254,4,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+255,4,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+256,4,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+257,4,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+258,4,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+259,4,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+260,4,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+261,4,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+262,4,Z01-A04-R04-B01,Storage Z01 A04 R04 B01,Z01,A04,R04,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+263,4,Z01-A04-R05-B01,Storage Z01 A04 R05 B01,Z01,A04,R05,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+264,4,Z02-A01-R01-B01,Storage Z02 A01 R01 B01,Z02,A01,R01,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+265,4,Z02-A01-R02-B01,Storage Z02 A01 R02 B01,Z02,A01,R02,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+266,4,Z02-A01-R03-B01,Storage Z02 A01 R03 B01,Z02,A01,R03,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+267,4,Z02-A01-R04-B01,Storage Z02 A01 R04 B01,Z02,A01,R04,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+268,4,Z02-A01-R05-B01,Storage Z02 A01 R05 B01,Z02,A01,R05,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+269,4,Z02-A02-R01-B01,Storage Z02 A02 R01 B01,Z02,A02,R01,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+270,4,Z02-A02-R02-B01,Storage Z02 A02 R02 B01,Z02,A02,R02,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+271,4,Z02-A02-R03-B01,Storage Z02 A02 R03 B01,Z02,A02,R03,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+272,4,Z02-A02-R04-B01,Storage Z02 A02 R04 B01,Z02,A02,R04,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+273,4,Z02-A02-R05-B01,Storage Z02 A02 R05 B01,Z02,A02,R05,B01,storage,mixed,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+274,4,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+275,4,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+276,4,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+277,4,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+278,4,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+279,4,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+280,4,P01-A02-R02-B01,Picking P01 A02 R02 B01,P01,A02,R02,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+281,4,P01-A02-R03-B01,Picking P01 A02 R03 B01,P01,A02,R03,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+282,4,P01-A02-R04-B01,Picking P01 A02 R04 B01,P01,A02,R04,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+283,4,P01-A02-R05-B01,Picking P01 A02 R05 B01,P01,A02,R05,B01,picking,mixed,5130.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+284,4,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+285,4,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+286,4,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+287,4,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,7125.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+288,4,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,7125.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+289,4,RET-01,Returns Area 01,RET,,,,returns,covered,4987.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+290,4,RET-02,Returns Area 02,RET,,,,returns,covered,4987.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+291,4,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,4987.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+292,4,DMG-02,Damage Hold Area 02,DMG,,,,damage,covered,4987.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+293,4,STG-01,Staging Area 01,STG,,,,staging,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+294,4,STG-02,Staging Area 02,STG,,,,staging,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+295,4,STG-03,Staging Area 03,STG,,,,staging,covered,6650.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+296,5,REC-01,Receiving Bay 01,REC,,,,receiving,covered,7853.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+297,5,REC-02,Receiving Bay 02,REC,,,,receiving,covered,7853.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+298,5,REC-03,Receiving Bay 03,REC,,,,receiving,covered,7853.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+299,5,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+300,5,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+301,5,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+302,5,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+303,5,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+304,5,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+305,5,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+306,5,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+307,5,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+308,5,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+309,5,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+310,5,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+311,5,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+312,5,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+313,5,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+314,5,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+315,5,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+316,5,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+317,5,Z01-A04-R04-B01,Storage Z01 A04 R04 B01,Z01,A04,R04,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+318,5,Z01-A04-R05-B01,Storage Z01 A04 R05 B01,Z01,A04,R05,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+319,5,Z02-A01-R01-B01,Storage Z02 A01 R01 B01,Z02,A01,R01,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+320,5,Z02-A01-R02-B01,Storage Z02 A01 R02 B01,Z02,A01,R02,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+321,5,Z02-A01-R03-B01,Storage Z02 A01 R03 B01,Z02,A01,R03,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+322,5,Z02-A01-R04-B01,Storage Z02 A01 R04 B01,Z02,A01,R04,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+323,5,Z02-A01-R05-B01,Storage Z02 A01 R05 B01,Z02,A01,R05,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+324,5,Z02-A02-R01-B01,Storage Z02 A02 R01 B01,Z02,A02,R01,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+325,5,Z02-A02-R02-B01,Storage Z02 A02 R02 B01,Z02,A02,R02,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+326,5,Z02-A02-R03-B01,Storage Z02 A02 R03 B01,Z02,A02,R03,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+327,5,Z02-A02-R04-B01,Storage Z02 A02 R04 B01,Z02,A02,R04,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+328,5,Z02-A02-R05-B01,Storage Z02 A02 R05 B01,Z02,A02,R05,B01,storage,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+329,5,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+330,5,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+331,5,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+332,5,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+333,5,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+334,5,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+335,5,P01-A02-R02-B01,Picking P01 A02 R02 B01,P01,A02,R02,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+336,5,P01-A02-R03-B01,Picking P01 A02 R03 B01,P01,A02,R03,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+337,5,P01-A02-R04-B01,Picking P01 A02 R04 B01,P01,A02,R04,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+338,5,P01-A02-R05-B01,Picking P01 A02 R05 B01,P01,A02,R05,B01,picking,covered,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+339,5,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+340,5,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+341,5,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+342,5,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,7362.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+343,5,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,7362.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+344,5,RET-01,Returns Area 01,RET,,,,returns,covered,5153.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+345,5,RET-02,Returns Area 02,RET,,,,returns,covered,5153.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+346,5,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,5153.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+347,5,DMG-02,Damage Hold Area 02,DMG,,,,damage,covered,5153.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+348,5,STG-01,Staging Area 01,STG,,,,staging,covered,6871.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+349,5,STG-02,Staging Area 02,STG,,,,staging,covered,6871.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+350,5,STG-03,Staging Area 03,STG,,,,staging,covered,6871.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+351,6,REC-01,Receiving Bay 01,REC,,,,receiving,covered,6966.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+352,6,REC-02,Receiving Bay 02,REC,,,,receiving,covered,6966.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+353,6,REC-03,Receiving Bay 03,REC,,,,receiving,covered,6966.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+354,6,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+355,6,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+356,6,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+357,6,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+358,6,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+359,6,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+360,6,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+361,6,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+362,6,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+363,6,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+364,6,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+365,6,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+366,6,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+367,6,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+368,6,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+369,6,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+370,6,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+371,6,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+372,6,Z01-A04-R04-B01,Storage Z01 A04 R04 B01,Z01,A04,R04,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+373,6,Z01-A04-R05-B01,Storage Z01 A04 R05 B01,Z01,A04,R05,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+374,6,Z02-A01-R01-B01,Storage Z02 A01 R01 B01,Z02,A01,R01,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+375,6,Z02-A01-R02-B01,Storage Z02 A01 R02 B01,Z02,A01,R02,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+376,6,Z02-A01-R03-B01,Storage Z02 A01 R03 B01,Z02,A01,R03,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+377,6,Z02-A01-R04-B01,Storage Z02 A01 R04 B01,Z02,A01,R04,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+378,6,Z02-A01-R05-B01,Storage Z02 A01 R05 B01,Z02,A01,R05,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+379,6,Z02-A02-R01-B01,Storage Z02 A02 R01 B01,Z02,A02,R01,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+380,6,Z02-A02-R02-B01,Storage Z02 A02 R02 B01,Z02,A02,R02,B01,storage,mixed,4837.96,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+381,6,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+382,6,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+383,6,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+384,6,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+385,6,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+386,6,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+387,6,P01-A02-R02-B01,Picking P01 A02 R02 B01,P01,A02,R02,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+388,6,P01-A02-R03-B01,Picking P01 A02 R03 B01,P01,A02,R03,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+389,6,P01-A02-R04-B01,Picking P01 A02 R04 B01,P01,A02,R04,B01,picking,mixed,5225.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+390,6,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,4354.17,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+391,6,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,4354.17,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+392,6,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,4354.17,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+393,6,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,6531.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+394,6,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,6531.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+395,6,RET-01,Returns Area 01,RET,,,,returns,covered,4571.88,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+396,6,RET-02,Returns Area 02,RET,,,,returns,covered,4571.88,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+397,6,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,4571.88,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+398,6,DMG-02,Damage Hold Area 02,DMG,,,,damage,covered,4571.88,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+399,6,STG-01,Staging Area 01,STG,,,,staging,covered,9143.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+400,6,STG-02,Staging Area 02,STG,,,,staging,covered,9143.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+401,7,REC-01,Receiving Bay 01,REC,,,,receiving,covered,7220.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+402,7,REC-02,Receiving Bay 02,REC,,,,receiving,covered,7220.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+403,7,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+404,7,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+405,7,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+406,7,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+407,7,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+408,7,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+409,7,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+410,7,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+411,7,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+412,7,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+413,7,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+414,7,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+415,7,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+416,7,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+417,7,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+418,7,Z01-A04-R01-B01,Storage Z01 A04 R01 B01,Z01,A04,R01,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+419,7,Z01-A04-R02-B01,Storage Z01 A04 R02 B01,Z01,A04,R02,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+420,7,Z01-A04-R03-B01,Storage Z01 A04 R03 B01,Z01,A04,R03,B01,storage,mixed,5013.89,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+421,7,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,mixed,5415.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+422,7,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,mixed,5415.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+423,7,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,mixed,5415.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+424,7,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,mixed,5415.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+425,7,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,mixed,5415.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+426,7,P01-A02-R01-B01,Picking P01 A02 R01 B01,P01,A02,R01,B01,picking,mixed,5415.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+427,7,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,4512.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+428,7,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,4512.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+429,7,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,4512.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+430,7,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,4512.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+431,7,RET-01,Returns Area 01,RET,,,,returns,covered,6317.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+432,7,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,6317.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+433,7,STG-01,Staging Area 01,STG,,,,staging,covered,4211.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+434,7,STG-02,Staging Area 02,STG,,,,staging,covered,4211.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+435,7,STG-03,Staging Area 03,STG,,,,staging,covered,4211.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+436,8,REC-01,Receiving Bay 01,REC,,,,receiving,covered,5890.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+437,8,REC-02,Receiving Bay 02,REC,,,,receiving,covered,5890.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+438,8,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+439,8,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+440,8,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+441,8,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+442,8,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+443,8,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+444,8,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+445,8,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+446,8,Z01-A02-R04-B01,Storage Z01 A02 R04 B01,Z01,A02,R04,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+447,8,Z01-A02-R05-B01,Storage Z01 A02 R05 B01,Z01,A02,R05,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+448,8,Z01-A03-R01-B01,Storage Z01 A03 R01 B01,Z01,A03,R01,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+449,8,Z01-A03-R02-B01,Storage Z01 A03 R02 B01,Z01,A03,R02,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+450,8,Z01-A03-R03-B01,Storage Z01 A03 R03 B01,Z01,A03,R03,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+451,8,Z01-A03-R04-B01,Storage Z01 A03 R04 B01,Z01,A03,R04,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+452,8,Z01-A03-R05-B01,Storage Z01 A03 R05 B01,Z01,A03,R05,B01,storage,mixed,4908.33,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+453,8,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,mixed,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+454,8,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,mixed,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+455,8,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,mixed,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+456,8,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,mixed,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+457,8,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,mixed,5301.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+458,8,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,3681.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+459,8,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,3681.25,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+460,8,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,7362.5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+461,8,RET-01,Returns Area 01,RET,,,,returns,covered,5153.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+462,8,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,5153.75,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+463,8,STG-01,Staging Area 01,STG,,,,staging,covered,3435.83,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+464,8,STG-02,Staging Area 02,STG,,,,staging,covered,3435.83,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+465,8,STG-03,Staging Area 03,STG,,,,staging,covered,3435.83,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+466,9,REC-01,Receiving Bay 01,REC,,,,receiving,covered,2026.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+467,9,REC-02,Receiving Bay 02,REC,,,,receiving,covered,2026.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+468,9,REC-03,Receiving Bay 03,REC,,,,receiving,covered,2026.67,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+469,9,Z01-A01-R01-B01,Storage Z01 A01 R01 B01,Z01,A01,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+470,9,Z01-A01-R02-B01,Storage Z01 A01 R02 B01,Z01,A01,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+471,9,Z01-A01-R03-B01,Storage Z01 A01 R03 B01,Z01,A01,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+472,9,Z01-A01-R04-B01,Storage Z01 A01 R04 B01,Z01,A01,R04,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+473,9,Z01-A01-R05-B01,Storage Z01 A01 R05 B01,Z01,A01,R05,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+474,9,Z01-A02-R01-B01,Storage Z01 A02 R01 B01,Z01,A02,R01,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+475,9,Z01-A02-R02-B01,Storage Z01 A02 R02 B01,Z01,A02,R02,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+476,9,Z01-A02-R03-B01,Storage Z01 A02 R03 B01,Z01,A02,R03,B01,storage,covered,4750.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+477,9,P01-A01-R01-B01,Picking P01 A01 R01 B01,P01,A01,R01,B01,picking,covered,2736.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+478,9,P01-A01-R02-B01,Picking P01 A01 R02 B01,P01,A01,R02,B01,picking,covered,2736.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+479,9,P01-A01-R03-B01,Picking P01 A01 R03 B01,P01,A01,R03,B01,picking,covered,2736.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+480,9,P01-A01-R04-B01,Picking P01 A01 R04 B01,P01,A01,R04,B01,picking,covered,2736.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+481,9,P01-A01-R05-B01,Picking P01 A01 R05 B01,P01,A01,R05,B01,picking,covered,2736.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+482,9,DSP-01,Dispatch Staging 01,DSP,,,,dispatch,covered,760.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+483,9,DSP-02,Dispatch Staging 02,DSP,,,,dispatch,covered,760.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+484,9,DSP-03,Dispatch Staging 03,DSP,,,,dispatch,covered,760.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+485,9,DSP-04,Dispatch Staging 04,DSP,,,,dispatch,covered,760.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+486,9,DSP-05,Dispatch Staging 05,DSP,,,,dispatch,covered,760.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+487,9,QTN-01,Quarantine Area 01,QTN,,,,quarantine,covered,1900.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+488,9,QTN-02,Quarantine Area 02,QTN,,,,quarantine,covered,1900.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+489,9,RET-01,Returns Area 01,RET,,,,returns,covered,2660.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+490,9,DMG-01,Damage Hold Area 01,DMG,,,,damage,covered,2660.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+491,9,STG-01,Staging Area 01,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+492,9,STG-02,Staging Area 02,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+493,9,STG-03,Staging Area 03,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+494,9,STG-04,Staging Area 04,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+495,9,STG-05,Staging Area 05,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+496,9,STG-06,Staging Area 06,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+497,9,STG-07,Staging Area 07,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+498,9,STG-08,Staging Area 08,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+499,9,STG-09,Staging Area 09,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+500,9,STG-10,Staging Area 10,STG,,,,staging,covered,532.0,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system

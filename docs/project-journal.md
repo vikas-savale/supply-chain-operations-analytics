@@ -230,13 +230,79 @@ Completed
 - Sales table count verified: 3
 - Sales tables verified before adding data
 
-### Current Focus
+---
 
-Synthetic data model and data generation
+## Milestone 5 — Synthetic Master Data Generation ✅
+
+### Completed
+
+- Python virtual environment configured for the project
+- Synthetic master-data generation framework created
+- UOM master dataset generated
+- Payment term master dataset generated
+- Brand master dataset generated
+- Category master dataset generated
+- Sub-category master dataset generated
+- Warehouse master dataset generated
+- Warehouse location master dataset generated
+- Master-data validation checks added
+- Category and sub-category relationships validated
+- Warehouse and location relationships validated
+- Warehouse location capacity consistency validated
+- Initial master datasets generated as CSV files
+
+### Current Master Dataset Counts
+
+- UOMs: 6
+- Payment Terms: 8
+- Brands: 10
+- Categories: 8
+- Sub-categories: 42
+- Warehouses: 9
+- Warehouse Locations: 500
+
+### Current Dataset Files
+
+- `datasets/master_uoms.csv`
+- `datasets/master_payment_terms.csv`
+- `datasets/master_brands.csv`
+- `datasets/master_categories.csv`
+- `datasets/master_sub_categories.csv`
+- `datasets/master_warehouses.csv`
+- `datasets/master_locations.csv`
+
+### Generator
+
+- `tools/generate_master_data.py`
+
+The generator validates the generated master data before writing the CSV files.
 
 ### Next
 
-- Define master seed data
+- Generate supplier master data
+- Generate product-supplier relationships
+- Generate product master data
+- Generate customer master data
+- Generate customer location data
+- Generate employee master data
+- Generate transporter master data
+- Generate vehicle master data
+- Validate the complete master-data network
+- Prepare master datasets for database loading
+
+---
+
+## Current Focus
+
+Synthetic master data generation.
+
+---
+
+## Next
+
+- Complete remaining master datasets
+- Validate master-data relationships
+- Prepare master datasets for database loading
 - Define transaction data generation rules
 - Generate linked procurement, inventory, warehouse, logistics and sales data
 - Validate transaction quantities and business relationships

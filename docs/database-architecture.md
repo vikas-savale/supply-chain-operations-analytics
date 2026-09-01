@@ -42,6 +42,28 @@ The `products` table stores material-level packaging attributes including pack t
 
 ---
 
+## Synthetic Master Data
+
+Initial synthetic master data has been generated for the current master model.
+
+- 6 UOMs
+- 8 payment terms
+- 10 brands
+- 8 categories
+- 42 sub-categories
+- 9 warehouses
+- 500 warehouse locations
+
+The generated data is stored as CSV files under the `datasets/` directory.
+
+The data-generation logic is maintained in:
+
+`tools/generate_master_data.py`
+
+The generator includes validation checks for master-data values and relationships.
+
+---
+
 ## Procurement Schema
 
 The `procurement` schema currently contains 4 transaction tables:
@@ -54,11 +76,8 @@ The `procurement` schema currently contains 4 transaction tables:
 The procurement flow is:
 
 Purchase Order
-
 → Purchase Order Items
-
 → Goods Receipt
-
 → Goods Receipt Items
 
 A purchase order can have multiple goods receipts.
@@ -185,7 +204,7 @@ A delivery is linked to a shipment.
 
 One delivery can contain multiple delivery items.
 
-Delivery items are linked to shipment items from the delivery shipment to keep the transaction flow consistent.
+Delivery items are linked to shipment items from the delivery shipment to keep the delivery flow consistent.
 
 Shipment documents store document references associated with shipments.
 
@@ -212,9 +231,7 @@ The `sales` schema currently contains 3 transaction tables:
 The sales order flow is:
 
 Sales Order
-
 → Sales Order Items
-
 → Stock Allocation
 
 A sales order is linked to a customer and a selected customer ship-to location.

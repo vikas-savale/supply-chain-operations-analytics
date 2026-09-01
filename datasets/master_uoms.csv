@@ -1,0 +1,7 @@
+uom_id,uom_code,uom_name,uom_category,is_active,created_date,created_by,updated_date,updated_by
+1,L,Litre,volume,True,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,ML,Millilitre,volume,True,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,KG,Kilogram,weight,True,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,G,Gram,weight,True,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,EA,Each,quantity,True,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,PAC,Package,quantity,True,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system

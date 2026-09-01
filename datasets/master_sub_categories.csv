@@ -1,0 +1,43 @@
+sub_category_id,category_id,sub_category_code,sub_category_name,description,sub_category_status,created_date,created_by,updated_date,updated_by
+1,1,SUB001,Passenger Car Engine Oils,Engine oils for passenger cars.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,1,SUB002,Heavy-Duty Diesel Engine Oils,Engine oils for heavy-duty diesel applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,1,SUB003,Commercial Vehicle Engine Oils,Engine oils for commercial vehicle applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,1,SUB004,Motorcycle Engine Oils,Engine oils for motorcycle applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,1,SUB005,Natural Gas Engine Oils,Engine oils for natural gas engine applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,2,SUB006,Gear Oils,Lubricants for automotive gear systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+7,2,SUB007,Automatic Transmission Fluids,Fluids for automatic transmission systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+8,2,SUB008,Manual Transmission Fluids,Fluids for manual transmission systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+9,2,SUB009,Differential Oils,Lubricants for vehicle differential systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+10,2,SUB010,Axle & Final Drive Oils,Lubricants for axle and final drive systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+11,3,SUB011,Industrial Gear Oils,Gear oils for industrial equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+12,3,SUB012,Compressor Oils,Lubricants for compressor equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+13,3,SUB013,Turbine Oils,Lubricants for turbine equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+14,3,SUB014,Circulating Oils,Circulating oils for industrial machinery.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+15,3,SUB015,Slideway Oils,Lubricants for machine tool slideways.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+16,3,SUB016,Machine Tool Oils,Lubricants for machine tool applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+17,4,SUB017,Hydraulic Oils,Hydraulic fluids for industrial and mobile equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+18,4,SUB018,Hydraulic Transmission Fluids,Fluids for combined hydraulic and transmission systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+19,4,SUB019,Tractor Hydraulic Fluids,Hydraulic fluids for tractor systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+20,4,SUB020,Construction Equipment Fluids,Fluids for construction equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+21,4,SUB021,Agricultural Equipment Fluids,Fluids for agricultural equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+22,5,SUB022,Multipurpose Greases,General-purpose greases for multiple applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+23,5,SUB023,EP Greases,Extreme-pressure greases for demanding loads.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+24,5,SUB024,High Temperature Greases,Greases designed for high-temperature applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+25,5,SUB025,Lithium Greases,Lithium-based greases for industrial and automotive use.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+26,5,SUB026,Calcium Greases,Calcium-based greases for suitable applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+27,5,SUB027,Special Purpose Greases,Greases for specialised operating conditions.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+28,6,SUB028,Engine Coolants,Coolants for engine cooling systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+29,6,SUB029,Long Life Coolants,Extended-life engine coolant products.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+30,6,SUB030,Ready-to-Use Coolants,Pre-mixed coolants ready for use.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+31,6,SUB031,Antifreeze Concentrates,Concentrated antifreeze products.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+32,6,SUB032,Radiator Fluids,Fluids for radiator and cooling-system maintenance.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+33,7,SUB033,Cutting Fluids,Fluids used in metal cutting operations.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+34,7,SUB034,Metalworking Fluids,Process fluids used in metalworking applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+35,7,SUB035,Heat Transfer Fluids,Fluids used in heat transfer systems.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+36,7,SUB036,Rust Preventive Fluids,Fluids used to protect metal surfaces against corrosion.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+37,7,SUB037,Electrical Insulating Oils,Insulating oils for electrical applications.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+38,8,SUB038,Tractor Engine Oils,Engine oils for tractors.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+39,8,SUB039,Tractor Transmission Oils,Transmission oils for tractors.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+40,8,SUB040,Tractor Differential Oils,Differential oils for tractors.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+41,8,SUB041,Agricultural Machinery Oils,Lubricants for agricultural machinery.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+42,8,SUB042,Off-Highway Engine Oils,Engine oils for off-highway equipment.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system

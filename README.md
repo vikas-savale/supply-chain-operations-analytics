@@ -52,10 +52,24 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 3 sales transaction tables
 - Customer and ship-to order structure
 - Sales order and stock allocation flow
+- Synthetic master-data generation framework
+- Initial synthetic master datasets
+- Master-data validation checks
+- Warehouse and location capacity consistency checks
+
+### Current Master Data
+
+- 6 UOMs
+- 8 payment terms
+- 10 brands
+- 8 categories
+- 42 sub-categories
+- 9 warehouses
+- 500 warehouse locations
 
 ### Current Focus
 
-Synthetic data model and data generation.
+Synthetic master data generation.
 
 ## Database Setup
 
@@ -180,7 +194,6 @@ database/
 ├── schema/
 ├── seed/
 └── setup/
-
 docs/
 datasets/
 images/

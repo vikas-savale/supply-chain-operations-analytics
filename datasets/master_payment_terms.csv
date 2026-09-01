@@ -1,0 +1,9 @@
+payment_term_id,payment_term_code,payment_term_name,payment_term_days,payment_term_description,payment_term_status,created_date,created_by,updated_date,updated_by
+1,PT001,Immediate,0,Payment due immediately.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,PT002,15 Days,15,Payment due within 15 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,PT003,30 Days,30,Payment due within 30 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,PT004,45 Days,45,Payment due within 45 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,PT005,60 Days,60,Payment due within 60 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,PT006,75 Days,75,Payment due within 75 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+7,PT007,90 Days,90,Payment due within 90 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+8,PT008,120 Days,120,Payment due within 120 days.,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system

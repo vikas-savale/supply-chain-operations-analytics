@@ -1,0 +1,11 @@
+brand_id,brand_code,brand_name,brand_owner_company,brand_status,created_date,created_by,updated_date,updated_by
+1,BR001,Northmark,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,BR002,Ironcrest,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,BR003,Redstone,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,BR004,Westmark,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,BR005,Crestfield,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,BR006,Stonebridge,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+7,BR007,Ridgewell,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+8,BR008,Millbrook,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+9,BR009,Highpoint,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+10,BR010,Fieldmark,Northridge Industrial Products,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
