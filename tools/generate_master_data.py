@@ -1,6 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 import csv
+import re
 
 
 # ============================================================
@@ -147,12 +148,12 @@ SUPPLIER_DEFINITIONS = [
     {
         "supplier_id": 1,
         "supplier_code": "SUP001",
-        "supplier_name": "Apex Lubricants Manufacturing",
+        "supplier_name": "Novera Lubricant Manufacturing",
         "supplier_type": "manufacturer",
         "contact_person": "Rohan Mehta",
-        "phone": "9871001001",
-        "email": "rohan.mehta@apexlubricants.example",
-        "gstin": "27AAACA1001A1Z5",
+        "phone": "020-4108-2637",
+        "email": "commercial@noveralu.com",
+        "gstin": "27QRTPL4821M1Z8",
         "state_code": "27",
         "address_line1": "Plot 12, Industrial Estate",
         "address_line2": "Bhosari MIDC",
@@ -167,12 +168,12 @@ SUPPLIER_DEFINITIONS = [
     {
         "supplier_id": 2,
         "supplier_code": "SUP002",
-        "supplier_name": "Bharat Industrial Oils",
+        "supplier_name": "Brightshore Industrial Oils",
         "supplier_type": "manufacturer",
         "contact_person": "Anil Sharma",
-        "phone": "9871001002",
-        "email": "anil.sharma@bharatindustrial.example",
-        "gstin": "24AABCB1002B1Z4",
+        "phone": "079-4682-3154",
+        "email": "commercial@brightshoreoils.in",
+        "gstin": "24NVMRK7316D1Z4",
         "state_code": "24",
         "address_line1": "Survey 44, GIDC Industrial Area",
         "address_line2": "Vatva Phase II",
@@ -190,9 +191,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Crestline Petrochem Supplies",
         "supplier_type": "manufacturer",
         "contact_person": "Neeraj Kapoor",
-        "phone": "9871001003",
-        "email": "neeraj.kapoor@crestlinepetrochem.example",
-        "gstin": "29AABCC1003C1Z3",
+        "phone": "080-4179-2638",
+        "email": "sales@crestlinepetrochem.in",
+        "gstin": "29LHTPS5842C1Z7",
         "state_code": "29",
         "address_line1": "Block 7, Industrial Layout",
         "address_line2": "Peenya",
@@ -210,9 +211,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Delta Automotive Fluids",
         "supplier_type": "manufacturer",
         "contact_person": "Sanjay Patel",
-        "phone": "9871001004",
-        "email": "sanjay.patel@deltafluids.example",
-        "gstin": "27AABCD1004D1Z2",
+        "phone": "020-4631-7284",
+        "email": "sales@deltafluids.in",
+        "gstin": "27XQFRE2168K1Z3",
         "state_code": "27",
         "address_line1": "Unit 18, Industrial Park",
         "address_line2": "Chakan MIDC",
@@ -230,9 +231,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Eastern Gear Lubricants",
         "supplier_type": "manufacturer",
         "contact_person": "Arindam Bose",
-        "phone": "9871001005",
-        "email": "arindam.bose@easterngl.example",
-        "gstin": "19AABCE1005E1Z1",
+        "phone": "033-4018-5263",
+        "email": "sales@easterngl.in",
+        "gstin": "19BKMTA9054R1Z6",
         "state_code": "19",
         "address_line1": "Industrial Plot 31",
         "address_line2": "Dankuni Industrial Zone",
@@ -250,9 +251,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Frontier Hydraulic Oils",
         "supplier_type": "manufacturer",
         "contact_person": "Vivek Joshi",
-        "phone": "9871001006",
-        "email": "vivek.joshi@frontierhydraulic.example",
-        "gstin": "23AABCF1006F1Z0",
+        "phone": "0731-4917-2635",
+        "email": "commercial@frontierhydraulic.in",
+        "gstin": "23CPNVD3471H1Z9",
         "state_code": "23",
         "address_line1": "Plot 8, Sector C",
         "address_line2": "Pithampur Industrial Area",
@@ -270,9 +271,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Greenfield Grease Works",
         "supplier_type": "manufacturer",
         "contact_person": "Manish Verma",
-        "phone": "9871001007",
-        "email": "manish.verma@greenfieldgrease.example",
-        "gstin": "09AABCG1007G1Z9",
+        "phone": "0120-4186-2735",
+        "email": "sales@greenfieldgrease.in",
+        "gstin": "09RSLKG6285P1Z2",
         "state_code": "09",
         "address_line1": "Plot 22, Industrial Estate",
         "address_line2": "Site IV",
@@ -290,9 +291,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Highland Industrial Fluids",
         "supplier_type": "manufacturer",
         "contact_person": "Kiran Desai",
-        "phone": "9871001008",
-        "email": "kiran.desai@highlandfluids.example",
-        "gstin": "27AABCH1008H1Z8",
+        "phone": "022-4928-3164",
+        "email": "commercial@highlandfluids.in",
+        "gstin": "27TDMQJ4137A1Z5",
         "state_code": "27",
         "address_line1": "Warehouse Road Industrial Plot",
         "address_line2": "Taloja MIDC",
@@ -310,9 +311,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Metro Lubricants Distribution",
         "supplier_type": "authorized_distributor",
         "contact_person": "Rahul Nair",
-        "phone": "9871001009",
-        "email": "rahul.nair@metrolubricants.example",
-        "gstin": "29AABCM1009M1Z7",
+        "phone": "080-4612-7358",
+        "email": "sales@metrolubricants.in",
+        "gstin": "29VKRNB7624S1Z8",
         "state_code": "29",
         "address_line1": "23 Logistics Park Road",
         "address_line2": "Hosur Road",
@@ -327,12 +328,12 @@ SUPPLIER_DEFINITIONS = [
     {
         "supplier_id": 10,
         "supplier_code": "SUP010",
-        "supplier_name": "Prime Auto Parts Supply",
+        "supplier_name": "Pioneer Mobility Components",
         "supplier_type": "authorized_distributor",
         "contact_person": "Akash Malhotra",
-        "phone": "9871001010",
-        "email": "akash.malhotra@primeautosupply.example",
-        "gstin": "07AABCP1010P1Z6",
+        "phone": "011-4286-3157",
+        "email": "commercial@pioneermobility.in",
+        "gstin": "07HPCWL5389N1Z4",
         "state_code": "07",
         "address_line1": "Shed 14, Industrial Park",
         "address_line2": "Patparganj",
@@ -350,9 +351,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Western Auto Fluids Distribution",
         "supplier_type": "authorized_distributor",
         "contact_person": "Harish Shah",
-        "phone": "9871001011",
-        "email": "harish.shah@westernfluids.example",
-        "gstin": "27AABCW1011W1Z5",
+        "phone": "02522-463817",
+        "email": "sales@westernfluids.in",
+        "gstin": "27MZTRF1846Q1Z7",
         "state_code": "27",
         "address_line1": "Unit 6, Industrial Estate",
         "address_line2": "Bhiwandi Logistics Zone",
@@ -370,9 +371,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Southline Lubricant Supply",
         "supplier_type": "authorized_distributor",
         "contact_person": "Joseph Mathew",
-        "phone": "9871001012",
-        "email": "joseph.mathew@southline.example",
-        "gstin": "32AABCS1012S1Z4",
+        "phone": "0484-4162-7351",
+        "email": "commercial@southlinelubes.in",
+        "gstin": "32DPLKS9072E1Z3",
         "state_code": "32",
         "address_line1": "Plot 9, Logistics Industrial Area",
         "address_line2": "Kalamassery",
@@ -390,9 +391,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Central Fleet Lubricants",
         "supplier_type": "authorized_distributor",
         "contact_person": "Pankaj Soni",
-        "phone": "9871001013",
-        "email": "pankaj.soni@centralfleet.example",
-        "gstin": "23AABCC1013C1Z3",
+        "phone": "0731-4628-3159",
+        "email": "sales@centralfleetlubes.in",
+        "gstin": "23GWNHC6158V1Z6",
         "state_code": "23",
         "address_line1": "Depot 4, Industrial Corridor",
         "address_line2": "Rau",
@@ -410,9 +411,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Deccan Equipment Fluids",
         "supplier_type": "authorized_distributor",
         "contact_person": "Swapnil Kulkarni",
-        "phone": "9871001014",
-        "email": "swapnil.kulkarni@deccanequipment.example",
-        "gstin": "27AABCD1014D1Z2",
+        "phone": "0253-4187-2634",
+        "email": "commercial@deccanequipment.in",
+        "gstin": "27RKDPS3429L1Z8",
         "state_code": "27",
         "address_line1": "Shop 12, Industrial Service Road",
         "address_line2": "Satpur MIDC",
@@ -430,9 +431,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Northwest Regional Oils",
         "supplier_type": "regional_distributor",
         "contact_person": "Gaurav Bansal",
-        "phone": "9871001015",
-        "email": "gaurav.bansal@northwestoils.example",
-        "gstin": "08AABCN1015N1Z1",
+        "phone": "0141-4672-3158",
+        "email": "sales@northwestoils.in",
+        "gstin": "08FQMBT7815C1Z4",
         "state_code": "08",
         "address_line1": "Plot 19, Transport Nagar",
         "address_line2": "Sitapura",
@@ -450,9 +451,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Vidarbha Industrial Distribution",
         "supplier_type": "regional_distributor",
         "contact_person": "Suresh Patil",
-        "phone": "9871001016",
-        "email": "suresh.patil@vidarbhadist.example",
-        "gstin": "27AABCV1016V1Z0",
+        "phone": "0712-4816-2734",
+        "email": "commercial@vidarbhadist.in",
+        "gstin": "27JVLNR5036T1Z9",
         "state_code": "27",
         "address_line1": "Plot 5, Logistics Hub",
         "address_line2": "Hingna Road",
@@ -467,12 +468,12 @@ SUPPLIER_DEFINITIONS = [
     {
         "supplier_id": 17,
         "supplier_code": "SUP017",
-        "supplier_name": "Hyderabad Industrial Supply",
+        "supplier_name": "Varnex Industrial Supply",
         "supplier_type": "regional_distributor",
         "contact_person": "Ramesh Rao",
-        "phone": "9871001017",
-        "email": "ramesh.rao@hyderabadindustrial.example",
-        "gstin": "36AABCH1017H1Z9",
+        "phone": "040-4637-2815",
+        "email": "sales@varnexindustrial.in",
+        "gstin": "36KPBRS4261F1Z5",
         "state_code": "36",
         "address_line1": "Shed 8, Industrial Estate",
         "address_line2": "Jeedimetla",
@@ -490,9 +491,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Gujarat Regional Lubricants",
         "supplier_type": "regional_distributor",
         "contact_person": "Dhruv Trivedi",
-        "phone": "9871001018",
-        "email": "dhruv.trivedi@gujaratregional.example",
-        "gstin": "24AABCG1018G1Z8",
+        "phone": "079-4518-3264",
+        "email": "commercial@gujaratregional.in",
+        "gstin": "24WDTMG8593A1Z7",
         "state_code": "24",
         "address_line1": "Warehouse 3, GIDC Estate",
         "address_line2": "Sanand",
@@ -510,9 +511,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Southwest Industrial Traders",
         "supplier_type": "regional_distributor",
         "contact_person": "Nitin Shetty",
-        "phone": "9871001019",
-        "email": "nitin.shetty@southwesttraders.example",
-        "gstin": "29AABCS1019S1Z7",
+        "phone": "080-4926-3175",
+        "email": "sales@southwesttraders.in",
+        "gstin": "29SCQHV2148M1Z3",
         "state_code": "29",
         "address_line1": "Plot 17, Industrial Area",
         "address_line2": "Bommasandra",
@@ -530,9 +531,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Global Base Oil Imports",
         "supplier_type": "importer",
         "contact_person": "Amit Khanna",
-        "phone": "9871001020",
-        "email": "amit.khanna@globalbaseoil.example",
-        "gstin": "27AABCG1020G1Z6",
+        "phone": "022-4691-2853",
+        "email": "commercial@globalbaseoil.in",
+        "gstin": "27BFRNK6705P1Z8",
         "state_code": "27",
         "address_line1": "Tank Farm Road, Plot 2",
         "address_line2": "Nhava Sheva",
@@ -550,9 +551,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "International Additives India",
         "supplier_type": "importer",
         "contact_person": "Rajiv Menon",
-        "phone": "9871001021",
-        "email": "rajiv.menon@intladditives.example",
-        "gstin": "33AABCI1021I1Z5",
+        "phone": "044-4186-3725",
+        "email": "sales@intladditives.in",
+        "gstin": "33NQXLD3917R1Z4",
         "state_code": "33",
         "address_line1": "Warehouse 11, Port Logistics Park",
         "address_line2": "Manali Industrial Area",
@@ -570,9 +571,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Coastal Specialty Chemicals",
         "supplier_type": "importer",
         "contact_person": "Faizal Ahmed",
-        "phone": "9871001022",
-        "email": "faizal.ahmed@coastalspecialty.example",
-        "gstin": "24AABCC1022C1Z4",
+        "phone": "02641-467218",
+        "email": "commercial@coastalspecialty.in",
+        "gstin": "24HVMCP7452K1Z9",
         "state_code": "24",
         "address_line1": "Plot 4, Port Industrial Zone",
         "address_line2": "Dahej",
@@ -590,9 +591,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Bulk Industrial Supply Co",
         "supplier_type": "bulk_supplier",
         "contact_person": "Prakash Yadav",
-        "phone": "9871001023",
-        "email": "prakash.yadav@bulkindustrial.example",
-        "gstin": "09AABCB1023B1Z3",
+        "phone": "0120-4527-3168",
+        "email": "sales@bulkindustrial.in",
+        "gstin": "09ZTRFS2864D1Z6",
         "state_code": "09",
         "address_line1": "Bulk Storage Yard 6",
         "address_line2": "Dadri Industrial Area",
@@ -610,9 +611,9 @@ SUPPLIER_DEFINITIONS = [
         "supplier_name": "Industrial Fluids Bulk Services",
         "supplier_type": "bulk_supplier",
         "contact_person": "Deepak Agarwal",
-        "phone": "9871001024",
-        "email": "deepak.agarwal@industrialbulk.example",
-        "gstin": "07AABBI1024I1Z2",
+        "phone": "011-4726-3185",
+        "email": "commercial@industrialbulk.in",
+        "gstin": "07PLQVB6183H1Z2",
         "state_code": "07",
         "address_line1": "Yard 3, Logistics Cluster",
         "address_line2": "Narela Industrial Area",
@@ -625,7 +626,6 @@ SUPPLIER_DEFINITIONS = [
         "supplier_status": "inactive",
     },
 ]
-
 
 
 # ============================================================
@@ -1586,10 +1586,22 @@ def validate_payment_terms(payment_terms: list[dict]) -> None:
             )
 
 
-
 # ============================================================
 # Supplier validation
 # ============================================================
+
+SUPPLIER_EMAIL_PATTERN = re.compile(
+    r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+)
+
+SUPPLIER_PHONE_PATTERN = re.compile(
+    r"^[0-9()+\-\s]{8,20}$"
+)
+
+SUPPLIER_GSTIN_PATTERN = re.compile(
+    r"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9]Z[A-Z0-9]$"
+)
+
 
 def validate_suppliers(
     suppliers: list[dict],
@@ -1629,20 +1641,12 @@ def validate_suppliers(
                 f"Missing supplier fields: {sorted(missing_fields)}"
             )
 
-    supplier_ids = [
-        row["supplier_id"]
-        for row in suppliers
-    ]
-
-    supplier_codes = [
-        row["supplier_code"]
-        for row in suppliers
-    ]
-
-    supplier_names = [
-        row["supplier_name"]
-        for row in suppliers
-    ]
+    supplier_ids = [row["supplier_id"] for row in suppliers]
+    supplier_codes = [row["supplier_code"] for row in suppliers]
+    supplier_names = [row["supplier_name"] for row in suppliers]
+    supplier_phones = [row["phone"] for row in suppliers]
+    supplier_emails = [row["email"].lower() for row in suppliers]
+    supplier_gstins = [row["gstin"].upper() for row in suppliers]
 
     if len(supplier_ids) != len(set(supplier_ids)):
         raise ValueError("Duplicate supplier_id found.")
@@ -1653,10 +1657,17 @@ def validate_suppliers(
     if len(supplier_names) != len(set(supplier_names)):
         raise ValueError("Duplicate supplier_name found.")
 
+    if len(supplier_phones) != len(set(supplier_phones)):
+        raise ValueError("Duplicate supplier phone found.")
+
+    if len(supplier_emails) != len(set(supplier_emails)):
+        raise ValueError("Duplicate supplier email found.")
+
+    if len(supplier_gstins) != len(set(supplier_gstins)):
+        raise ValueError("Duplicate supplier GSTIN found.")
+
     if supplier_ids != sorted(supplier_ids):
-        raise ValueError(
-            "Supplier IDs are not in ascending order."
-        )
+        raise ValueError("Supplier IDs are not in ascending order.")
 
     allowed_supplier_types = {
         "manufacturer",
@@ -1677,79 +1688,128 @@ def validate_suppliers(
     }
 
     for row in suppliers:
+        code = row["supplier_code"]
+
         if row["supplier_id"] <= 0:
             raise ValueError(
-                f"supplier_id must be positive: "
-                f"{row['supplier_id']}"
+                f"supplier_id must be positive: {row['supplier_id']}"
             )
 
         if not row["supplier_code"].strip():
             raise ValueError(
-                f"Supplier code cannot be empty: "
-                f"{row['supplier_id']}"
+                f"Supplier code cannot be empty: {row['supplier_id']}"
             )
 
         if not row["supplier_name"].strip():
             raise ValueError(
-                f"Supplier name cannot be empty: "
-                f"{row['supplier_id']}"
+                f"Supplier name cannot be empty: {row['supplier_id']}"
             )
 
         if row["supplier_type"] not in allowed_supplier_types:
             raise ValueError(
-                f"Invalid supplier type: "
-                f"{row['supplier_type']}"
+                f"Invalid supplier type: {row['supplier_type']}"
+            )
+
+        if not row["contact_person"].strip():
+            raise ValueError(
+                f"Supplier contact_person cannot be empty: {code}"
+            )
+
+        phone = row["phone"].strip()
+
+        if not SUPPLIER_PHONE_PATTERN.fullmatch(phone):
+            raise ValueError(
+                f"Invalid supplier phone format: {code}"
+            )
+
+        phone_digits = re.sub(
+            r"\D",
+            "",
+            phone,
+        )
+
+        if len(phone_digits) < 8:
+            raise ValueError(
+                f"Supplier phone has too few digits: {code}"
+            )
+
+        if len(set(phone_digits)) == 1:
+            raise ValueError(
+                f"Supplier phone looks like a placeholder: {code}"
+            )
+
+        email = row["email"].strip()
+
+        if not email or not SUPPLIER_EMAIL_PATTERN.fullmatch(email):
+            raise ValueError(
+                f"Invalid supplier email format: {code}"
+            )
+
+        email_domain = email.rsplit(
+            "@",
+            1,
+        )[1].lower()
+
+        blocked_email_tokens = {
+            "example",
+            "test",
+            "demo",
+            "dummy",
+            "sample",
+            "localhost",
+            "invalid",
+        }
+
+        if any(
+            token in email_domain
+            for token in blocked_email_tokens
+        ):
+            raise ValueError(
+                f"Supplier email domain looks like a placeholder: {code}"
+            )
+
+        gstin = row["gstin"].strip().upper()
+
+        if not SUPPLIER_GSTIN_PATTERN.fullmatch(gstin):
+            raise ValueError(
+                f"Invalid supplier GSTIN format: {code}"
+            )
+
+        state_code = row["state_code"].strip()
+
+        if not state_code or gstin[:2] != state_code:
+            raise ValueError(
+                f"Supplier GSTIN/state_code mismatch: {code}"
             )
 
         if row["lead_time_days"] < 0:
             raise ValueError(
-                f"Negative supplier lead time: "
-                f"{row['supplier_code']}"
+                f"Negative supplier lead time: {code}"
             )
 
         if row["payment_term_id"] not in payment_term_ids:
             raise ValueError(
                 f"Invalid payment_term_id "
-                f"{row['payment_term_id']} for "
-                f"{row['supplier_code']}"
+                f"{row['payment_term_id']} for {code}"
             )
 
         if row["supplier_status"] not in allowed_statuses:
             raise ValueError(
-                f"Invalid supplier status: "
-                f"{row['supplier_status']}"
+                f"Invalid supplier status: {row['supplier_status']}"
             )
 
-        if not row["address_line1"].strip():
-            raise ValueError(
-                f"Supplier address_line1 cannot be empty: "
-                f"{row['supplier_code']}"
-            )
-
-        if not row["city"].strip():
-            raise ValueError(
-                f"Supplier city cannot be empty: "
-                f"{row['supplier_code']}"
-            )
-
-        if not row["state"].strip():
-            raise ValueError(
-                f"Supplier state cannot be empty: "
-                f"{row['supplier_code']}"
-            )
-
-        if not row["postal_code"].strip():
-            raise ValueError(
-                f"Supplier postal_code cannot be empty: "
-                f"{row['supplier_code']}"
-            )
-
-        if not row["country"].strip():
-            raise ValueError(
-                f"Supplier country cannot be empty: "
-                f"{row['supplier_code']}"
-            )
-
+        for field in (
+            "address_line1",
+            "address_line2",
+            "city",
+            "state",
+            "postal_code",
+            "country",
+        ):
+            if not row[field].strip():
+                raise ValueError(
+                    f"Supplier {field} cannot be empty: {code}"
+                )
 
 
 # ============================================================
@@ -1778,9 +1838,20 @@ def validate_brands(brands: list[dict]) -> None:
                 f"Missing brand fields: {sorted(missing_fields)}"
             )
 
-    brand_ids = [row["brand_id"] for row in brands]
-    brand_codes = [row["brand_code"] for row in brands]
-    brand_names = [row["brand_name"] for row in brands]
+    brand_ids = [
+        row["brand_id"]
+        for row in brands
+    ]
+
+    brand_codes = [
+        row["brand_code"]
+        for row in brands
+    ]
+
+    brand_names = [
+        row["brand_name"]
+        for row in brands
+    ]
 
     if len(brand_ids) != len(set(brand_ids)):
         raise ValueError("Duplicate brand_id found.")
@@ -1851,9 +1922,20 @@ def validate_categories(categories: list[dict]) -> None:
                 f"Missing category fields: {sorted(missing_fields)}"
             )
 
-    category_ids = [row["category_id"] for row in categories]
-    category_codes = [row["category_code"] for row in categories]
-    category_names = [row["category_name"] for row in categories]
+    category_ids = [
+        row["category_id"]
+        for row in categories
+    ]
+
+    category_codes = [
+        row["category_code"]
+        for row in categories
+    ]
+
+    category_names = [
+        row["category_name"]
+        for row in categories
+    ]
 
     if len(category_ids) != len(set(category_ids)):
         raise ValueError("Duplicate category_id found.")
@@ -2222,9 +2304,11 @@ def generate_locations(
                     location_code = (
                         f"REC-{sequence:02d}"
                     )
+
                     location_name = (
                         f"Receiving Bay {sequence:02d}"
                     )
+
                     zone_code = "REC"
                     aisle_no = ""
                     rack_no = ""
@@ -2234,12 +2318,15 @@ def generate_locations(
                     zone_number = (
                         ((sequence - 1) // 20) + 1
                     )
+
                     aisle_number = (
                         ((sequence - 1) % 20) // 5
                     ) + 1
+
                     rack_number = (
                         ((sequence - 1) % 5) + 1
                     )
+
                     bin_number = 1
 
                     zone_code = f"Z{zone_number:02d}"
@@ -2265,12 +2352,15 @@ def generate_locations(
                     zone_number = (
                         ((sequence - 1) // 10) + 1
                     )
+
                     aisle_number = (
                         ((sequence - 1) % 10) // 5
                     ) + 1
+
                     rack_number = (
                         ((sequence - 1) % 5) + 1
                     )
+
                     bin_number = 1
 
                     zone_code = f"P{zone_number:02d}"
@@ -2296,9 +2386,11 @@ def generate_locations(
                     location_code = (
                         f"DSP-{sequence:02d}"
                     )
+
                     location_name = (
                         f"Dispatch Staging {sequence:02d}"
                     )
+
                     zone_code = "DSP"
                     aisle_no = ""
                     rack_no = ""
@@ -2308,9 +2400,11 @@ def generate_locations(
                     location_code = (
                         f"QTN-{sequence:02d}"
                     )
+
                     location_name = (
                         f"Quarantine Area {sequence:02d}"
                     )
+
                     zone_code = "QTN"
                     aisle_no = ""
                     rack_no = ""
@@ -2320,9 +2414,11 @@ def generate_locations(
                     location_code = (
                         f"RET-{sequence:02d}"
                     )
+
                     location_name = (
                         f"Returns Area {sequence:02d}"
                     )
+
                     zone_code = "RET"
                     aisle_no = ""
                     rack_no = ""
@@ -2332,9 +2428,11 @@ def generate_locations(
                     location_code = (
                         f"DMG-{sequence:02d}"
                     )
+
                     location_name = (
                         f"Damage Hold Area {sequence:02d}"
                     )
+
                     zone_code = "DMG"
                     aisle_no = ""
                     rack_no = ""
@@ -2344,9 +2442,11 @@ def generate_locations(
                     location_code = (
                         f"STG-{sequence:02d}"
                     )
+
                     location_name = (
                         f"Staging Area {sequence:02d}"
                     )
+
                     zone_code = "STG"
                     aisle_no = ""
                     rack_no = ""
@@ -2747,7 +2847,6 @@ def write_payment_terms_csv(
             "updated_by",
         ],
     )
-
 
 
 def write_suppliers_csv(
