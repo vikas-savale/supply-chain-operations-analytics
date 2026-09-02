@@ -51,6 +51,7 @@ Initial synthetic master data has been generated for the current master model.
 - 10 brands
 - 8 categories
 - 42 sub-categories
+- 24 suppliers
 - 9 warehouses
 - 500 warehouse locations
 
@@ -76,8 +77,11 @@ The `procurement` schema currently contains 4 transaction tables:
 The procurement flow is:
 
 Purchase Order
+
 → Purchase Order Items
+
 → Goods Receipt
+
 → Goods Receipt Items
 
 A purchase order can have multiple goods receipts.
@@ -127,12 +131,7 @@ Stock audits store system base quantity and separate physical quantities for goo
 
 Variance is calculated as:
 
-Physical Good
-
-- Physical Damaged
-- Physical Leakage
-
-* System Base Quantity
+Variance = Physical Good + Physical Damaged + Physical Leakage - System Base Quantity
 
 ---
 
@@ -231,7 +230,9 @@ The `sales` schema currently contains 3 transaction tables:
 The sales order flow is:
 
 Sales Order
+
 → Sales Order Items
+
 → Stock Allocation
 
 A sales order is linked to a customer and a selected customer ship-to location.

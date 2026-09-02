@@ -125,14 +125,7 @@ Stock audits store separate physical quantities for:
 
 The variance is calculated from the physical quantities and the system base quantity.
 
-Variance:
-
-Physical Good
-
-- Physical Damaged
-- Physical Leakage
-
-* System Base Quantity
+Variance = Physical Good + Physical Damaged + Physical Leakage - System Base Quantity
 
 ---
 
@@ -268,6 +261,7 @@ Initial synthetic master data has been generated for the current master model.
 - 10 brands
 - 8 categories
 - 42 sub-categories
+- 24 suppliers
 - 9 warehouses
 - 500 warehouse locations
 
@@ -278,12 +272,19 @@ The generated master data follows the relationships and validation rules defined
 ## Inbound Flow
 
 Supplier
+
 → Purchase Order
+
 → Purchase Order Items
+
 → Goods Receipt
+
 → Goods Receipt Items
+
 → Receiving / Staging Inventory
+
 → Putaway
+
 → Storage / Picking Location
 
 ---
@@ -291,13 +292,21 @@ Supplier
 ## Outbound Flow
 
 Customer Order
+
 → Sales Order
+
 → Sales Order Items
+
 → Stock Allocation
+
 → Picking
+
 → Dispatch / Loading
+
 → Shipment
+
 → Delivery
+
 → Shipment Documents
 
 ---
@@ -305,8 +314,13 @@ Customer Order
 ## Shipment Event Timeline
 
 Shipment
+
 → Vehicle Arrived
+
 → Loading Started
+
 → Loading Completed
+
 → Departed
+
 → Delivery Completed

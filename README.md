@@ -54,6 +54,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Sales order and stock allocation flow
 - Synthetic master-data generation framework
 - Initial synthetic master datasets
+- Supplier master dataset
 - Master-data validation checks
 - Warehouse and location capacity consistency checks
 
@@ -64,6 +65,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 10 brands
 - 8 categories
 - 42 sub-categories
+- 24 suppliers
 - 9 warehouses
 - 500 warehouse locations
 
@@ -194,6 +196,7 @@ database/
 ├── schema/
 ├── seed/
 └── setup/
+
 docs/
 datasets/
 images/

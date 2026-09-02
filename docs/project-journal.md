@@ -171,7 +171,6 @@ Completed
 - `warehouse.dispatches` table designed and created
 - `warehouse.dispatch_items` table designed and created
 - Dispatch foreign keys verified
-- Dispatch status rules verified
 - Dispatch quantity check verified
 - Dispatch line uniqueness verified
 - PAC and base quantities verified across warehouse transaction lines
@@ -243,9 +242,11 @@ Completed
 - Brand master dataset generated
 - Category master dataset generated
 - Sub-category master dataset generated
+- Supplier master dataset generated
 - Warehouse master dataset generated
 - Warehouse location master dataset generated
 - Master-data validation checks added
+- Supplier payment-term references validated
 - Category and sub-category relationships validated
 - Warehouse and location relationships validated
 - Warehouse location capacity consistency validated
@@ -258,6 +259,7 @@ Completed
 - Brands: 10
 - Categories: 8
 - Sub-categories: 42
+- Suppliers: 24
 - Warehouses: 9
 - Warehouse Locations: 500
 
@@ -268,6 +270,7 @@ Completed
 - `datasets/master_brands.csv`
 - `datasets/master_categories.csv`
 - `datasets/master_sub_categories.csv`
+- `datasets/master_suppliers.csv`
 - `datasets/master_warehouses.csv`
 - `datasets/master_locations.csv`
 
@@ -279,7 +282,6 @@ The generator validates the generated master data before writing the CSV files.
 
 ### Next
 
-- Generate supplier master data
 - Generate product-supplier relationships
 - Generate product master data
 - Generate customer master data

@@ -140,6 +140,495 @@ PAYMENT_TERM_DEFINITIONS = [
 
 
 # ============================================================
+# Supplier master definitions
+# ============================================================
+
+SUPPLIER_DEFINITIONS = [
+    {
+        "supplier_id": 1,
+        "supplier_code": "SUP001",
+        "supplier_name": "Apex Lubricants Manufacturing",
+        "supplier_type": "manufacturer",
+        "contact_person": "Rohan Mehta",
+        "phone": "9871001001",
+        "email": "rohan.mehta@apexlubricants.example",
+        "gstin": "27AAACA1001A1Z5",
+        "state_code": "27",
+        "address_line1": "Plot 12, Industrial Estate",
+        "address_line2": "Bhosari MIDC",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "postal_code": "411026",
+        "country": "India",
+        "lead_time_days": 7,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 2,
+        "supplier_code": "SUP002",
+        "supplier_name": "Bharat Industrial Oils",
+        "supplier_type": "manufacturer",
+        "contact_person": "Anil Sharma",
+        "phone": "9871001002",
+        "email": "anil.sharma@bharatindustrial.example",
+        "gstin": "24AABCB1002B1Z4",
+        "state_code": "24",
+        "address_line1": "Survey 44, GIDC Industrial Area",
+        "address_line2": "Vatva Phase II",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "postal_code": "382445",
+        "country": "India",
+        "lead_time_days": 10,
+        "payment_term_id": 4,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 3,
+        "supplier_code": "SUP003",
+        "supplier_name": "Crestline Petrochem Supplies",
+        "supplier_type": "manufacturer",
+        "contact_person": "Neeraj Kapoor",
+        "phone": "9871001003",
+        "email": "neeraj.kapoor@crestlinepetrochem.example",
+        "gstin": "29AABCC1003C1Z3",
+        "state_code": "29",
+        "address_line1": "Block 7, Industrial Layout",
+        "address_line2": "Peenya",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postal_code": "560058",
+        "country": "India",
+        "lead_time_days": 9,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 4,
+        "supplier_code": "SUP004",
+        "supplier_name": "Delta Automotive Fluids",
+        "supplier_type": "manufacturer",
+        "contact_person": "Sanjay Patel",
+        "phone": "9871001004",
+        "email": "sanjay.patel@deltafluids.example",
+        "gstin": "27AABCD1004D1Z2",
+        "state_code": "27",
+        "address_line1": "Unit 18, Industrial Park",
+        "address_line2": "Chakan MIDC",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "postal_code": "410501",
+        "country": "India",
+        "lead_time_days": 6,
+        "payment_term_id": 5,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 5,
+        "supplier_code": "SUP005",
+        "supplier_name": "Eastern Gear Lubricants",
+        "supplier_type": "manufacturer",
+        "contact_person": "Arindam Bose",
+        "phone": "9871001005",
+        "email": "arindam.bose@easterngl.example",
+        "gstin": "19AABCE1005E1Z1",
+        "state_code": "19",
+        "address_line1": "Industrial Plot 31",
+        "address_line2": "Dankuni Industrial Zone",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "postal_code": "712311",
+        "country": "India",
+        "lead_time_days": 12,
+        "payment_term_id": 6,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 6,
+        "supplier_code": "SUP006",
+        "supplier_name": "Frontier Hydraulic Oils",
+        "supplier_type": "manufacturer",
+        "contact_person": "Vivek Joshi",
+        "phone": "9871001006",
+        "email": "vivek.joshi@frontierhydraulic.example",
+        "gstin": "23AABCF1006F1Z0",
+        "state_code": "23",
+        "address_line1": "Plot 8, Sector C",
+        "address_line2": "Pithampur Industrial Area",
+        "city": "Indore",
+        "state": "Madhya Pradesh",
+        "postal_code": "454775",
+        "country": "India",
+        "lead_time_days": 8,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 7,
+        "supplier_code": "SUP007",
+        "supplier_name": "Greenfield Grease Works",
+        "supplier_type": "manufacturer",
+        "contact_person": "Manish Verma",
+        "phone": "9871001007",
+        "email": "manish.verma@greenfieldgrease.example",
+        "gstin": "09AABCG1007G1Z9",
+        "state_code": "09",
+        "address_line1": "Plot 22, Industrial Estate",
+        "address_line2": "Site IV",
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "postal_code": "201010",
+        "country": "India",
+        "lead_time_days": 11,
+        "payment_term_id": 5,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 8,
+        "supplier_code": "SUP008",
+        "supplier_name": "Highland Industrial Fluids",
+        "supplier_type": "manufacturer",
+        "contact_person": "Kiran Desai",
+        "phone": "9871001008",
+        "email": "kiran.desai@highlandfluids.example",
+        "gstin": "27AABCH1008H1Z8",
+        "state_code": "27",
+        "address_line1": "Warehouse Road Industrial Plot",
+        "address_line2": "Taloja MIDC",
+        "city": "Navi Mumbai",
+        "state": "Maharashtra",
+        "postal_code": "410208",
+        "country": "India",
+        "lead_time_days": 10,
+        "payment_term_id": 4,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 9,
+        "supplier_code": "SUP009",
+        "supplier_name": "Metro Lubricants Distribution",
+        "supplier_type": "authorized_distributor",
+        "contact_person": "Rahul Nair",
+        "phone": "9871001009",
+        "email": "rahul.nair@metrolubricants.example",
+        "gstin": "29AABCM1009M1Z7",
+        "state_code": "29",
+        "address_line1": "23 Logistics Park Road",
+        "address_line2": "Hosur Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postal_code": "560068",
+        "country": "India",
+        "lead_time_days": 5,
+        "payment_term_id": 2,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 10,
+        "supplier_code": "SUP010",
+        "supplier_name": "Prime Auto Parts Supply",
+        "supplier_type": "authorized_distributor",
+        "contact_person": "Akash Malhotra",
+        "phone": "9871001010",
+        "email": "akash.malhotra@primeautosupply.example",
+        "gstin": "07AABCP1010P1Z6",
+        "state_code": "07",
+        "address_line1": "Shed 14, Industrial Park",
+        "address_line2": "Patparganj",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "postal_code": "110092",
+        "country": "India",
+        "lead_time_days": 4,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 11,
+        "supplier_code": "SUP011",
+        "supplier_name": "Western Auto Fluids Distribution",
+        "supplier_type": "authorized_distributor",
+        "contact_person": "Harish Shah",
+        "phone": "9871001011",
+        "email": "harish.shah@westernfluids.example",
+        "gstin": "27AABCW1011W1Z5",
+        "state_code": "27",
+        "address_line1": "Unit 6, Industrial Estate",
+        "address_line2": "Bhiwandi Logistics Zone",
+        "city": "Thane",
+        "state": "Maharashtra",
+        "postal_code": "421302",
+        "country": "India",
+        "lead_time_days": 6,
+        "payment_term_id": 4,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 12,
+        "supplier_code": "SUP012",
+        "supplier_name": "Southline Lubricant Supply",
+        "supplier_type": "authorized_distributor",
+        "contact_person": "Joseph Mathew",
+        "phone": "9871001012",
+        "email": "joseph.mathew@southline.example",
+        "gstin": "32AABCS1012S1Z4",
+        "state_code": "32",
+        "address_line1": "Plot 9, Logistics Industrial Area",
+        "address_line2": "Kalamassery",
+        "city": "Kochi",
+        "state": "Kerala",
+        "postal_code": "683104",
+        "country": "India",
+        "lead_time_days": 7,
+        "payment_term_id": 5,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 13,
+        "supplier_code": "SUP013",
+        "supplier_name": "Central Fleet Lubricants",
+        "supplier_type": "authorized_distributor",
+        "contact_person": "Pankaj Soni",
+        "phone": "9871001013",
+        "email": "pankaj.soni@centralfleet.example",
+        "gstin": "23AABCC1013C1Z3",
+        "state_code": "23",
+        "address_line1": "Depot 4, Industrial Corridor",
+        "address_line2": "Rau",
+        "city": "Indore",
+        "state": "Madhya Pradesh",
+        "postal_code": "453331",
+        "country": "India",
+        "lead_time_days": 5,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 14,
+        "supplier_code": "SUP014",
+        "supplier_name": "Deccan Equipment Fluids",
+        "supplier_type": "authorized_distributor",
+        "contact_person": "Swapnil Kulkarni",
+        "phone": "9871001014",
+        "email": "swapnil.kulkarni@deccanequipment.example",
+        "gstin": "27AABCD1014D1Z2",
+        "state_code": "27",
+        "address_line1": "Shop 12, Industrial Service Road",
+        "address_line2": "Satpur MIDC",
+        "city": "Nashik",
+        "state": "Maharashtra",
+        "postal_code": "422007",
+        "country": "India",
+        "lead_time_days": 4,
+        "payment_term_id": 2,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 15,
+        "supplier_code": "SUP015",
+        "supplier_name": "Northwest Regional Oils",
+        "supplier_type": "regional_distributor",
+        "contact_person": "Gaurav Bansal",
+        "phone": "9871001015",
+        "email": "gaurav.bansal@northwestoils.example",
+        "gstin": "08AABCN1015N1Z1",
+        "state_code": "08",
+        "address_line1": "Plot 19, Transport Nagar",
+        "address_line2": "Sitapura",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal_code": "302022",
+        "country": "India",
+        "lead_time_days": 6,
+        "payment_term_id": 4,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 16,
+        "supplier_code": "SUP016",
+        "supplier_name": "Vidarbha Industrial Distribution",
+        "supplier_type": "regional_distributor",
+        "contact_person": "Suresh Patil",
+        "phone": "9871001016",
+        "email": "suresh.patil@vidarbhadist.example",
+        "gstin": "27AABCV1016V1Z0",
+        "state_code": "27",
+        "address_line1": "Plot 5, Logistics Hub",
+        "address_line2": "Hingna Road",
+        "city": "Nagpur",
+        "state": "Maharashtra",
+        "postal_code": "440016",
+        "country": "India",
+        "lead_time_days": 5,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 17,
+        "supplier_code": "SUP017",
+        "supplier_name": "Hyderabad Industrial Supply",
+        "supplier_type": "regional_distributor",
+        "contact_person": "Ramesh Rao",
+        "phone": "9871001017",
+        "email": "ramesh.rao@hyderabadindustrial.example",
+        "gstin": "36AABCH1017H1Z9",
+        "state_code": "36",
+        "address_line1": "Shed 8, Industrial Estate",
+        "address_line2": "Jeedimetla",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "postal_code": "500055",
+        "country": "India",
+        "lead_time_days": 7,
+        "payment_term_id": 5,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 18,
+        "supplier_code": "SUP018",
+        "supplier_name": "Gujarat Regional Lubricants",
+        "supplier_type": "regional_distributor",
+        "contact_person": "Dhruv Trivedi",
+        "phone": "9871001018",
+        "email": "dhruv.trivedi@gujaratregional.example",
+        "gstin": "24AABCG1018G1Z8",
+        "state_code": "24",
+        "address_line1": "Warehouse 3, GIDC Estate",
+        "address_line2": "Sanand",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "postal_code": "382170",
+        "country": "India",
+        "lead_time_days": 5,
+        "payment_term_id": 3,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 19,
+        "supplier_code": "SUP019",
+        "supplier_name": "Southwest Industrial Traders",
+        "supplier_type": "regional_distributor",
+        "contact_person": "Nitin Shetty",
+        "phone": "9871001019",
+        "email": "nitin.shetty@southwesttraders.example",
+        "gstin": "29AABCS1019S1Z7",
+        "state_code": "29",
+        "address_line1": "Plot 17, Industrial Area",
+        "address_line2": "Bommasandra",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postal_code": "560099",
+        "country": "India",
+        "lead_time_days": 6,
+        "payment_term_id": 4,
+        "supplier_status": "inactive",
+    },
+    {
+        "supplier_id": 20,
+        "supplier_code": "SUP020",
+        "supplier_name": "Global Base Oil Imports",
+        "supplier_type": "importer",
+        "contact_person": "Amit Khanna",
+        "phone": "9871001020",
+        "email": "amit.khanna@globalbaseoil.example",
+        "gstin": "27AABCG1020G1Z6",
+        "state_code": "27",
+        "address_line1": "Tank Farm Road, Plot 2",
+        "address_line2": "Nhava Sheva",
+        "city": "Navi Mumbai",
+        "state": "Maharashtra",
+        "postal_code": "400707",
+        "country": "India",
+        "lead_time_days": 24,
+        "payment_term_id": 7,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 21,
+        "supplier_code": "SUP021",
+        "supplier_name": "International Additives India",
+        "supplier_type": "importer",
+        "contact_person": "Rajiv Menon",
+        "phone": "9871001021",
+        "email": "rajiv.menon@intladditives.example",
+        "gstin": "33AABCI1021I1Z5",
+        "state_code": "33",
+        "address_line1": "Warehouse 11, Port Logistics Park",
+        "address_line2": "Manali Industrial Area",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "postal_code": "600068",
+        "country": "India",
+        "lead_time_days": 28,
+        "payment_term_id": 8,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 22,
+        "supplier_code": "SUP022",
+        "supplier_name": "Coastal Specialty Chemicals",
+        "supplier_type": "importer",
+        "contact_person": "Faizal Ahmed",
+        "phone": "9871001022",
+        "email": "faizal.ahmed@coastalspecialty.example",
+        "gstin": "24AABCC1022C1Z4",
+        "state_code": "24",
+        "address_line1": "Plot 4, Port Industrial Zone",
+        "address_line2": "Dahej",
+        "city": "Bharuch",
+        "state": "Gujarat",
+        "postal_code": "392130",
+        "country": "India",
+        "lead_time_days": 21,
+        "payment_term_id": 7,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 23,
+        "supplier_code": "SUP023",
+        "supplier_name": "Bulk Industrial Supply Co",
+        "supplier_type": "bulk_supplier",
+        "contact_person": "Prakash Yadav",
+        "phone": "9871001023",
+        "email": "prakash.yadav@bulkindustrial.example",
+        "gstin": "09AABCB1023B1Z3",
+        "state_code": "09",
+        "address_line1": "Bulk Storage Yard 6",
+        "address_line2": "Dadri Industrial Area",
+        "city": "Greater Noida",
+        "state": "Uttar Pradesh",
+        "postal_code": "201306",
+        "country": "India",
+        "lead_time_days": 13,
+        "payment_term_id": 6,
+        "supplier_status": "active",
+    },
+    {
+        "supplier_id": 24,
+        "supplier_code": "SUP024",
+        "supplier_name": "Industrial Fluids Bulk Services",
+        "supplier_type": "bulk_supplier",
+        "contact_person": "Deepak Agarwal",
+        "phone": "9871001024",
+        "email": "deepak.agarwal@industrialbulk.example",
+        "gstin": "07AABBI1024I1Z2",
+        "state_code": "07",
+        "address_line1": "Yard 3, Logistics Cluster",
+        "address_line2": "Narela Industrial Area",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "postal_code": "110040",
+        "country": "India",
+        "lead_time_days": 14,
+        "payment_term_id": 6,
+        "supplier_status": "inactive",
+    },
+]
+
+
+
+# ============================================================
 # Brand master definitions
 # ============================================================
 
@@ -1095,6 +1584,172 @@ def validate_payment_terms(payment_terms: list[dict]) -> None:
                 f"Payment term name cannot be empty: "
                 f"{row['payment_term_id']}"
             )
+
+
+
+# ============================================================
+# Supplier validation
+# ============================================================
+
+def validate_suppliers(
+    suppliers: list[dict],
+    payment_terms: list[dict],
+) -> None:
+    """Validate supplier master data."""
+
+    if not suppliers:
+        raise ValueError("Supplier data is empty.")
+
+    required_fields = {
+        "supplier_id",
+        "supplier_code",
+        "supplier_name",
+        "supplier_type",
+        "contact_person",
+        "phone",
+        "email",
+        "gstin",
+        "state_code",
+        "address_line1",
+        "address_line2",
+        "city",
+        "state",
+        "postal_code",
+        "country",
+        "lead_time_days",
+        "payment_term_id",
+        "supplier_status",
+    }
+
+    for row in suppliers:
+        missing_fields = required_fields - row.keys()
+
+        if missing_fields:
+            raise ValueError(
+                f"Missing supplier fields: {sorted(missing_fields)}"
+            )
+
+    supplier_ids = [
+        row["supplier_id"]
+        for row in suppliers
+    ]
+
+    supplier_codes = [
+        row["supplier_code"]
+        for row in suppliers
+    ]
+
+    supplier_names = [
+        row["supplier_name"]
+        for row in suppliers
+    ]
+
+    if len(supplier_ids) != len(set(supplier_ids)):
+        raise ValueError("Duplicate supplier_id found.")
+
+    if len(supplier_codes) != len(set(supplier_codes)):
+        raise ValueError("Duplicate supplier_code found.")
+
+    if len(supplier_names) != len(set(supplier_names)):
+        raise ValueError("Duplicate supplier_name found.")
+
+    if supplier_ids != sorted(supplier_ids):
+        raise ValueError(
+            "Supplier IDs are not in ascending order."
+        )
+
+    allowed_supplier_types = {
+        "manufacturer",
+        "authorized_distributor",
+        "regional_distributor",
+        "importer",
+        "bulk_supplier",
+    }
+
+    allowed_statuses = {
+        "active",
+        "inactive",
+    }
+
+    payment_term_ids = {
+        row["payment_term_id"]
+        for row in payment_terms
+    }
+
+    for row in suppliers:
+        if row["supplier_id"] <= 0:
+            raise ValueError(
+                f"supplier_id must be positive: "
+                f"{row['supplier_id']}"
+            )
+
+        if not row["supplier_code"].strip():
+            raise ValueError(
+                f"Supplier code cannot be empty: "
+                f"{row['supplier_id']}"
+            )
+
+        if not row["supplier_name"].strip():
+            raise ValueError(
+                f"Supplier name cannot be empty: "
+                f"{row['supplier_id']}"
+            )
+
+        if row["supplier_type"] not in allowed_supplier_types:
+            raise ValueError(
+                f"Invalid supplier type: "
+                f"{row['supplier_type']}"
+            )
+
+        if row["lead_time_days"] < 0:
+            raise ValueError(
+                f"Negative supplier lead time: "
+                f"{row['supplier_code']}"
+            )
+
+        if row["payment_term_id"] not in payment_term_ids:
+            raise ValueError(
+                f"Invalid payment_term_id "
+                f"{row['payment_term_id']} for "
+                f"{row['supplier_code']}"
+            )
+
+        if row["supplier_status"] not in allowed_statuses:
+            raise ValueError(
+                f"Invalid supplier status: "
+                f"{row['supplier_status']}"
+            )
+
+        if not row["address_line1"].strip():
+            raise ValueError(
+                f"Supplier address_line1 cannot be empty: "
+                f"{row['supplier_code']}"
+            )
+
+        if not row["city"].strip():
+            raise ValueError(
+                f"Supplier city cannot be empty: "
+                f"{row['supplier_code']}"
+            )
+
+        if not row["state"].strip():
+            raise ValueError(
+                f"Supplier state cannot be empty: "
+                f"{row['supplier_code']}"
+            )
+
+        if not row["postal_code"].strip():
+            raise ValueError(
+                f"Supplier postal_code cannot be empty: "
+                f"{row['supplier_code']}"
+            )
+
+        if not row["country"].strip():
+            raise ValueError(
+                f"Supplier country cannot be empty: "
+                f"{row['supplier_code']}"
+            )
+
 
 
 # ============================================================
@@ -2094,6 +2749,42 @@ def write_payment_terms_csv(
     )
 
 
+
+def write_suppliers_csv(
+    suppliers: list[dict],
+) -> Path:
+    """Write supplier master data."""
+
+    return write_csv(
+        rows=suppliers,
+        filename="master_suppliers.csv",
+        fieldnames=[
+            "supplier_id",
+            "supplier_code",
+            "supplier_name",
+            "supplier_type",
+            "contact_person",
+            "phone",
+            "email",
+            "gstin",
+            "state_code",
+            "address_line1",
+            "address_line2",
+            "city",
+            "state",
+            "postal_code",
+            "country",
+            "lead_time_days",
+            "payment_term_id",
+            "supplier_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
 def write_brands_csv(
     brands: list[dict],
 ) -> Path:
@@ -2230,6 +2921,7 @@ def main() -> None:
     try:
         uoms = UOM_DEFINITIONS
         payment_terms = PAYMENT_TERM_DEFINITIONS
+        suppliers = SUPPLIER_DEFINITIONS
         brands = BRAND_DEFINITIONS
         categories = CATEGORY_DEFINITIONS
         sub_categories = SUB_CATEGORY_DEFINITIONS
@@ -2248,6 +2940,12 @@ def main() -> None:
 
         validate_payment_terms(payment_terms)
         print("Payment term validation: PASSED")
+
+        validate_suppliers(
+            suppliers,
+            payment_terms,
+        )
+        print("Supplier validation: PASSED")
 
         validate_brands(brands)
         print("Brand validation: PASSED")
@@ -2290,6 +2988,10 @@ def main() -> None:
             write_payment_terms_csv(payment_terms)
         )
 
+        supplier_file = write_suppliers_csv(
+            suppliers
+        )
+
         brand_file = write_brands_csv(brands)
 
         category_file = write_categories_csv(
@@ -2319,6 +3021,9 @@ def main() -> None:
 
         print(f"Created: {payment_term_file}")
         print(f"Rows: {len(payment_terms)}")
+
+        print(f"Created: {supplier_file}")
+        print(f"Rows: {len(suppliers)}")
 
         print(f"Created: {brand_file}")
         print(f"Rows: {len(brands)}")
