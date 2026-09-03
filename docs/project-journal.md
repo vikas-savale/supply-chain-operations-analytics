@@ -8,18 +8,18 @@ Build a practical end-to-end Supply Chain and Operations Analytics project that 
 
 ## Milestone 1 — Project Foundation ✅
 
-Completed
+### Completed
 
 - Project repository created
 - Project folder structure created
-- README.md added
+- `README.md` added
 - `.gitignore` added
 
 ---
 
 ## Milestone 2 — Database Foundation ✅
 
-Completed
+### Completed
 
 - PostgreSQL installed
 - pgAdmin configured
@@ -28,7 +28,7 @@ Completed
 - `02_create_schemas.sql`
 - Business schemas created
 
-Schemas:
+### Schemas
 
 - `master`
 - `inventory`
@@ -42,7 +42,7 @@ Schemas:
 
 ## Milestone 3 — Architecture Planning ✅
 
-Completed
+### Completed
 
 - Database architecture document created
 - Initial data model prepared
@@ -245,12 +245,14 @@ Completed
 - Supplier master dataset generated
 - Warehouse master dataset generated
 - Warehouse location master dataset generated
+- Product master dataset generated
 - Master-data validation checks added
 - Supplier payment-term references validated
 - Category and sub-category relationships validated
 - Warehouse and location relationships validated
 - Warehouse location capacity consistency validated
-- Initial master datasets generated as CSV files
+- Product reference and packaging validations added
+- Master datasets generated as CSV files
 
 ### Current Master Dataset Counts
 
@@ -260,6 +262,7 @@ Completed
 - Categories: 8
 - Sub-categories: 42
 - Suppliers: 24
+- Products: 1,500
 - Warehouses: 9
 - Warehouse Locations: 500
 
@@ -273,6 +276,7 @@ Completed
 - `datasets/master_suppliers.csv`
 - `datasets/master_warehouses.csv`
 - `datasets/master_locations.csv`
+- `datasets/master_products.csv`
 
 ### Generator
 
@@ -280,30 +284,81 @@ Completed
 
 The generator validates the generated master data before writing the CSV files.
 
-### Next
+---
+
+## Milestone 6 — Product Master Generation and Database Validation ✅
+
+### Product Dataset
+
+- Product master generated with 1,500 products
+- Product IDs generated sequentially from 1 to 1,500
+- SKUs validated as unique
+- Product names validated as unique
+- Brand references validated
+- Sub-category references validated
+- Base UOM references validated
+- Product status values validated
+- Product packaging definitions validated
+- Base quantity per PAC validated as positive
+- Packaging quantity normalization validated
+- Product status distribution validated:
+  - Active: 1,350
+  - Inactive: 90
+  - Discontinued: 60
+- Brand distribution validated across 10 brands
+- Sub-category distribution validated across 42 sub-categories
+
+### PostgreSQL Load
+
+- `datasets/master_products.csv` loaded into `master.products` using PostgreSQL from the pgAdmin Query Tool
+- Product row count verified: 1,500
+- Product ID range verified: 1 to 1,500
+- Distinct product IDs verified: 1,500
+- Distinct SKUs verified: 1,500
+- Distinct product names verified: 1,500
+
+### Database Validation
+
+- Missing SKU values: 0
+- Missing product names: 0
+- Missing product status values: 0
+- Invalid product status values: 0
+- Invalid base quantities: 0
+- Missing brand references: 0
+- Missing sub-category references: 0
+- Missing UOM references: 0
+- Orphan brand references: 0
+- Orphan sub-category references: 0
+- Orphan UOM references: 0
+- Packaging quantity mismatches: 0
+- Packaging/UOM mismatches: 0
+- Product primary key verified
+- SKU unique constraint verified
+- Product foreign keys verified
+- Product status check constraint verified
+- Product base quantity check constraint verified
+- Required NOT NULL constraints verified
+- Product identity sequence aligned after CSV load
+- Next generated product ID verified to continue from 1,501
+
+---
+
+## Current Focus
+
+Complete the remaining master-data relationships and prepare the full master-data network for transaction-data generation.
+
+---
+
+## Next
 
 - Generate product-supplier relationships
-- Generate product master data
+- Validate product-supplier relationships
 - Generate customer master data
 - Generate customer location data
 - Generate employee master data
 - Generate transporter master data
 - Generate vehicle master data
 - Validate the complete master-data network
-- Prepare master datasets for database loading
-
----
-
-## Current Focus
-
-Synthetic master data generation.
-
----
-
-## Next
-
-- Complete remaining master datasets
-- Validate master-data relationships
 - Prepare master datasets for database loading
 - Define transaction data generation rules
 - Generate linked procurement, inventory, warehouse, logistics and sales data

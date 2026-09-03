@@ -44,7 +44,7 @@ The `products` table stores material-level packaging attributes including pack t
 
 ## Synthetic Master Data
 
-Initial synthetic master data has been generated for the current master model.
+Synthetic master data has been generated for the current master model.
 
 - 6 UOMs
 - 8 payment terms
@@ -52,6 +52,7 @@ Initial synthetic master data has been generated for the current master model.
 - 8 categories
 - 42 sub-categories
 - 24 suppliers
+- 1,500 products
 - 9 warehouses
 - 500 warehouse locations
 

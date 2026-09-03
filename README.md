@@ -53,10 +53,12 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Customer and ship-to order structure
 - Sales order and stock allocation flow
 - Synthetic master-data generation framework
-- Initial synthetic master datasets
+- Synthetic master datasets
 - Supplier master dataset
+- Product master dataset
 - Master-data validation checks
 - Warehouse and location capacity consistency checks
+- Product packaging and quantity consistency checks
 
 ### Current Master Data
 
@@ -66,12 +68,13 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 8 categories
 - 42 sub-categories
 - 24 suppliers
+- 1,500 products
 - 9 warehouses
 - 500 warehouse locations
 
 ### Current Focus
 
-Synthetic master data generation.
+Product-supplier relationships and completion of the remaining master-data network.
 
 ## Database Setup
 

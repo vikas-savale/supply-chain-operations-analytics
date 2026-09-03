@@ -48,13 +48,13 @@
 
 The product master stores packaging information for each stockable material.
 
-- Material code identifies the stockable material and pack variant
+- SKU identifies the stockable material and pack variant
 - Pack type identifies the packaging form
 - Pack size stores the descriptive pack configuration
 - Base UOM defines the normalized measurement unit
 - Base quantity per PAC stores the quantity represented by one PAC
 
-PAC quantity is material-specific because different material codes can have different pack sizes.
+PAC quantity is material-specific because different SKUs can have different pack sizes.
 
 ---
 
@@ -254,7 +254,7 @@ The database includes consistency rules for related records.
 
 ## Synthetic Master Data
 
-Initial synthetic master data has been generated for the current master model.
+Synthetic master data has been generated for the current master model.
 
 - 6 UOMs
 - 8 payment terms
@@ -262,6 +262,7 @@ Initial synthetic master data has been generated for the current master model.
 - 8 categories
 - 42 sub-categories
 - 24 suppliers
+- 1,500 products
 - 9 warehouses
 - 500 warehouse locations
 

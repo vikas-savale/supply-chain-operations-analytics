@@ -152,7 +152,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Rohan Mehta",
         "phone": "020-4108-2637",
-        "email": "commercial@noveralu.com",
+        "email": "commercial@noveralu.example",
         "gstin": "27QRTPL4821M1Z8",
         "state_code": "27",
         "address_line1": "Plot 12, Industrial Estate",
@@ -172,7 +172,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Anil Sharma",
         "phone": "079-4682-3154",
-        "email": "commercial@brightshoreoils.in",
+        "email": "commercial@brightshoreoils.example",
         "gstin": "24NVMRK7316D1Z4",
         "state_code": "24",
         "address_line1": "Survey 44, GIDC Industrial Area",
@@ -192,7 +192,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Neeraj Kapoor",
         "phone": "080-4179-2638",
-        "email": "sales@crestlinepetrochem.in",
+        "email": "sales@crestlinepetrochem.example",
         "gstin": "29LHTPS5842C1Z7",
         "state_code": "29",
         "address_line1": "Block 7, Industrial Layout",
@@ -212,7 +212,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Sanjay Patel",
         "phone": "020-4631-7284",
-        "email": "sales@deltafluids.in",
+        "email": "sales@deltafluids.example",
         "gstin": "27XQFRE2168K1Z3",
         "state_code": "27",
         "address_line1": "Unit 18, Industrial Park",
@@ -232,7 +232,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Arindam Bose",
         "phone": "033-4018-5263",
-        "email": "sales@easterngl.in",
+        "email": "sales@easterngl.example",
         "gstin": "19BKMTA9054R1Z6",
         "state_code": "19",
         "address_line1": "Industrial Plot 31",
@@ -252,7 +252,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Vivek Joshi",
         "phone": "0731-4917-2635",
-        "email": "commercial@frontierhydraulic.in",
+        "email": "commercial@frontierhydraulic.example",
         "gstin": "23CPNVD3471H1Z9",
         "state_code": "23",
         "address_line1": "Plot 8, Sector C",
@@ -272,7 +272,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Manish Verma",
         "phone": "0120-4186-2735",
-        "email": "sales@greenfieldgrease.in",
+        "email": "sales@greenfieldgrease.example",
         "gstin": "09RSLKG6285P1Z2",
         "state_code": "09",
         "address_line1": "Plot 22, Industrial Estate",
@@ -292,7 +292,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "manufacturer",
         "contact_person": "Kiran Desai",
         "phone": "022-4928-3164",
-        "email": "commercial@highlandfluids.in",
+        "email": "commercial@highlandfluids.example",
         "gstin": "27TDMQJ4137A1Z5",
         "state_code": "27",
         "address_line1": "Warehouse Road Industrial Plot",
@@ -312,7 +312,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "authorized_distributor",
         "contact_person": "Rahul Nair",
         "phone": "080-4612-7358",
-        "email": "sales@metrolubricants.in",
+        "email": "sales@metrolubricants.example",
         "gstin": "29VKRNB7624S1Z8",
         "state_code": "29",
         "address_line1": "23 Logistics Park Road",
@@ -332,7 +332,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "authorized_distributor",
         "contact_person": "Akash Malhotra",
         "phone": "011-4286-3157",
-        "email": "commercial@pioneermobility.in",
+        "email": "commercial@pioneermobility.example",
         "gstin": "07HPCWL5389N1Z4",
         "state_code": "07",
         "address_line1": "Shed 14, Industrial Park",
@@ -352,7 +352,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "authorized_distributor",
         "contact_person": "Harish Shah",
         "phone": "02522-463817",
-        "email": "sales@westernfluids.in",
+        "email": "sales@westernfluids.example",
         "gstin": "27MZTRF1846Q1Z7",
         "state_code": "27",
         "address_line1": "Unit 6, Industrial Estate",
@@ -372,7 +372,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "authorized_distributor",
         "contact_person": "Joseph Mathew",
         "phone": "0484-4162-7351",
-        "email": "commercial@southlinelubes.in",
+        "email": "commercial@southlinelubes.example",
         "gstin": "32DPLKS9072E1Z3",
         "state_code": "32",
         "address_line1": "Plot 9, Logistics Industrial Area",
@@ -392,7 +392,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "authorized_distributor",
         "contact_person": "Pankaj Soni",
         "phone": "0731-4628-3159",
-        "email": "sales@centralfleetlubes.in",
+        "email": "sales@centralfleetlubes.example",
         "gstin": "23GWNHC6158V1Z6",
         "state_code": "23",
         "address_line1": "Depot 4, Industrial Corridor",
@@ -412,7 +412,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "authorized_distributor",
         "contact_person": "Swapnil Kulkarni",
         "phone": "0253-4187-2634",
-        "email": "commercial@deccanequipment.in",
+        "email": "commercial@deccanequipment.example",
         "gstin": "27RKDPS3429L1Z8",
         "state_code": "27",
         "address_line1": "Shop 12, Industrial Service Road",
@@ -432,7 +432,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "regional_distributor",
         "contact_person": "Gaurav Bansal",
         "phone": "0141-4672-3158",
-        "email": "sales@northwestoils.in",
+        "email": "sales@northwestoils.example",
         "gstin": "08FQMBT7815C1Z4",
         "state_code": "08",
         "address_line1": "Plot 19, Transport Nagar",
@@ -452,7 +452,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "regional_distributor",
         "contact_person": "Suresh Patil",
         "phone": "0712-4816-2734",
-        "email": "commercial@vidarbhadist.in",
+        "email": "commercial@vidarbhadist.example",
         "gstin": "27JVLNR5036T1Z9",
         "state_code": "27",
         "address_line1": "Plot 5, Logistics Hub",
@@ -472,7 +472,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "regional_distributor",
         "contact_person": "Ramesh Rao",
         "phone": "040-4637-2815",
-        "email": "sales@varnexindustrial.in",
+        "email": "sales@varnexindustrial.example",
         "gstin": "36KPBRS4261F1Z5",
         "state_code": "36",
         "address_line1": "Shed 8, Industrial Estate",
@@ -492,7 +492,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "regional_distributor",
         "contact_person": "Dhruv Trivedi",
         "phone": "079-4518-3264",
-        "email": "commercial@gujaratregional.in",
+        "email": "commercial@gujaratregional.example",
         "gstin": "24WDTMG8593A1Z7",
         "state_code": "24",
         "address_line1": "Warehouse 3, GIDC Estate",
@@ -512,7 +512,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "regional_distributor",
         "contact_person": "Nitin Shetty",
         "phone": "080-4926-3175",
-        "email": "sales@southwesttraders.in",
+        "email": "sales@southwesttraders.example",
         "gstin": "29SCQHV2148M1Z3",
         "state_code": "29",
         "address_line1": "Plot 17, Industrial Area",
@@ -532,7 +532,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "importer",
         "contact_person": "Amit Khanna",
         "phone": "022-4691-2853",
-        "email": "commercial@globalbaseoil.in",
+        "email": "commercial@globalbaseoil.example",
         "gstin": "27BFRNK6705P1Z8",
         "state_code": "27",
         "address_line1": "Tank Farm Road, Plot 2",
@@ -552,7 +552,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "importer",
         "contact_person": "Rajiv Menon",
         "phone": "044-4186-3725",
-        "email": "sales@intladditives.in",
+        "email": "sales@intladditives.example",
         "gstin": "33NQXLD3917R1Z4",
         "state_code": "33",
         "address_line1": "Warehouse 11, Port Logistics Park",
@@ -572,7 +572,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "importer",
         "contact_person": "Faizal Ahmed",
         "phone": "02641-467218",
-        "email": "commercial@coastalspecialty.in",
+        "email": "commercial@coastalspecialty.example",
         "gstin": "24HVMCP7452K1Z9",
         "state_code": "24",
         "address_line1": "Plot 4, Port Industrial Zone",
@@ -592,7 +592,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "bulk_supplier",
         "contact_person": "Prakash Yadav",
         "phone": "0120-4527-3168",
-        "email": "sales@bulkindustrial.in",
+        "email": "sales@bulkindustrial.example",
         "gstin": "09ZTRFS2864D1Z6",
         "state_code": "09",
         "address_line1": "Bulk Storage Yard 6",
@@ -612,7 +612,7 @@ SUPPLIER_DEFINITIONS = [
         "supplier_type": "bulk_supplier",
         "contact_person": "Deepak Agarwal",
         "phone": "011-4726-3185",
-        "email": "commercial@industrialbulk.in",
+        "email": "commercial@industrialbulk.example",
         "gstin": "07PLQVB6183H1Z2",
         "state_code": "07",
         "address_line1": "Yard 3, Logistics Cluster",
@@ -1104,6 +1104,448 @@ SUB_CATEGORY_DEFINITIONS = [
         "sub_category_status": "active",
     },
 ]
+
+
+# ============================================================
+# Product master generation
+# ============================================================
+
+PRODUCT_MASTER_COUNT = 1500
+PRODUCT_RANDOM_SEED = 20260101
+
+CATEGORY_PRODUCT_TARGETS = {
+    1: 300,
+    2: 200,
+    3: 250,
+    4: 220,
+    5: 170,
+    6: 130,
+    7: 100,
+    8: 130,
+}
+
+SUB_CATEGORY_PRODUCT_TARGETS = {
+    # Automotive Engine Oils
+    1: 70,
+    2: 65,
+    3: 60,
+    4: 55,
+    5: 50,
+    # Automotive & Drivetrain Fluids
+    6: 50,
+    7: 40,
+    8: 40,
+    9: 35,
+    10: 35,
+    # Industrial Lubricants
+    11: 45,
+    12: 45,
+    13: 40,
+    14: 40,
+    15: 40,
+    16: 40,
+    # Hydraulic & Equipment Fluids
+    17: 50,
+    18: 45,
+    19: 45,
+    20: 40,
+    21: 40,
+    # Greases
+    22: 30,
+    23: 30,
+    24: 30,
+    25: 30,
+    26: 25,
+    27: 25,
+    # Coolants & Maintenance Fluids
+    28: 30,
+    29: 30,
+    30: 25,
+    31: 25,
+    32: 20,
+    # Specialty & Process Fluids
+    33: 25,
+    34: 20,
+    35: 20,
+    36: 20,
+    37: 15,
+    # Agricultural & Off-Highway Lubricants
+    38: 30,
+    39: 25,
+    40: 25,
+    41: 25,
+    42: 25,
+}
+
+PRODUCT_BRAND_TARGET = 150
+
+PRODUCT_STATUS_TARGETS = {
+    "active": 1350,
+    "inactive": 90,
+    "discontinued": 60,
+}
+
+CATEGORY_SKU_PREFIXES = {
+    1: "AEO",
+    2: "ADF",
+    3: "ILO",
+    4: "HEF",
+    5: "GRS",
+    6: "CMF",
+    7: "SPF",
+    8: "AOL",
+}
+
+
+# Product families are synthetic and tied to the business meaning
+# of the corresponding sub-category.
+PRODUCT_FAMILY_STEMS = {
+    1: ["RoadShield", "DriveCore", "EngineMax", "AutoPrime"],
+    2: ["FleetGuard", "DieselCore", "HaulPro", "TorqueShield"],
+    3: ["FleetLine", "CargoForce", "RoadHaul", "TransitCore"],
+    4: ["MotoDrive", "RiderCore", "StreetForce", "MotoGuard"],
+    5: ["GasCore", "CleanBurn", "StationPro", "GasGuard"],
+    6: ["GearShield", "TorqueLine", "DriveGear", "AxleGuard"],
+    7: ["TransFlow", "ShiftCore", "AutoShift", "TransGuard"],
+    8: ["ManualCore", "ShiftForce", "GearFlow", "DriveShift"],
+    9: ["DiffShield", "AxleCore", "DriveDiff", "FinalGuard"],
+    10: ["FinalDrive", "AxleForce", "PowerAxle", "DriveLoad"],
+    11: ["PlantGear", "IndustrialGear", "MachDrive", "GearWorks"],
+    12: ["CompressorCore", "AirGuard", "CompressPro", "AirFlow"],
+    13: ["TurbineCore", "RotorGuard", "PowerTurb", "TurbineLine"],
+    14: ["CircuCore", "MachineFlow", "LoopGuard", "CircuLine"],
+    15: ["SlideGuard", "WayCore", "MachineWay", "SlideForce"],
+    16: ["ToolCore", "MachinePro", "ToolGuard", "MachLube"],
+    17: ["HydraCore", "HydroForce", "PowerHyd", "HydraFlow"],
+    18: ["HydraShift", "TransHyd", "PowerUTTO", "HydroDrive"],
+    19: ["TractorHyd", "AgriHydro", "FieldFlow", "FarmHyd"],
+    20: ["SiteHyd", "BuildForce", "EarthMove", "EquipHyd"],
+    21: ["AgriFlow", "FarmPower", "FieldHyd", "CropForce"],
+    22: ["MultiGrease", "GeneralLube", "AllRoundGrease", "MultiGuard"],
+    23: ["EPShield", "LoadGuard", "ExtremeLube", "EPForce"],
+    24: ["ThermoGrease", "HeatGuard", "TempForce", "HeatShield"],
+    25: ["LithoGuard", "LithoForce", "BearingLube", "LithoPro"],
+    26: ["CalciCore", "CalciGuard", "CalciForce", "CalciLube"],
+    27: ["SpecialGrease", "LoadSpecial", "MotionGuard", "PurposeLube"],
+    28: ["CoolGuard", "EngineCool", "ThermoCool", "CoolFlow", "RadiantCore"],
+    29: [
+        "LongLifeCool",
+        "EnduraCool",
+        "LifeGuardCool",
+        "ExtendedCool",
+        "LongRunCool",
+    ],
+    30: [
+        "ReadyCool",
+        "PremixGuard",
+        "ReadyFlow",
+        "InstantCool",
+        "UseReadyCool",
+    ],
+    31: [
+        "FreezeGuard",
+        "AntifreezeCore",
+        "ColdShield",
+        "FrostProtect",
+        "WinterGuard",
+    ],
+    32: [
+        "RadiatorGuard",
+        "RadFlow",
+        "CoolingCore",
+        "RadShield",
+        "ThermoGuard",
+    ],
+    33: ["CutFlow", "MetalCut", "MachCut", "ToolCool", "CutGuard"],
+    34: [
+        "MetalCore",
+        "ProcessFlow",
+        "WorkshopCool",
+        "MetalGuard",
+        "ProcessLube",
+    ],
+    35: [
+        "HeatFlow",
+        "ThermoProcess",
+        "HeatCore",
+        "ThermalGuard",
+        "ProcessTherm",
+    ],
+    36: [
+        "RustGuard",
+        "CorroShield",
+        "MetalProtect",
+        "RustBlock",
+        "SurfaceGuard",
+    ],
+    37: [
+        "InsulCore",
+        "VoltGuard",
+        "DielectricPro",
+        "TransformShield",
+        "InsulFlow",
+    ],
+    38: ["TractorDrive", "FieldEngine", "AgriEngine", "FarmPowerOil"],
+    39: ["TractorGear", "FarmTransmission", "FieldGear", "AgriDrive"],
+    40: ["TractorDiff", "FarmAxle", "AgriFinal", "FieldDiff"],
+    41: ["MachineryCore", "AgriMach", "FieldMach", "FarmLube"],
+    42: ["OffRoadPower", "EarthEngine", "SiteEngine", "RuggedCore"],
+}
+
+PRODUCT_GRADE_OPTIONS = {
+    1: ["0W-20", "5W-30", "5W-40", "10W-40"],
+    2: ["10W-30", "15W-40", "20W-40", "20W-50"],
+    3: ["10W-40", "15W-40", "20W-50"],
+    4: ["5W-30", "10W-30", "10W-40", "20W-40"],
+    5: ["10W-40", "15W-40", "20W-40"],
+    6: ["75W-90", "80W-90", "85W-140"],
+    7: ["ATF Multi-Vehicle", "ATF Low-Viscosity", "ATF Synthetic"],
+    8: ["75W-80", "75W-90", "80W"],
+    9: ["75W-90", "80W-90", "85W-140"],
+    10: ["80W-90", "85W-140", "75W-140"],
+    11: ["AGMA 4", "AGMA 5", "AGMA 6"],
+    12: ["ISO VG 32", "ISO VG 46", "ISO VG 68", "ISO VG 100"],
+    13: ["ISO VG 32", "ISO VG 46", "ISO VG 68"],
+    14: ["ISO VG 32", "ISO VG 46", "ISO VG 68", "ISO VG 100"],
+    15: ["ISO VG 68", "ISO VG 100", "ISO VG 220"],
+    16: ["ISO VG 32", "ISO VG 46", "ISO VG 68"],
+    17: ["ISO VG 32", "ISO VG 46", "ISO VG 68"],
+    18: ["UTTO 10W-30", "UTTO 20W-30", "UTTO 20W-40"],
+    19: ["UTTO 10W-30", "UTTO 20W-30", "UTTO 20W-40"],
+    20: ["10W", "10W-30", "15W-40"],
+    21: ["UTTO 10W-30", "STOU 10W-30", "15W-40"],
+    22: ["NLGI 1", "NLGI 2", "NLGI 3"],
+    23: ["NLGI 1", "NLGI 2", "NLGI 3"],
+    24: ["NLGI 2", "NLGI 3"],
+    25: ["NLGI 1", "NLGI 2", "NLGI 3"],
+    26: ["NLGI 2", "NLGI 3"],
+    27: ["NLGI 1", "NLGI 2", "NLGI 3"],
+    28: [None],
+    29: [None],
+    30: [None],
+    31: [None],
+    32: [None],
+    33: [None],
+    34: [None],
+    35: [None],
+    36: [None],
+    37: [None],
+    38: ["10W-30", "15W-40", "20W-50"],
+    39: ["80W-90", "85W-140", "75W-90"],
+    40: ["80W-90", "85W-140", "75W-140"],
+    41: ["15W-40", "20W-40", "20W-50"],
+    42: ["10W-40", "15W-40", "20W-50"],
+}
+
+PRODUCT_PACKAGE_GROUP = {
+    **{
+        sub_category_id: "automotive_liquid"
+        for sub_category_id in range(1, 11)
+    },
+    **{
+        sub_category_id: "industrial_liquid"
+        for sub_category_id in range(11, 22)
+    },
+    **{
+        sub_category_id: "grease"
+        for sub_category_id in range(22, 28)
+    },
+    **{
+        sub_category_id: "coolant"
+        for sub_category_id in range(28, 33)
+    },
+    **{
+        sub_category_id: "specialty_liquid"
+        for sub_category_id in range(33, 38)
+    },
+    **{
+        sub_category_id: "industrial_liquid"
+        for sub_category_id in range(38, 43)
+    },
+}
+
+PRODUCT_PACKAGE_DEFINITIONS = {
+    "automotive_liquid": [
+        ("Bottle", "800 ML", 0.8, 1),
+        ("Bottle", "1 L", 1, 1),
+        ("Bottle", "1.2 L", 1.2, 1),
+        ("Bottle", "3 L", 3, 1),
+        ("Bucket", "5 L", 5, 1),
+        ("Bucket", "10 L", 10, 1),
+        ("Bucket", "15 L", 15, 1),
+        ("Bucket", "20 L", 20, 1),
+        ("Bucket", "25 L", 25, 1),
+        ("Bucket", "30 L", 30, 1),
+        ("Drum", "50 L", 50, 1),
+        ("Drum", "55 L", 55, 1),
+        ("Drum", "180 L", 180, 1),
+        ("Barrel", "210 L", 210, 1),
+        ("Bulk", "1000 L", 1000, 1),
+    ],
+    "industrial_liquid": [
+        ("Can", "3 L", 3, 1),
+        ("Bucket", "5 L", 5, 1),
+        ("Bucket", "10 L", 10, 1),
+        ("Bucket", "15 L", 15, 1),
+        ("Bucket", "20 L", 20, 1),
+        ("Bucket", "25 L", 25, 1),
+        ("Bucket", "30 L", 30, 1),
+        ("Drum", "50 L", 50, 1),
+        ("Drum", "55 L", 55, 1),
+        ("Drum", "180 L", 180, 1),
+        ("Barrel", "210 L", 210, 1),
+        ("Bulk", "500 L", 500, 1),
+        ("Bulk", "1000 L", 1000, 1),
+        ("Bulk", "2000 L", 2000, 1),
+    ],
+    "grease": [
+        ("Cartridge", "400 G", 0.4, 3),
+        ("Tub", "500 G", 0.5, 3),
+        ("Tub", "1 KG", 1, 3),
+        ("Tub", "2 KG", 2, 3),
+        ("Tub", "5 KG", 5, 3),
+        ("Pail", "10 KG", 10, 3),
+        ("Pail", "18 KG", 18, 3),
+        ("Drum", "50 KG", 50, 3),
+        ("Drum", "180 KG", 180, 3),
+    ],
+    "coolant": [
+        ("Bottle", "1 L", 1, 1),
+        ("Bottle", "3 L", 3, 1),
+        ("Can", "5 L", 5, 1),
+        ("Bucket", "10 L", 10, 1),
+        ("Bucket", "20 L", 20, 1),
+        ("Drum", "55 L", 55, 1),
+        ("Barrel", "210 L", 210, 1),
+        ("Bulk", "1000 L", 1000, 1),
+    ],
+    "specialty_liquid": [
+        ("Bottle", "1 L", 1, 1),
+        ("Can", "5 L", 5, 1),
+        ("Bucket", "20 L", 20, 1),
+        ("Drum", "55 L", 55, 1),
+        ("Drum", "180 L", 180, 1),
+        ("Barrel", "210 L", 210, 1),
+        ("Bulk", "1000 L", 1000, 1),
+        ("Bulk", "2000 L", 2000, 1),
+    ],
+}
+
+
+PRODUCT_CATEGORY_NAMES = {
+    row["category_id"]: row["category_name"]
+    for row in CATEGORY_DEFINITIONS
+}
+
+BRAND_NAMES_BY_ID = {
+    row["brand_id"]: row["brand_name"]
+    for row in BRAND_DEFINITIONS
+}
+
+SUB_CATEGORY_BY_ID = {
+    row["sub_category_id"]: row
+    for row in SUB_CATEGORY_DEFINITIONS
+}
+
+UOM_CODES_BY_ID = {
+    row["uom_id"]: row["uom_code"]
+    for row in UOM_DEFINITIONS
+}
+
+
+def generate_products() -> list[dict]:
+    """Generate the large product master deterministically."""
+
+    import random
+
+    rng = random.Random(PRODUCT_RANDOM_SEED)
+    product_rows = []
+
+    category_sequences = {
+        category_id: 0
+        for category_id in CATEGORY_PRODUCT_TARGETS
+    }
+
+    global_index = 0
+
+    status_pool = (
+        ["active"] * PRODUCT_STATUS_TARGETS["active"]
+        + ["inactive"] * PRODUCT_STATUS_TARGETS["inactive"]
+        + ["discontinued"] * PRODUCT_STATUS_TARGETS["discontinued"]
+    )
+
+    rng.shuffle(status_pool)
+
+    for sub_category_id in sorted(SUB_CATEGORY_PRODUCT_TARGETS):
+        target_count = SUB_CATEGORY_PRODUCT_TARGETS[sub_category_id]
+        sub_category = SUB_CATEGORY_BY_ID[sub_category_id]
+        category_id = sub_category["category_id"]
+        category_prefix = CATEGORY_SKU_PREFIXES[category_id]
+
+        families = PRODUCT_FAMILY_STEMS[sub_category_id]
+        grades = PRODUCT_GRADE_OPTIONS[sub_category_id]
+        package_group = PRODUCT_PACKAGE_GROUP[sub_category_id]
+        packages = PRODUCT_PACKAGE_DEFINITIONS[package_group]
+
+        for local_index in range(target_count):
+            brand_id = (global_index % len(BRAND_DEFINITIONS)) + 1
+            family = families[local_index % len(families)]
+            grade = grades[
+                (local_index // len(families)) % len(grades)
+            ]
+            package = packages[
+                (local_index + sub_category_id * 2) % len(packages)
+            ]
+
+            (
+                pack_type,
+                pack_size,
+                base_quantity,
+                base_uom_id,
+            ) = package
+
+            category_sequences[category_id] += 1
+            category_sequence = category_sequences[category_id]
+
+            sku = (
+                f"NR-{category_prefix}-{category_sequence:04d}"
+            )
+
+            name_parts = [
+                BRAND_NAMES_BY_ID[brand_id],
+                family,
+            ]
+
+            if grade is not None:
+                name_parts.append(grade)
+
+            name_parts.append(pack_size)
+
+            product_rows.append(
+                {
+                    "product_id": global_index + 1,
+                    "sku": sku,
+                    "product_name": " ".join(name_parts),
+                    "brand_id": brand_id,
+                    "sub_category_id": sub_category_id,
+                    "base_uom_id": base_uom_id,
+                    "pack_type": pack_type,
+                    "pack_size": pack_size,
+                    "base_quantity_per_pac": base_quantity,
+                    "viscosity_grade": grade,
+                    "product_status": status_pool[global_index],
+                }
+            )
+
+            global_index += 1
+
+    if len(product_rows) != PRODUCT_MASTER_COUNT:
+        raise ValueError(
+            f"Expected {PRODUCT_MASTER_COUNT} products, "
+            f"generated {len(product_rows)}"
+        )
+
+    return product_rows
 
 
 # ============================================================
@@ -1645,8 +2087,14 @@ def validate_suppliers(
     supplier_codes = [row["supplier_code"] for row in suppliers]
     supplier_names = [row["supplier_name"] for row in suppliers]
     supplier_phones = [row["phone"] for row in suppliers]
-    supplier_emails = [row["email"].lower() for row in suppliers]
-    supplier_gstins = [row["gstin"].upper() for row in suppliers]
+    supplier_emails = [
+        row["email"].lower()
+        for row in suppliers
+    ]
+    supplier_gstins = [
+        row["gstin"].upper()
+        for row in suppliers
+    ]
 
     if len(supplier_ids) != len(set(supplier_ids)):
         raise ValueError("Duplicate supplier_id found.")
@@ -1677,10 +2125,7 @@ def validate_suppliers(
         "bulk_supplier",
     }
 
-    allowed_statuses = {
-        "active",
-        "inactive",
-    }
+    allowed_statuses = {"active", "inactive"}
 
     payment_term_ids = {
         row["payment_term_id"]
@@ -1692,12 +2137,14 @@ def validate_suppliers(
 
         if row["supplier_id"] <= 0:
             raise ValueError(
-                f"supplier_id must be positive: {row['supplier_id']}"
+                f"supplier_id must be positive: "
+                f"{row['supplier_id']}"
             )
 
         if not row["supplier_code"].strip():
             raise ValueError(
-                f"Supplier code cannot be empty: {row['supplier_id']}"
+                f"Supplier code cannot be empty: "
+                f"{row['supplier_id']}"
             )
 
         if not row["supplier_name"].strip():
@@ -1722,11 +2169,7 @@ def validate_suppliers(
                 f"Invalid supplier phone format: {code}"
             )
 
-        phone_digits = re.sub(
-            r"\D",
-            "",
-            phone,
-        )
+        phone_digits = re.sub(r"\D", "", phone)
 
         if len(phone_digits) < 8:
             raise ValueError(
@@ -1745,13 +2188,9 @@ def validate_suppliers(
                 f"Invalid supplier email format: {code}"
             )
 
-        email_domain = email.rsplit(
-            "@",
-            1,
-        )[1].lower()
+        email_domain = email.rsplit("@", 1)[1].lower()
 
         blocked_email_tokens = {
-            "example",
             "test",
             "demo",
             "dummy",
@@ -1795,7 +2234,8 @@ def validate_suppliers(
 
         if row["supplier_status"] not in allowed_statuses:
             raise ValueError(
-                f"Invalid supplier status: {row['supplier_status']}"
+                f"Invalid supplier status: "
+                f"{row['supplier_status']}"
             )
 
         for field in (
@@ -1838,20 +2278,9 @@ def validate_brands(brands: list[dict]) -> None:
                 f"Missing brand fields: {sorted(missing_fields)}"
             )
 
-    brand_ids = [
-        row["brand_id"]
-        for row in brands
-    ]
-
-    brand_codes = [
-        row["brand_code"]
-        for row in brands
-    ]
-
-    brand_names = [
-        row["brand_name"]
-        for row in brands
-    ]
+    brand_ids = [row["brand_id"] for row in brands]
+    brand_codes = [row["brand_code"] for row in brands]
+    brand_names = [row["brand_name"] for row in brands]
 
     if len(brand_ids) != len(set(brand_ids)):
         raise ValueError("Duplicate brand_id found.")
@@ -1922,20 +2351,9 @@ def validate_categories(categories: list[dict]) -> None:
                 f"Missing category fields: {sorted(missing_fields)}"
             )
 
-    category_ids = [
-        row["category_id"]
-        for row in categories
-    ]
-
-    category_codes = [
-        row["category_code"]
-        for row in categories
-    ]
-
-    category_names = [
-        row["category_name"]
-        for row in categories
-    ]
+    category_ids = [row["category_id"] for row in categories]
+    category_codes = [row["category_code"] for row in categories]
+    category_names = [row["category_name"] for row in categories]
 
     if len(category_ids) != len(set(category_ids)):
         raise ValueError("Duplicate category_id found.")
@@ -2096,6 +2514,386 @@ def validate_sub_categories(
 
 
 # ============================================================
+# Product validation
+# ============================================================
+
+def validate_products(products: list[dict]) -> None:
+    """Validate product master data and reference integrity."""
+
+    if len(products) != PRODUCT_MASTER_COUNT:
+        raise ValueError(
+            f"Product count mismatch: expected "
+            f"{PRODUCT_MASTER_COUNT}, got {len(products)}"
+        )
+
+    required_fields = {
+        "product_id",
+        "sku",
+        "product_name",
+        "brand_id",
+        "sub_category_id",
+        "base_uom_id",
+        "pack_type",
+        "pack_size",
+        "base_quantity_per_pac",
+        "viscosity_grade",
+        "product_status",
+    }
+
+    for row in products:
+        missing_fields = required_fields - row.keys()
+
+        if missing_fields:
+            raise ValueError(
+                f"Missing product fields: "
+                f"{sorted(missing_fields)}"
+            )
+
+    product_ids = [
+        row["product_id"]
+        for row in products
+    ]
+
+    skus = [
+        row["sku"]
+        for row in products
+    ]
+
+    product_names = [
+        row["product_name"]
+        for row in products
+    ]
+
+    if product_ids != list(
+        range(1, PRODUCT_MASTER_COUNT + 1)
+    ):
+        raise ValueError(
+            "Product IDs are not sequential from 1 "
+            f"to {PRODUCT_MASTER_COUNT}."
+        )
+
+    if len(skus) != len(set(skus)):
+        raise ValueError(
+            "Duplicate product SKU found."
+        )
+
+    if len(product_names) != len(set(product_names)):
+        raise ValueError(
+            "Duplicate product_name found."
+        )
+
+    brand_ids = {
+        row["brand_id"]
+        for row in BRAND_DEFINITIONS
+    }
+
+    sub_category_map = {
+        row["sub_category_id"]: row
+        for row in SUB_CATEGORY_DEFINITIONS
+    }
+
+    uom_ids = {
+        row["uom_id"]
+        for row in UOM_DEFINITIONS
+    }
+
+    target_sub_category_ids = set(
+        SUB_CATEGORY_PRODUCT_TARGETS
+    )
+
+    if set(sub_category_map) != target_sub_category_ids:
+        raise ValueError(
+            "Sub-category definitions and product targets "
+            "do not cover the same IDs."
+        )
+
+    if set(PRODUCT_FAMILY_STEMS) != target_sub_category_ids:
+        raise ValueError(
+            "Product family definitions do not cover "
+            "all product target sub-categories."
+        )
+
+    if set(PRODUCT_GRADE_OPTIONS) != target_sub_category_ids:
+        raise ValueError(
+            "Product grade definitions do not cover "
+            "all product target sub-categories."
+        )
+
+    if set(PRODUCT_PACKAGE_GROUP) != target_sub_category_ids:
+        raise ValueError(
+            "Product package groups do not cover "
+            "all product target sub-categories."
+        )
+
+    if set(CATEGORY_SKU_PREFIXES) != set(
+        CATEGORY_PRODUCT_TARGETS
+    ):
+        raise ValueError(
+            "SKU prefixes do not cover all product target categories."
+        )
+
+    if sum(SUB_CATEGORY_PRODUCT_TARGETS.values()) != PRODUCT_MASTER_COUNT:
+        raise ValueError(
+            "Sub-category product targets do not sum "
+            f"to {PRODUCT_MASTER_COUNT}."
+        )
+
+    if sum(CATEGORY_PRODUCT_TARGETS.values()) != PRODUCT_MASTER_COUNT:
+        raise ValueError(
+            "Category product targets do not sum "
+            f"to {PRODUCT_MASTER_COUNT}."
+        )
+
+    if sum(PRODUCT_STATUS_TARGETS.values()) != PRODUCT_MASTER_COUNT:
+        raise ValueError(
+            "Product status targets do not sum "
+            f"to {PRODUCT_MASTER_COUNT}."
+        )
+
+    expected_brand_total = (
+        len(BRAND_DEFINITIONS) * PRODUCT_BRAND_TARGET
+    )
+
+    if expected_brand_total != PRODUCT_MASTER_COUNT:
+        raise ValueError(
+            "Brand distribution target does not reconcile "
+            f"to {PRODUCT_MASTER_COUNT}."
+        )
+
+    category_ids = set(
+        CATEGORY_PRODUCT_TARGETS
+    )
+
+    if category_ids != set(PRODUCT_CATEGORY_NAMES):
+        raise ValueError(
+            "Category product targets and category definitions "
+            "do not cover the same IDs."
+        )
+
+    sub_category_totals_by_category = {
+        category_id: 0
+        for category_id in CATEGORY_PRODUCT_TARGETS
+    }
+
+    for sub_category_id, target in (
+        SUB_CATEGORY_PRODUCT_TARGETS.items()
+    ):
+        category_id = sub_category_map[
+            sub_category_id
+        ]["category_id"]
+
+        sub_category_totals_by_category[
+            category_id
+        ] += target
+
+    if (
+        sub_category_totals_by_category
+        != CATEGORY_PRODUCT_TARGETS
+    ):
+        raise ValueError(
+            "Sub-category product targets do not reconcile "
+            "to category product targets."
+        )
+
+    allowed_statuses = set(PRODUCT_STATUS_TARGETS)
+
+    category_counts = {
+        category_id: 0
+        for category_id in CATEGORY_PRODUCT_TARGETS
+    }
+
+    sub_category_counts = {
+        sub_category_id: 0
+        for sub_category_id in SUB_CATEGORY_PRODUCT_TARGETS
+    }
+
+    brand_counts = {
+        brand_id: 0
+        for brand_id in brand_ids
+    }
+
+    status_counts = {
+        status: 0
+        for status in allowed_statuses
+    }
+
+    for row in products:
+        product_label = row["sku"]
+        sub_category_id = row["sub_category_id"]
+
+        if row["brand_id"] not in brand_ids:
+            raise ValueError(
+                f"Invalid brand_id {row['brand_id']} "
+                f"for {product_label}"
+            )
+
+        if sub_category_id not in sub_category_map:
+            raise ValueError(
+                f"Invalid sub_category_id "
+                f"{sub_category_id} for {product_label}"
+            )
+
+        if row["base_uom_id"] not in uom_ids:
+            raise ValueError(
+                f"Invalid base_uom_id "
+                f"{row['base_uom_id']} for {product_label}"
+            )
+
+        package_group = PRODUCT_PACKAGE_GROUP[
+            sub_category_id
+        ]
+
+        valid_packages = PRODUCT_PACKAGE_DEFINITIONS.get(
+            package_group
+        )
+
+        if not valid_packages:
+            raise ValueError(
+                f"No package definitions found for package group "
+                f"{package_group} assigned to {product_label}"
+            )
+
+        package = (
+            row["pack_type"],
+            row["pack_size"],
+            row["base_quantity_per_pac"],
+            row["base_uom_id"],
+        )
+
+        if package not in valid_packages:
+            raise ValueError(
+                f"Invalid package for sub-category "
+                f"{sub_category_id}: {product_label}: {package}"
+            )
+
+        if row["base_quantity_per_pac"] <= 0:
+            raise ValueError(
+                "base_quantity_per_pac must be positive: "
+                f"{product_label}"
+            )
+
+        valid_grades = PRODUCT_GRADE_OPTIONS[
+            sub_category_id
+        ]
+
+        if row["viscosity_grade"] not in valid_grades:
+            raise ValueError(
+                f"Invalid viscosity/grade value for sub-category "
+                f"{sub_category_id}: {product_label}: "
+                f"{row['viscosity_grade']}"
+            )
+
+        if row["product_status"] not in allowed_statuses:
+            raise ValueError(
+                f"Invalid product_status for "
+                f"{product_label}: {row['product_status']}"
+            )
+
+        if not row["sku"].strip():
+            raise ValueError(
+                "SKU cannot be empty: "
+                f"product_id={row['product_id']}"
+            )
+
+        if not row["product_name"].strip():
+            raise ValueError(
+                "Product name cannot be empty: "
+                f"product_id={row['product_id']}"
+            )
+
+        expected_category_id = sub_category_map[
+            sub_category_id
+        ]["category_id"]
+
+        category_counts[expected_category_id] += 1
+        sub_category_counts[sub_category_id] += 1
+        brand_counts[row["brand_id"]] += 1
+        status_counts[row["product_status"]] += 1
+
+    if category_counts != CATEGORY_PRODUCT_TARGETS:
+        raise ValueError(
+            "Category product distribution mismatch: "
+            f"{category_counts}"
+        )
+
+    if (
+        sub_category_counts
+        != SUB_CATEGORY_PRODUCT_TARGETS
+    ):
+        raise ValueError(
+            "Sub-category product distribution mismatch: "
+            f"{sub_category_counts}"
+        )
+
+    expected_brand_counts = {
+        brand_id: PRODUCT_BRAND_TARGET
+        for brand_id in brand_ids
+    }
+
+    if brand_counts != expected_brand_counts:
+        raise ValueError(
+            "Brand product distribution mismatch: "
+            f"{brand_counts}"
+        )
+
+    if status_counts != PRODUCT_STATUS_TARGETS:
+        raise ValueError(
+            "Product status distribution mismatch: "
+            f"{status_counts}"
+        )
+
+    for category_id, target in (
+        CATEGORY_PRODUCT_TARGETS.items()
+    ):
+        if category_id not in PRODUCT_CATEGORY_NAMES:
+            raise ValueError(
+                "Product target references unknown category: "
+                f"{category_id}"
+            )
+
+        if target <= 0:
+            raise ValueError(
+                "Product target must be positive: "
+                f"category {category_id}"
+            )
+
+    for sub_category_id, target in (
+        SUB_CATEGORY_PRODUCT_TARGETS.items()
+    ):
+        if target <= 0:
+            raise ValueError(
+                "Product target must be positive: "
+                f"sub-category {sub_category_id}"
+            )
+
+        if not PRODUCT_FAMILY_STEMS[
+            sub_category_id
+        ]:
+            raise ValueError(
+                "Product family definitions cannot be empty "
+                f"for sub-category {sub_category_id}"
+            )
+
+        if not PRODUCT_GRADE_OPTIONS[
+            sub_category_id
+        ]:
+            raise ValueError(
+                "Product grade definitions cannot be empty "
+                f"for sub-category {sub_category_id}"
+            )
+
+        package_group = PRODUCT_PACKAGE_GROUP[
+            sub_category_id
+        ]
+
+        if package_group not in PRODUCT_PACKAGE_DEFINITIONS:
+            raise ValueError(
+                f"Unknown package group {package_group} "
+                f"for sub-category {sub_category_id}"
+            )
+
+
+# ============================================================
 # Warehouse validation
 # ============================================================
 
@@ -2243,7 +3041,6 @@ def generate_locations(
     """Generate deterministic warehouse locations."""
 
     locations = []
-
     location_id = 1
 
     for warehouse in warehouses:
@@ -2304,11 +3101,9 @@ def generate_locations(
                     location_code = (
                         f"REC-{sequence:02d}"
                     )
-
                     location_name = (
                         f"Receiving Bay {sequence:02d}"
                     )
-
                     zone_code = "REC"
                     aisle_no = ""
                     rack_no = ""
@@ -2386,11 +3181,9 @@ def generate_locations(
                     location_code = (
                         f"DSP-{sequence:02d}"
                     )
-
                     location_name = (
                         f"Dispatch Staging {sequence:02d}"
                     )
-
                     zone_code = "DSP"
                     aisle_no = ""
                     rack_no = ""
@@ -2400,11 +3193,9 @@ def generate_locations(
                     location_code = (
                         f"QTN-{sequence:02d}"
                     )
-
                     location_name = (
                         f"Quarantine Area {sequence:02d}"
                     )
-
                     zone_code = "QTN"
                     aisle_no = ""
                     rack_no = ""
@@ -2414,11 +3205,9 @@ def generate_locations(
                     location_code = (
                         f"RET-{sequence:02d}"
                     )
-
                     location_name = (
                         f"Returns Area {sequence:02d}"
                     )
-
                     zone_code = "RET"
                     aisle_no = ""
                     rack_no = ""
@@ -2428,11 +3217,9 @@ def generate_locations(
                     location_code = (
                         f"DMG-{sequence:02d}"
                     )
-
                     location_name = (
                         f"Damage Hold Area {sequence:02d}"
                     )
-
                     zone_code = "DMG"
                     aisle_no = ""
                     rack_no = ""
@@ -2442,11 +3229,9 @@ def generate_locations(
                     location_code = (
                         f"STG-{sequence:02d}"
                     )
-
                     location_name = (
                         f"Staging Area {sequence:02d}"
                     )
-
                     zone_code = "STG"
                     aisle_no = ""
                     rack_no = ""
@@ -2589,7 +3374,6 @@ def validate_locations(
     }
 
     warehouse_location_pairs = set()
-
     capacity_by_warehouse = {}
 
     for row in locations:
@@ -2784,7 +3568,6 @@ def write_csv(
         newline="",
         encoding="utf-8",
     ) as csv_file:
-
         writer = csv.DictWriter(
             csv_file,
             fieldnames=fieldnames,
@@ -2950,6 +3733,34 @@ def write_sub_categories_csv(
     )
 
 
+def write_products_csv(
+    products: list[dict],
+) -> Path:
+    """Write product master data."""
+
+    return write_csv(
+        rows=products,
+        filename="master_products.csv",
+        fieldnames=[
+            "product_id",
+            "sku",
+            "product_name",
+            "brand_id",
+            "sub_category_id",
+            "base_uom_id",
+            "pack_type",
+            "pack_size",
+            "base_quantity_per_pac",
+            "viscosity_grade",
+            "product_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
 def write_warehouses_csv(
     warehouses: list[dict],
 ) -> Path:
@@ -3026,6 +3837,8 @@ def main() -> None:
         sub_categories = SUB_CATEGORY_DEFINITIONS
         warehouses = WAREHOUSE_DEFINITIONS
 
+        products = generate_products()
+
         locations = generate_locations(
             warehouses
         )
@@ -3057,6 +3870,9 @@ def main() -> None:
             categories,
         )
         print("Sub-category validation: PASSED")
+
+        validate_products(products)
+        print("Product validation: PASSED")
 
         validate_warehouses(
             warehouses
@@ -3103,6 +3919,10 @@ def main() -> None:
             )
         )
 
+        product_file = write_products_csv(
+            products
+        )
+
         warehouse_file = write_warehouses_csv(
             warehouses
         )
@@ -3132,6 +3952,9 @@ def main() -> None:
 
         print(f"Created: {sub_category_file}")
         print(f"Rows: {len(sub_categories)}")
+
+        print(f"Created: {product_file}")
+        print(f"Rows: {len(products)}")
 
         print(f"Created: {warehouse_file}")
         print(f"Rows: {len(warehouses)}")
