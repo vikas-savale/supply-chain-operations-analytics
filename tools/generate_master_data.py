@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 import csv
 import re
@@ -1453,6 +1453,1437 @@ UOM_CODES_BY_ID = {
 }
 
 
+# ============================================================
+# Product-supplier relationship generation
+# ============================================================
+
+PRODUCT_SUPPLIER_RANDOM_SEED = 20260102
+
+PRODUCT_SUPPLIER_COUNT_TARGETS = {
+    1: 300,
+    2: 525,
+    3: 450,
+    4: 225,
+}
+
+SUPPLIER_CATEGORY_CAPABILITIES = {
+    "manufacturer": {
+        1, 2, 3, 4, 5, 6, 7, 8,
+    },
+    "authorized_distributor": {
+        1, 2, 3, 4, 5, 6, 8,
+    },
+    "regional_distributor": {
+        1, 2, 3, 4, 5, 6, 8,
+    },
+    "importer": {
+        2, 3, 4, 6, 7,
+    },
+    "bulk_supplier": {
+        3, 4, 6, 7, 8,
+    },
+}
+
+SUPPLIER_SELECTION_WEIGHTS = {
+    "manufacturer": 3.0,
+    "authorized_distributor": 2.4,
+    "regional_distributor": 1.7,
+    "importer": 1.1,
+    "bulk_supplier": 0.9,
+}
+
+INACTIVE_SUPPLIER_SELECTION_FACTOR = 0.20
+
+SUPPLIER_PRICE_MULTIPLIER_RANGES = {
+    "manufacturer": (0.94, 1.05),
+    "authorized_distributor": (1.02, 1.14),
+    "regional_distributor": (1.05, 1.18),
+    "importer": (1.08, 1.24),
+    "bulk_supplier": (0.91, 1.02),
+}
+
+SUPPLIER_MOQ_MULTIPLIERS = {
+    "manufacturer": 1.00,
+    "authorized_distributor": 1.15,
+    "regional_distributor": 1.25,
+    "importer": 0.90,
+    "bulk_supplier": 0.85,
+}
+
+CATEGORY_PURCHASE_PRICE_PER_BASE_UOM = {
+    1: 240.0,
+    2: 220.0,
+    3: 190.0,
+    4: 210.0,
+    5: 360.0,
+    6: 140.0,
+    7: 320.0,
+    8: 210.0,
+}
+
+CATEGORY_LEAD_TIME_ADJUSTMENT = {
+    1: 0,
+    2: 0,
+    3: 1,
+    4: 1,
+    5: 0,
+    6: 0,
+    7: 2,
+    8: 1,
+}
+
+PACKAGE_MOQ_BASE = {
+    "Bottle": 12,
+    "Can": 12,
+    "Bucket": 6,
+    "Drum": 2,
+    "Barrel": 1,
+    "Bulk": 1,
+    "Cartridge": 24,
+    "Tub": 12,
+    "Pail": 4,
+}
+
+PACKAGE_CATEGORY_PRICE_DISCOUNT = {
+    180: 0.95,
+    500: 0.91,
+}
+
+PRODUCT_SUPPLIER_EFFECTIVE_FROM = date(2026, 1, 1)
+PRODUCT_SUPPLIER_LEGACY_FROM = date(2024, 1, 1)
+PRODUCT_SUPPLIER_LEGACY_TO = date(2025, 12, 31)
+
+PRODUCT_SUPPLIER_ACTIVE_HISTORY_DAYS = 730
+PRODUCT_SUPPLIER_INACTIVE_MAX_HISTORY_DAYS = 730
+PRODUCT_SUPPLIER_INACTIVE_MIN_DURATION_DAYS = 60
+PRODUCT_SUPPLIER_INACTIVE_MAX_DURATION_DAYS = 540
+
+PACKAGED_PRODUCT_TYPES = {
+    "Bottle",
+    "Can",
+    "Bucket",
+    "Drum",
+    "Barrel",
+    "Cartridge",
+    "Tub",
+    "Pail",
+}
+
+
+def build_product_supplier_count_map(
+    products: list[dict],
+) -> dict[int, int]:
+    """Assign deterministic supplier counts across products."""
+
+    import random
+
+    rng = random.Random(PRODUCT_SUPPLIER_RANDOM_SEED)
+
+    product_ids = [
+        row["product_id"]
+        for row in products
+    ]
+
+    rng.shuffle(product_ids)
+
+    expected_total_products = sum(
+        PRODUCT_SUPPLIER_COUNT_TARGETS.values()
+    )
+
+    if len(product_ids) != expected_total_products:
+        raise ValueError(
+            "Product supplier count targets do not cover "
+            f"the current product count: "
+            f"expected {expected_total_products}, "
+            f"got {len(product_ids)}"
+        )
+
+    count_map = {}
+    cursor = 0
+
+    for relationship_count in sorted(
+        PRODUCT_SUPPLIER_COUNT_TARGETS
+    ):
+        product_count = PRODUCT_SUPPLIER_COUNT_TARGETS[
+            relationship_count
+        ]
+
+        for product_id in product_ids[
+            cursor:cursor + product_count
+        ]:
+            count_map[product_id] = relationship_count
+
+        cursor += product_count
+
+    return count_map
+
+
+def _weighted_sample_without_replacement(
+    rng,
+    candidates: list[dict],
+    weights: list[float],
+    sample_size: int,
+) -> list[dict]:
+    """Sample unique candidates using deterministic weighted selection."""
+
+    if sample_size > len(candidates):
+        raise ValueError(
+            "Cannot sample more suppliers than available "
+            "eligible suppliers."
+        )
+
+    remaining_candidates = list(candidates)
+    remaining_weights = list(weights)
+    selected = []
+
+    for _ in range(sample_size):
+        total_weight = sum(remaining_weights)
+
+        if total_weight <= 0:
+            raise ValueError(
+                "Supplier selection weights must contain "
+                "a positive total."
+            )
+
+        threshold = rng.random() * total_weight
+        cumulative = 0.0
+        selected_index = None
+
+        for index, weight in enumerate(
+            remaining_weights
+        ):
+            cumulative += weight
+
+            if threshold <= cumulative:
+                selected_index = index
+                break
+
+        if selected_index is None:
+            selected_index = len(remaining_candidates) - 1
+
+        selected.append(
+            remaining_candidates.pop(selected_index)
+        )
+        remaining_weights.pop(selected_index)
+
+    return selected
+
+
+def _get_product_category_id(
+    product: dict,
+) -> int:
+    """Return the category ID associated with a product."""
+
+    sub_category = SUB_CATEGORY_BY_ID[
+        product["sub_category_id"]
+    ]
+
+    return sub_category["category_id"]
+
+
+def _get_supplier_candidates(
+    product: dict,
+    suppliers: list[dict],
+) -> list[dict]:
+    """Return suppliers eligible for the product."""
+
+    category_id = _get_product_category_id(product)
+
+    eligible = []
+
+    for supplier in suppliers:
+        supplier_type = supplier["supplier_type"]
+
+        allowed_categories = (
+            SUPPLIER_CATEGORY_CAPABILITIES[
+                supplier_type
+            ]
+        )
+
+        if category_id not in allowed_categories:
+            continue
+
+        # Active products can only use active suppliers.
+        if (
+            product["product_status"] == "active"
+            and supplier["supplier_status"] != "active"
+        ):
+            continue
+
+        eligible.append(supplier)
+
+    return eligible
+
+
+def _get_purchase_uom_id(
+    product: dict,
+) -> int:
+    """
+    Determine the purchasing UOM from the product packaging.
+
+    Packaged products are purchased by package.
+    Bulk liquid products are purchased by litre.
+    Bulk grease products are purchased by kilogram.
+    """
+
+    pack_type = product["pack_type"]
+    base_uom_id = product["base_uom_id"]
+
+    if pack_type in PACKAGED_PRODUCT_TYPES:
+        return 6
+
+    if pack_type == "Bulk":
+        if base_uom_id == 1:
+            return 1
+
+        if base_uom_id == 3:
+            return 3
+
+        raise ValueError(
+            "Bulk product must use a litre or kilogram base UOM: "
+            f"product_id={product['product_id']}, "
+            f"base_uom_id={base_uom_id}"
+        )
+
+    raise ValueError(
+        "Unsupported product pack type for purchasing UOM: "
+        f"product_id={product['product_id']}, "
+        f"pack_type={pack_type}"
+    )
+
+
+def _build_supplier_product_name(
+    product: dict,
+) -> str:
+    """Build a clean supplier-facing product name with package size in brackets."""
+
+    product_name = product["product_name"].strip()
+    pack_size = product["pack_size"].strip()
+
+    if not product_name.endswith(pack_size):
+        raise ValueError(
+            "Product name does not end with its package size: "
+            f"product_id={product['product_id']}"
+        )
+
+    base_name = product_name[
+        :len(product_name) - len(pack_size)
+    ].rstrip()
+
+    supplier_product_name = (
+        f"{base_name} ({pack_size})"
+    )
+
+    return supplier_product_name[:150]
+
+
+def _calculate_unit_purchase_price(
+    product: dict,
+    supplier: dict,
+    rng,
+) -> float:
+    """Calculate supplier-specific purchase price in the purchase UOM."""
+
+    category_id = _get_product_category_id(product)
+
+    base_price_per_uom = (
+        CATEGORY_PURCHASE_PRICE_PER_BASE_UOM[
+            category_id
+        ]
+    )
+
+    base_quantity_per_pac = float(
+        product["base_quantity_per_pac"]
+    )
+
+    purchase_uom_id = _get_purchase_uom_id(
+        product
+    )
+
+    package_discount = 1.0
+
+    for threshold, discount in sorted(
+        PACKAGE_CATEGORY_PRICE_DISCOUNT.items()
+    ):
+        if base_quantity_per_pac >= threshold:
+            package_discount = discount
+
+    supplier_type = supplier["supplier_type"]
+
+    minimum_multiplier, maximum_multiplier = (
+        SUPPLIER_PRICE_MULTIPLIER_RANGES[
+            supplier_type
+        ]
+    )
+
+    supplier_multiplier = rng.uniform(
+        minimum_multiplier,
+        maximum_multiplier,
+    )
+
+    grade_multiplier = 1.0
+
+    viscosity_grade = product["viscosity_grade"]
+
+    if viscosity_grade == "ATF Synthetic":
+        grade_multiplier = 1.08
+
+    if viscosity_grade == "AGMA 6":
+        grade_multiplier = 1.06
+
+    if purchase_uom_id == 6:
+        price = (
+            base_price_per_uom
+            * base_quantity_per_pac
+            * package_discount
+            * supplier_multiplier
+            * grade_multiplier
+        )
+
+    elif purchase_uom_id in {1, 3}:
+        price = (
+            base_price_per_uom
+            * package_discount
+            * supplier_multiplier
+            * grade_multiplier
+        )
+
+    else:
+        raise ValueError(
+            "Unsupported purchase UOM for purchase price: "
+            f"product_id={product['product_id']}, "
+            f"purchase_uom_id={purchase_uom_id}"
+        )
+
+    return round(
+        max(price, 0.01),
+        2,
+    )
+
+
+def _calculate_minimum_order_quantity(
+    product: dict,
+    supplier: dict,
+    rng,
+) -> float:
+    """Calculate supplier MOQ in the purchase UOM."""
+
+    pack_type = product["pack_type"]
+    supplier_type = supplier["supplier_type"]
+
+    supplier_multiplier = (
+        SUPPLIER_MOQ_MULTIPLIERS[
+            supplier_type
+        ]
+    )
+
+    purchase_uom_id = _get_purchase_uom_id(
+        product
+    )
+
+    if purchase_uom_id == 6:
+        base_moq = PACKAGE_MOQ_BASE[
+            pack_type
+        ]
+
+        variation = rng.uniform(
+            0.85,
+            1.20,
+        )
+
+        quantity = round(
+            base_moq
+            * supplier_multiplier
+            * variation
+        )
+
+        return float(
+            max(
+                int(quantity),
+                1,
+            )
+        )
+
+    if purchase_uom_id in {1, 3}:
+        base_quantity_per_pac = float(
+            product["base_quantity_per_pac"]
+        )
+
+        variation = rng.uniform(
+            0.80,
+            1.25,
+        )
+
+        raw_quantity = (
+            base_quantity_per_pac
+            * supplier_multiplier
+            * variation
+        )
+
+        # Bulk ordering is expressed in practical lot sizes.
+        lot_size = 50.0
+
+        quantity = (
+            round(
+                raw_quantity / lot_size
+            )
+            * lot_size
+        )
+
+        return round(
+            max(
+                quantity,
+                lot_size,
+            ),
+            3,
+        )
+
+    raise ValueError(
+        "Unsupported purchase UOM for MOQ: "
+        f"product_id={product['product_id']}, "
+        f"purchase_uom_id={purchase_uom_id}"
+    )
+
+
+def _calculate_relationship_lead_time(
+    product: dict,
+    supplier: dict,
+    rng,
+) -> int:
+    """Calculate product-specific sourcing lead time."""
+
+    category_id = _get_product_category_id(product)
+
+    supplier_baseline = supplier["lead_time_days"]
+
+    category_adjustment = (
+        CATEGORY_LEAD_TIME_ADJUSTMENT[
+            category_id
+        ]
+    )
+
+    package_adjustment = 0
+
+    if float(product["base_quantity_per_pac"]) >= 180:
+        package_adjustment = 1
+
+    variation = rng.randint(
+        -2,
+        3,
+    )
+
+    lead_time = (
+        supplier_baseline
+        + category_adjustment
+        + package_adjustment
+        + variation
+    )
+
+    return max(
+        int(lead_time),
+        0,
+    )
+
+
+def _calculate_relationship_dates(
+    relationship_status: str,
+    rng,
+) -> tuple[date, date | None]:
+    """Generate deterministic business-valid relationship effective dates."""
+
+    if relationship_status == "active":
+        effective_from = (
+            PRODUCT_SUPPLIER_EFFECTIVE_FROM
+            - timedelta(
+                days=rng.randint(
+                    0,
+                    PRODUCT_SUPPLIER_ACTIVE_HISTORY_DAYS,
+                )
+            )
+        )
+
+        return (
+            effective_from,
+            None,
+        )
+
+    if relationship_status == "inactive":
+        effective_to = (
+            PRODUCT_SUPPLIER_LEGACY_TO
+            - timedelta(
+                days=rng.randint(
+                    0,
+                    364,
+                )
+            )
+        )
+
+        duration_days = rng.randint(
+            PRODUCT_SUPPLIER_INACTIVE_MIN_DURATION_DAYS,
+            PRODUCT_SUPPLIER_INACTIVE_MAX_DURATION_DAYS,
+        )
+
+        effective_from = (
+            effective_to
+            - timedelta(days=duration_days)
+        )
+
+        minimum_allowed_from = (
+            PRODUCT_SUPPLIER_LEGACY_FROM
+            - timedelta(
+                days=PRODUCT_SUPPLIER_INACTIVE_MAX_HISTORY_DAYS
+            )
+        )
+
+        if effective_from < minimum_allowed_from:
+            effective_from = minimum_allowed_from
+
+        if effective_from >= effective_to:
+            effective_from = (
+                effective_to
+                - timedelta(
+                    days=PRODUCT_SUPPLIER_INACTIVE_MIN_DURATION_DAYS
+                )
+            )
+
+        return (
+            effective_from,
+            effective_to,
+        )
+
+    raise ValueError(
+        "Unsupported product-supplier relationship status: "
+        f"{relationship_status}"
+    )
+
+
+def _select_primary_supplier(
+    relationship_candidates: list[dict],
+    rng,
+) -> int:
+    """Select one active primary supplier without always choosing the cheapest."""
+
+    if not relationship_candidates:
+        raise ValueError(
+            "Cannot select a primary supplier from an empty set."
+        )
+
+    if len(relationship_candidates) == 1:
+        return relationship_candidates[0][
+            "supplier_id"
+        ]
+
+    minimum_price = min(
+        row["unit_purchase_price"]
+        for row in relationship_candidates
+    )
+
+    minimum_lead_time = min(
+        row["lead_time_days"]
+        for row in relationship_candidates
+    )
+
+    scored = []
+
+    for row in relationship_candidates:
+        supplier_type = row[
+            "_supplier_type"
+        ]
+
+        supplier_preference = (
+            1.0
+            / SUPPLIER_SELECTION_WEIGHTS[
+                supplier_type
+            ]
+        )
+
+        price_ratio = (
+            row["unit_purchase_price"]
+            / minimum_price
+        )
+
+        lead_ratio = (
+            row["lead_time_days"]
+            / max(
+                minimum_lead_time,
+                1,
+            )
+        )
+
+        score = (
+            0.55 * price_ratio
+            + 0.30 * lead_ratio
+            + 0.15 * supplier_preference
+            + rng.uniform(0.0, 0.03)
+        )
+
+        scored.append(
+            (
+                score,
+                row,
+            )
+        )
+
+    scored.sort(
+        key=lambda item: item[0]
+    )
+
+    top_candidates = [
+        item[1]
+        for item in scored[:3]
+    ]
+
+    if len(top_candidates) == 1:
+        return top_candidates[0][
+            "supplier_id"
+        ]
+
+    selection_weights = []
+
+    for index in range(
+        len(top_candidates)
+    ):
+        if index == 0:
+            selection_weights.append(0.60)
+        elif index == 1:
+            selection_weights.append(0.25)
+        else:
+            selection_weights.append(0.15)
+
+    total_weight = sum(
+        selection_weights
+    )
+
+    threshold = (
+        rng.random()
+        * total_weight
+    )
+
+    cumulative = 0.0
+
+    for index, weight in enumerate(
+        selection_weights
+    ):
+        cumulative += weight
+
+        if threshold <= cumulative:
+            return top_candidates[index][
+                "supplier_id"
+            ]
+
+    return top_candidates[-1][
+        "supplier_id"
+    ]
+
+
+def generate_product_suppliers(
+    products: list[dict],
+    suppliers: list[dict],
+) -> list[dict]:
+    """Generate deterministic product-supplier relationships."""
+
+    import random
+
+    rng = random.Random(
+        PRODUCT_SUPPLIER_RANDOM_SEED
+    )
+
+    relationship_count_map = (
+        build_product_supplier_count_map(
+            products
+        )
+    )
+
+    relationship_rows = []
+
+    for product in products:
+        product_id = product["product_id"]
+
+        relationship_count = (
+            relationship_count_map[
+                product_id
+            ]
+        )
+
+        candidates = _get_supplier_candidates(
+            product,
+            suppliers,
+        )
+
+        if len(candidates) < relationship_count:
+            raise ValueError(
+                "Insufficient eligible suppliers for "
+                f"product {product['sku']}: "
+                f"required={relationship_count}, "
+                f"available={len(candidates)}"
+            )
+
+        weights = []
+
+        for supplier in candidates:
+            supplier_type = supplier[
+                "supplier_type"
+            ]
+
+            weight = SUPPLIER_SELECTION_WEIGHTS[
+                supplier_type
+            ]
+
+            if (
+                supplier["supplier_status"]
+                != "active"
+            ):
+                weight *= (
+                    INACTIVE_SUPPLIER_SELECTION_FACTOR
+                )
+
+            weights.append(weight)
+
+        selected_suppliers = (
+            _weighted_sample_without_replacement(
+                rng,
+                candidates,
+                weights,
+                relationship_count,
+            )
+        )
+
+        candidate_relationships = []
+
+        for supplier in selected_suppliers:
+            relationship_status = (
+                "active"
+                if product["product_status"]
+                == "active"
+                else "inactive"
+            )
+
+            purchase_uom_id = _get_purchase_uom_id(
+                product
+            )
+
+            purchase_price = (
+                _calculate_unit_purchase_price(
+                    product,
+                    supplier,
+                    rng,
+                )
+            )
+
+            minimum_order_quantity = (
+                _calculate_minimum_order_quantity(
+                    product,
+                    supplier,
+                    rng,
+                )
+            )
+
+            lead_time_days = (
+                _calculate_relationship_lead_time(
+                    product,
+                    supplier,
+                    rng,
+                )
+            )
+
+            category_prefix = (
+                CATEGORY_SKU_PREFIXES[
+                    _get_product_category_id(product)
+                ]
+            )
+
+            supplier_product_code = (
+                f"{supplier['supplier_code']}-"
+                f"{category_prefix}-"
+                f"{product_id:04d}"
+            )
+
+            supplier_product_name = (
+                _build_supplier_product_name(
+                    product
+                )
+            )
+
+            effective_from, effective_to = (
+                _calculate_relationship_dates(
+                    relationship_status,
+                    rng,
+                )
+            )
+
+            candidate_relationships.append(
+                {
+                    "product_id": product_id,
+                    "supplier_id": supplier[
+                        "supplier_id"
+                    ],
+                    "supplier_product_code": (
+                        supplier_product_code
+                    ),
+                    "supplier_product_name": (
+                        supplier_product_name
+                    ),
+                    "purchase_uom_id": (
+                        purchase_uom_id
+                    ),
+                    "unit_purchase_price": (
+                        purchase_price
+                    ),
+                    "minimum_order_quantity": (
+                        minimum_order_quantity
+                    ),
+                    "lead_time_days": (
+                        lead_time_days
+                    ),
+                    "is_primary_source": False,
+                    "relationship_status": (
+                        relationship_status
+                    ),
+                    "effective_from": (
+                        effective_from.isoformat()
+                    ),
+                    "effective_to": (
+                        effective_to.isoformat()
+                        if effective_to
+                        else None
+                    ),
+                    "_supplier_type": supplier[
+                        "supplier_type"
+                    ],
+                }
+            )
+
+        if product["product_status"] == "active":
+            primary_supplier_id = (
+                _select_primary_supplier(
+                    candidate_relationships,
+                    rng,
+                )
+            )
+
+            for row in candidate_relationships:
+                row["is_primary_source"] = (
+                    row["supplier_id"]
+                    == primary_supplier_id
+                )
+
+        for row in candidate_relationships:
+            row.pop(
+                "_supplier_type",
+                None,
+            )
+
+            row["product_supplier_id"] = (
+                len(relationship_rows) + 1
+            )
+
+            relationship_rows.append(
+                row
+            )
+
+    expected_relationship_count = (
+        sum(
+            relationship_count
+            * product_count
+            for relationship_count,
+            product_count
+            in PRODUCT_SUPPLIER_COUNT_TARGETS.items()
+        )
+    )
+
+    if len(relationship_rows) != (
+        expected_relationship_count
+    ):
+        raise ValueError(
+            "Product-supplier relationship count mismatch: "
+            f"expected {expected_relationship_count}, "
+            f"generated {len(relationship_rows)}"
+        )
+
+    return relationship_rows
+
+
+def validate_product_suppliers(
+    product_suppliers: list[dict],
+    products: list[dict],
+    suppliers: list[dict],
+) -> None:
+    """Validate product-supplier relationships and sourcing rules."""
+
+    expected_relationship_count = (
+        sum(
+            relationship_count
+            * product_count
+            for relationship_count,
+            product_count
+            in PRODUCT_SUPPLIER_COUNT_TARGETS.items()
+        )
+    )
+
+    if len(product_suppliers) != (
+        expected_relationship_count
+    ):
+        raise ValueError(
+            "Product-supplier relationship count mismatch: "
+            f"expected {expected_relationship_count}, "
+            f"got {len(product_suppliers)}"
+        )
+
+    required_fields = {
+        "product_supplier_id",
+        "product_id",
+        "supplier_id",
+        "supplier_product_code",
+        "supplier_product_name",
+        "purchase_uom_id",
+        "unit_purchase_price",
+        "minimum_order_quantity",
+        "lead_time_days",
+        "is_primary_source",
+        "relationship_status",
+        "effective_from",
+        "effective_to",
+    }
+
+    for row in product_suppliers:
+        missing_fields = (
+            required_fields - row.keys()
+        )
+
+        if missing_fields:
+            raise ValueError(
+                "Missing product-supplier fields: "
+                f"{sorted(missing_fields)}"
+            )
+
+    product_map = {
+        row["product_id"]: row
+        for row in products
+    }
+
+    supplier_map = {
+        row["supplier_id"]: row
+        for row in suppliers
+    }
+
+    relationship_ids = [
+        row["product_supplier_id"]
+        for row in product_suppliers
+    ]
+
+    if relationship_ids != list(
+        range(
+            1,
+            expected_relationship_count + 1,
+        )
+    ):
+        raise ValueError(
+            "Product-supplier IDs are not sequential."
+        )
+
+    relationship_pairs = [
+        (
+            row["product_id"],
+            row["supplier_id"],
+        )
+        for row in product_suppliers
+    ]
+
+    if len(relationship_pairs) != len(
+        set(relationship_pairs)
+    ):
+        raise ValueError(
+            "Duplicate product-supplier relationship found."
+        )
+
+    supplier_codes = [
+        (
+            row["supplier_id"],
+            row["supplier_product_code"],
+        )
+        for row in product_suppliers
+    ]
+
+    if len(supplier_codes) != len(
+        set(supplier_codes)
+    ):
+        raise ValueError(
+            "Duplicate supplier product code found "
+            "within supplier."
+        )
+
+    relationship_count_by_product = {}
+
+    for row in product_suppliers:
+        product_id = row["product_id"]
+        supplier_id = row["supplier_id"]
+
+        if product_id not in product_map:
+            raise ValueError(
+                "Product-supplier relationship references "
+                f"unknown product_id: {product_id}"
+            )
+
+        if supplier_id not in supplier_map:
+            raise ValueError(
+                "Product-supplier relationship references "
+                f"unknown supplier_id: {supplier_id}"
+            )
+
+        supplier = supplier_map[
+            supplier_id
+        ]
+
+        product = product_map[
+            product_id
+        ]
+
+        expected_purchase_uom_id = (
+            _get_purchase_uom_id(
+                product
+            )
+        )
+
+        if row["purchase_uom_id"] != (
+            expected_purchase_uom_id
+        ):
+            raise ValueError(
+                "Unexpected product-supplier purchase UOM: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}, "
+                f"expected={expected_purchase_uom_id}, "
+                f"got={row['purchase_uom_id']}"
+            )
+
+        if (
+            row["purchase_uom_id"]
+            not in UOM_CODES_BY_ID
+        ):
+            raise ValueError(
+                "Unknown purchase UOM ID: "
+                f"{row['purchase_uom_id']}"
+            )
+
+        if row["unit_purchase_price"] <= 0:
+            raise ValueError(
+                "Unit purchase price must be positive: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if row["minimum_order_quantity"] <= 0:
+            raise ValueError(
+                "Minimum order quantity must be positive: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if row["lead_time_days"] < 0:
+            raise ValueError(
+                "Lead time cannot be negative: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if row["relationship_status"] not in {
+            "active",
+            "inactive",
+        }:
+            raise ValueError(
+                "Invalid product-supplier relationship status: "
+                f"{row['relationship_status']}"
+            )
+
+        if not row["supplier_product_code"].strip():
+            raise ValueError(
+                "Supplier product code cannot be empty: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        expected_supplier_product_name = (
+            _build_supplier_product_name(
+                product
+            )
+        )
+
+        if (
+            row["supplier_product_name"]
+            != expected_supplier_product_name
+        ):
+            raise ValueError(
+                "Supplier product name format mismatch: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if (
+            len(
+                row["supplier_product_name"]
+            )
+            > 150
+        ):
+            raise ValueError(
+                "Supplier product name exceeds 150 characters: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if (
+            row["supplier_product_name"]
+            .endswith("Supply Pack")
+        ):
+            raise ValueError(
+                "Supplier product name contains the deprecated "
+                "Supply Pack suffix: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if supplier["supplier_code"] in (
+            row["supplier_product_name"]
+        ):
+            raise ValueError(
+                "Supplier product name contains a supplier code: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if not (
+            row["supplier_product_name"]
+            .endswith(
+                f"({product['pack_size']})"
+            )
+        ):
+            raise ValueError(
+                "Supplier product name must end with "
+                "the package size in brackets: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        effective_from = date.fromisoformat(
+            row["effective_from"]
+        )
+
+        effective_to = None
+
+        if row["effective_to"] is not None:
+            effective_to = date.fromisoformat(
+                row["effective_to"]
+            )
+
+            if effective_to < effective_from:
+                raise ValueError(
+                    "effective_to cannot be before "
+                    "effective_from."
+                )
+
+        if (
+            effective_from
+            > PRODUCT_SUPPLIER_EFFECTIVE_FROM
+        ):
+            raise ValueError(
+                "effective_from cannot be in the future "
+                "relative to the master data date: "
+                f"product_id={product_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if (
+            row["relationship_status"]
+            == "active"
+        ):
+            if supplier["supplier_status"] != "active":
+                raise ValueError(
+                    "Inactive supplier cannot have "
+                    "an active relationship: "
+                    f"supplier_id={supplier_id}"
+                )
+
+            if product["product_status"] != "active":
+                raise ValueError(
+                    "Non-active product cannot have "
+                    "an active supplier relationship: "
+                    f"product_id={product_id}"
+                )
+
+            if effective_to is not None:
+                raise ValueError(
+                    "Active relationship must not have "
+                    "an effective_to date."
+                )
+
+        else:
+            if row["is_primary_source"]:
+                raise ValueError(
+                    "Inactive relationship cannot be primary."
+                )
+
+            if effective_to is None:
+                raise ValueError(
+                    "Inactive relationship must have "
+                    "an effective_to date."
+                )
+
+            if effective_to >= PRODUCT_SUPPLIER_EFFECTIVE_FROM:
+                raise ValueError(
+                    "Inactive relationship must end before "
+                    "the active master-data date: "
+                    f"product_id={product_id}, "
+                    f"supplier_id={supplier_id}"
+                )
+
+        if supplier["supplier_status"] == "inactive":
+            if (
+                row["relationship_status"]
+                == "active"
+            ):
+                raise ValueError(
+                    "Inactive supplier cannot be active."
+                )
+
+            if row["is_primary_source"]:
+                raise ValueError(
+                    "Inactive supplier cannot be primary."
+                )
+
+        relationship_count_by_product[
+            product_id
+        ] = (
+            relationship_count_by_product.get(
+                product_id,
+                0,
+            )
+            + 1
+        )
+
+    if set(relationship_count_by_product) != set(
+        product_map
+    ):
+        missing_products = (
+            set(product_map)
+            - set(relationship_count_by_product)
+        )
+
+        raise ValueError(
+            "Products without supplier relationships: "
+            f"{sorted(missing_products)[:20]}"
+        )
+
+    expected_count_map = (
+        build_product_supplier_count_map(
+            products
+        )
+    )
+
+    if (
+        relationship_count_by_product
+        != expected_count_map
+    ):
+        raise ValueError(
+            "Product-supplier relationship count "
+            "distribution mismatch."
+        )
+
+    primary_count_by_product = {}
+
+    active_relationship_count_by_product = {}
+
+    for row in product_suppliers:
+        product_id = row["product_id"]
+
+        if row["is_primary_source"]:
+            primary_count_by_product[
+                product_id
+            ] = (
+                primary_count_by_product.get(
+                    product_id,
+                    0,
+                )
+                + 1
+            )
+
+        if row["relationship_status"] == "active":
+            active_relationship_count_by_product[
+                product_id
+            ] = (
+                active_relationship_count_by_product.get(
+                    product_id,
+                    0,
+                )
+                + 1
+            )
+
+    for product in products:
+        product_id = product[
+            "product_id"
+        ]
+
+        primary_count = (
+            primary_count_by_product.get(
+                product_id,
+                0,
+            )
+        )
+
+        active_relationship_count = (
+            active_relationship_count_by_product.get(
+                product_id,
+                0,
+            )
+        )
+
+        if product["product_status"] == "active":
+            if active_relationship_count < 1:
+                raise ValueError(
+                    "Active product has no active supplier relationship: "
+                    f"product_id={product_id}"
+                )
+
+            if primary_count != 1:
+                raise ValueError(
+                    "Active product must have exactly "
+                    "one active primary supplier: "
+                    f"product_id={product_id}"
+                )
+
+        else:
+            if active_relationship_count != 0:
+                raise ValueError(
+                    "Inactive/discontinued product cannot "
+                    "have active supplier relationships: "
+                    f"product_id={product_id}"
+                )
+
+            if primary_count != 0:
+                raise ValueError(
+                    "Inactive/discontinued product cannot "
+                    "have a primary supplier: "
+                    f"product_id={product_id}"
+                )
+
+    relationship_count_distribution = {}
+
+    for count in relationship_count_by_product.values():
+        relationship_count_distribution[count] = (
+            relationship_count_distribution.get(
+                count,
+                0,
+            )
+            + 1
+        )
+
+    if (
+        relationship_count_distribution
+        != PRODUCT_SUPPLIER_COUNT_TARGETS
+    ):
+        raise ValueError(
+            "Supplier-per-product distribution mismatch: "
+            f"{relationship_count_distribution}"
+        )
+
+
 def generate_products() -> list[dict]:
     """Generate the large product master deterministically."""
 
@@ -1488,13 +2919,26 @@ def generate_products() -> list[dict]:
         packages = PRODUCT_PACKAGE_DEFINITIONS[package_group]
 
         for local_index in range(target_count):
-            brand_id = (global_index % len(BRAND_DEFINITIONS)) + 1
-            family = families[local_index % len(families)]
-            grade = grades[
-                (local_index // len(families)) % len(grades)
+            brand_id = (
+                global_index
+                % len(BRAND_DEFINITIONS)
+            ) + 1
+
+            family = families[
+                local_index % len(families)
             ]
+
+            grade = grades[
+                (local_index // len(families))
+                % len(grades)
+            ]
+
             package = packages[
-                (local_index + sub_category_id * 2) % len(packages)
+                (
+                    local_index
+                    + sub_category_id * 2
+                )
+                % len(packages)
             ]
 
             (
@@ -1505,10 +2949,16 @@ def generate_products() -> list[dict]:
             ) = package
 
             category_sequences[category_id] += 1
-            category_sequence = category_sequences[category_id]
+
+            category_sequence = (
+                category_sequences[
+                    category_id
+                ]
+            )
 
             sku = (
-                f"NR-{category_prefix}-{category_sequence:04d}"
+                f"NR-{category_prefix}-"
+                f"{category_sequence:04d}"
             )
 
             name_parts = [
@@ -1525,15 +2975,23 @@ def generate_products() -> list[dict]:
                 {
                     "product_id": global_index + 1,
                     "sku": sku,
-                    "product_name": " ".join(name_parts),
+                    "product_name": " ".join(
+                        name_parts
+                    ),
                     "brand_id": brand_id,
-                    "sub_category_id": sub_category_id,
+                    "sub_category_id": (
+                        sub_category_id
+                    ),
                     "base_uom_id": base_uom_id,
                     "pack_type": pack_type,
                     "pack_size": pack_size,
-                    "base_quantity_per_pac": base_quantity,
+                    "base_quantity_per_pac": (
+                        base_quantity
+                    ),
                     "viscosity_grade": grade,
-                    "product_status": status_pool[global_index],
+                    "product_status": (
+                        status_pool[global_index]
+                    ),
                 }
             )
 
@@ -1839,13 +3297,17 @@ LOCATION_TYPE_ORDER = [
 def format_timestamp(value: datetime) -> str:
     """Return a PostgreSQL-friendly timestamp string."""
 
-    return value.strftime("%Y-%m-%d %H:%M:%S")
+    return value.strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
 
 
 def add_audit_columns(row: dict) -> dict:
     """Add standard audit fields to a master-data row."""
 
-    timestamp = format_timestamp(MASTER_DATA_DATE)
+    timestamp = format_timestamp(
+        MASTER_DATA_DATE
+    )
 
     return {
         **row,
@@ -1856,7 +3318,9 @@ def add_audit_columns(row: dict) -> dict:
     }
 
 
-def get_warehouse_by_id(warehouse_id: int) -> dict:
+def get_warehouse_by_id(
+    warehouse_id: int,
+) -> dict:
     """Return a warehouse definition by ID."""
 
     for warehouse in WAREHOUSE_DEFINITIONS:
@@ -1872,11 +3336,15 @@ def get_warehouse_by_id(warehouse_id: int) -> dict:
 # UOM validation
 # ============================================================
 
-def validate_uoms(uoms: list[dict]) -> None:
+def validate_uoms(
+    uoms: list[dict],
+) -> None:
     """Validate UOM master data."""
 
     if not uoms:
-        raise ValueError("UOM data is empty.")
+        raise ValueError(
+            "UOM data is empty."
+        )
 
     required_fields = {
         "uom_id",
@@ -1887,28 +3355,56 @@ def validate_uoms(uoms: list[dict]) -> None:
     }
 
     for row in uoms:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
-                f"Missing UOM fields: {sorted(missing_fields)}"
+                f"Missing UOM fields: "
+                f"{sorted(missing_fields)}"
             )
 
-    uom_ids = [row["uom_id"] for row in uoms]
-    uom_codes = [row["uom_code"] for row in uoms]
-    uom_names = [row["uom_name"] for row in uoms]
+    uom_ids = [
+        row["uom_id"]
+        for row in uoms
+    ]
 
-    if len(uom_ids) != len(set(uom_ids)):
-        raise ValueError("Duplicate uom_id found.")
+    uom_codes = [
+        row["uom_code"]
+        for row in uoms
+    ]
 
-    if len(uom_codes) != len(set(uom_codes)):
-        raise ValueError("Duplicate uom_code found.")
+    uom_names = [
+        row["uom_name"]
+        for row in uoms
+    ]
 
-    if len(uom_names) != len(set(uom_names)):
-        raise ValueError("Duplicate uom_name found.")
+    if len(uom_ids) != len(
+        set(uom_ids)
+    ):
+        raise ValueError(
+            "Duplicate uom_id found."
+        )
+
+    if len(uom_codes) != len(
+        set(uom_codes)
+    ):
+        raise ValueError(
+            "Duplicate uom_code found."
+        )
+
+    if len(uom_names) != len(
+        set(uom_names)
+    ):
+        raise ValueError(
+            "Duplicate uom_name found."
+        )
 
     if uom_ids != sorted(uom_ids):
-        raise ValueError("UOM IDs are not in ascending order.")
+        raise ValueError(
+            "UOM IDs are not in ascending order."
+        )
 
     allowed_categories = {
         "volume",
@@ -1921,17 +3417,23 @@ def validate_uoms(uoms: list[dict]) -> None:
     for row in uoms:
         if row["uom_category"] not in allowed_categories:
             raise ValueError(
-                f"Invalid UOM category: {row['uom_category']}"
+                f"Invalid UOM category: "
+                f"{row['uom_category']}"
             )
 
-        if not isinstance(row["is_active"], bool):
+        if not isinstance(
+            row["is_active"],
+            bool,
+        ):
             raise ValueError(
-                f"is_active must be boolean for UOM: {row['uom_code']}"
+                f"is_active must be boolean for UOM: "
+                f"{row['uom_code']}"
             )
 
         if row["uom_id"] <= 0:
             raise ValueError(
-                f"uom_id must be positive: {row['uom_id']}"
+                f"uom_id must be positive: "
+                f"{row['uom_id']}"
             )
 
 
@@ -1939,11 +3441,15 @@ def validate_uoms(uoms: list[dict]) -> None:
 # Payment term validation
 # ============================================================
 
-def validate_payment_terms(payment_terms: list[dict]) -> None:
+def validate_payment_terms(
+    payment_terms: list[dict],
+) -> None:
     """Validate payment term master data."""
 
     if not payment_terms:
-        raise ValueError("Payment term data is empty.")
+        raise ValueError(
+            "Payment term data is empty."
+        )
 
     required_fields = {
         "payment_term_id",
@@ -1955,11 +3461,14 @@ def validate_payment_terms(payment_terms: list[dict]) -> None:
     }
 
     for row in payment_terms:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
-                f"Missing payment term fields: {sorted(missing_fields)}"
+                f"Missing payment term fields: "
+                f"{sorted(missing_fields)}"
             )
 
     payment_term_ids = [
@@ -1977,16 +3486,30 @@ def validate_payment_terms(payment_terms: list[dict]) -> None:
         for row in payment_terms
     ]
 
-    if len(payment_term_ids) != len(set(payment_term_ids)):
-        raise ValueError("Duplicate payment_term_id found.")
+    if len(payment_term_ids) != len(
+        set(payment_term_ids)
+    ):
+        raise ValueError(
+            "Duplicate payment_term_id found."
+        )
 
-    if len(payment_term_codes) != len(set(payment_term_codes)):
-        raise ValueError("Duplicate payment_term_code found.")
+    if len(payment_term_codes) != len(
+        set(payment_term_codes)
+    ):
+        raise ValueError(
+            "Duplicate payment_term_code found."
+        )
 
-    if len(payment_term_names) != len(set(payment_term_names)):
-        raise ValueError("Duplicate payment_term_name found.")
+    if len(payment_term_names) != len(
+        set(payment_term_names)
+    ):
+        raise ValueError(
+            "Duplicate payment_term_name found."
+        )
 
-    if payment_term_ids != sorted(payment_term_ids):
+    if payment_term_ids != sorted(
+        payment_term_ids
+    ):
         raise ValueError(
             "Payment term IDs are not in ascending order."
         )
@@ -2033,11 +3556,13 @@ def validate_payment_terms(payment_terms: list[dict]) -> None:
 # ============================================================
 
 SUPPLIER_EMAIL_PATTERN = re.compile(
-    r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+    r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+"
+    r"@"
+    r"[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
 )
 
 SUPPLIER_PHONE_PATTERN = re.compile(
-    r"^[0-9()+\-\s]{8,20}$"
+    r"^[0-9()+\-\s]{8,25}$"
 )
 
 SUPPLIER_GSTIN_PATTERN = re.compile(
@@ -2052,7 +3577,9 @@ def validate_suppliers(
     """Validate supplier master data."""
 
     if not suppliers:
-        raise ValueError("Supplier data is empty.")
+        raise ValueError(
+            "Supplier data is empty."
+        )
 
     required_fields = {
         "supplier_id",
@@ -2076,46 +3603,94 @@ def validate_suppliers(
     }
 
     for row in suppliers:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
-                f"Missing supplier fields: {sorted(missing_fields)}"
+                f"Missing supplier fields: "
+                f"{sorted(missing_fields)}"
             )
 
-    supplier_ids = [row["supplier_id"] for row in suppliers]
-    supplier_codes = [row["supplier_code"] for row in suppliers]
-    supplier_names = [row["supplier_name"] for row in suppliers]
-    supplier_phones = [row["phone"] for row in suppliers]
+    supplier_ids = [
+        row["supplier_id"]
+        for row in suppliers
+    ]
+
+    supplier_codes = [
+        row["supplier_code"]
+        for row in suppliers
+    ]
+
+    supplier_names = [
+        row["supplier_name"]
+        for row in suppliers
+    ]
+
+    supplier_phones = [
+        row["phone"]
+        for row in suppliers
+    ]
+
     supplier_emails = [
         row["email"].lower()
         for row in suppliers
     ]
+
     supplier_gstins = [
         row["gstin"].upper()
         for row in suppliers
     ]
 
-    if len(supplier_ids) != len(set(supplier_ids)):
-        raise ValueError("Duplicate supplier_id found.")
+    if len(supplier_ids) != len(
+        set(supplier_ids)
+    ):
+        raise ValueError(
+            "Duplicate supplier_id found."
+        )
 
-    if len(supplier_codes) != len(set(supplier_codes)):
-        raise ValueError("Duplicate supplier_code found.")
+    if len(supplier_codes) != len(
+        set(supplier_codes)
+    ):
+        raise ValueError(
+            "Duplicate supplier_code found."
+        )
 
-    if len(supplier_names) != len(set(supplier_names)):
-        raise ValueError("Duplicate supplier_name found.")
+    if len(supplier_names) != len(
+        set(supplier_names)
+    ):
+        raise ValueError(
+            "Duplicate supplier_name found."
+        )
 
-    if len(supplier_phones) != len(set(supplier_phones)):
-        raise ValueError("Duplicate supplier phone found.")
+    if len(supplier_phones) != len(
+        set(supplier_phones)
+    ):
+        raise ValueError(
+            "Duplicate supplier phone found."
+        )
 
-    if len(supplier_emails) != len(set(supplier_emails)):
-        raise ValueError("Duplicate supplier email found.")
+    if len(supplier_emails) != len(
+        set(supplier_emails)
+    ):
+        raise ValueError(
+            "Duplicate supplier email found."
+        )
 
-    if len(supplier_gstins) != len(set(supplier_gstins)):
-        raise ValueError("Duplicate supplier GSTIN found.")
+    if len(supplier_gstins) != len(
+        set(supplier_gstins)
+    ):
+        raise ValueError(
+            "Duplicate supplier GSTIN found."
+        )
 
-    if supplier_ids != sorted(supplier_ids):
-        raise ValueError("Supplier IDs are not in ascending order.")
+    if supplier_ids != sorted(
+        supplier_ids
+    ):
+        raise ValueError(
+            "Supplier IDs are not in ascending order."
+        )
 
     allowed_supplier_types = {
         "manufacturer",
@@ -2125,7 +3700,10 @@ def validate_suppliers(
         "bulk_supplier",
     }
 
-    allowed_statuses = {"active", "inactive"}
+    allowed_statuses = {
+        "active",
+        "inactive",
+    }
 
     payment_term_ids = {
         row["payment_term_id"]
@@ -2149,27 +3727,36 @@ def validate_suppliers(
 
         if not row["supplier_name"].strip():
             raise ValueError(
-                f"Supplier name cannot be empty: {row['supplier_id']}"
+                f"Supplier name cannot be empty: "
+                f"{row['supplier_id']}"
             )
 
         if row["supplier_type"] not in allowed_supplier_types:
             raise ValueError(
-                f"Invalid supplier type: {row['supplier_type']}"
+                f"Invalid supplier type: "
+                f"{row['supplier_type']}"
             )
 
         if not row["contact_person"].strip():
             raise ValueError(
-                f"Supplier contact_person cannot be empty: {code}"
+                f"Supplier contact_person cannot be empty: "
+                f"{code}"
             )
 
         phone = row["phone"].strip()
 
-        if not SUPPLIER_PHONE_PATTERN.fullmatch(phone):
+        if not SUPPLIER_PHONE_PATTERN.fullmatch(
+            phone
+        ):
             raise ValueError(
                 f"Invalid supplier phone format: {code}"
             )
 
-        phone_digits = re.sub(r"\D", "", phone)
+        phone_digits = re.sub(
+            r"\D",
+            "",
+            phone,
+        )
 
         if len(phone_digits) < 8:
             raise ValueError(
@@ -2183,12 +3770,20 @@ def validate_suppliers(
 
         email = row["email"].strip()
 
-        if not email or not SUPPLIER_EMAIL_PATTERN.fullmatch(email):
+        if (
+            not email
+            or not SUPPLIER_EMAIL_PATTERN.fullmatch(
+                email
+            )
+        ):
             raise ValueError(
                 f"Invalid supplier email format: {code}"
             )
 
-        email_domain = email.rsplit("@", 1)[1].lower()
+        email_domain = email.rsplit(
+            "@",
+            1,
+        )[1].lower()
 
         blocked_email_tokens = {
             "test",
@@ -2209,14 +3804,19 @@ def validate_suppliers(
 
         gstin = row["gstin"].strip().upper()
 
-        if not SUPPLIER_GSTIN_PATTERN.fullmatch(gstin):
+        if not SUPPLIER_GSTIN_PATTERN.fullmatch(
+            gstin
+        ):
             raise ValueError(
                 f"Invalid supplier GSTIN format: {code}"
             )
 
         state_code = row["state_code"].strip()
 
-        if not state_code or gstin[:2] != state_code:
+        if (
+            not state_code
+            or gstin[:2] != state_code
+        ):
             raise ValueError(
                 f"Supplier GSTIN/state_code mismatch: {code}"
             )
@@ -2248,7 +3848,8 @@ def validate_suppliers(
         ):
             if not row[field].strip():
                 raise ValueError(
-                    f"Supplier {field} cannot be empty: {code}"
+                    f"Supplier {field} cannot be empty: "
+                    f"{code}"
                 )
 
 
@@ -2256,11 +3857,15 @@ def validate_suppliers(
 # Brand validation
 # ============================================================
 
-def validate_brands(brands: list[dict]) -> None:
+def validate_brands(
+    brands: list[dict],
+) -> None:
     """Validate brand master data."""
 
     if not brands:
-        raise ValueError("Brand data is empty.")
+        raise ValueError(
+            "Brand data is empty."
+        )
 
     required_fields = {
         "brand_id",
@@ -2271,28 +3876,56 @@ def validate_brands(brands: list[dict]) -> None:
     }
 
     for row in brands:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
-                f"Missing brand fields: {sorted(missing_fields)}"
+                f"Missing brand fields: "
+                f"{sorted(missing_fields)}"
             )
 
-    brand_ids = [row["brand_id"] for row in brands]
-    brand_codes = [row["brand_code"] for row in brands]
-    brand_names = [row["brand_name"] for row in brands]
+    brand_ids = [
+        row["brand_id"]
+        for row in brands
+    ]
 
-    if len(brand_ids) != len(set(brand_ids)):
-        raise ValueError("Duplicate brand_id found.")
+    brand_codes = [
+        row["brand_code"]
+        for row in brands
+    ]
 
-    if len(brand_codes) != len(set(brand_codes)):
-        raise ValueError("Duplicate brand_code found.")
+    brand_names = [
+        row["brand_name"]
+        for row in brands
+    ]
 
-    if len(brand_names) != len(set(brand_names)):
-        raise ValueError("Duplicate brand_name found.")
+    if len(brand_ids) != len(
+        set(brand_ids)
+    ):
+        raise ValueError(
+            "Duplicate brand_id found."
+        )
+
+    if len(brand_codes) != len(
+        set(brand_codes)
+    ):
+        raise ValueError(
+            "Duplicate brand_code found."
+        )
+
+    if len(brand_names) != len(
+        set(brand_names)
+    ):
+        raise ValueError(
+            "Duplicate brand_name found."
+        )
 
     if brand_ids != sorted(brand_ids):
-        raise ValueError("Brand IDs are not in ascending order.")
+        raise ValueError(
+            "Brand IDs are not in ascending order."
+        )
 
     allowed_statuses = {
         "active",
@@ -2302,27 +3935,32 @@ def validate_brands(brands: list[dict]) -> None:
     for row in brands:
         if row["brand_id"] <= 0:
             raise ValueError(
-                f"brand_id must be positive: {row['brand_id']}"
+                f"brand_id must be positive: "
+                f"{row['brand_id']}"
             )
 
         if not row["brand_code"].strip():
             raise ValueError(
-                f"Brand code cannot be empty: {row['brand_id']}"
+                f"Brand code cannot be empty: "
+                f"{row['brand_id']}"
             )
 
         if not row["brand_name"].strip():
             raise ValueError(
-                f"Brand name cannot be empty: {row['brand_id']}"
+                f"Brand name cannot be empty: "
+                f"{row['brand_id']}"
             )
 
         if row["brand_status"] not in allowed_statuses:
             raise ValueError(
-                f"Invalid brand status: {row['brand_status']}"
+                f"Invalid brand status: "
+                f"{row['brand_status']}"
             )
 
         if row["brand_owner_company"] != COMPANY_NAME:
             raise ValueError(
-                f"Unexpected brand owner: {row['brand_name']}"
+                f"Unexpected brand owner: "
+                f"{row['brand_name']}"
             )
 
 
@@ -2330,11 +3968,15 @@ def validate_brands(brands: list[dict]) -> None:
 # Category validation
 # ============================================================
 
-def validate_categories(categories: list[dict]) -> None:
+def validate_categories(
+    categories: list[dict],
+) -> None:
     """Validate category master data."""
 
     if not categories:
-        raise ValueError("Category data is empty.")
+        raise ValueError(
+            "Category data is empty."
+        )
 
     required_fields = {
         "category_id",
@@ -2344,27 +3986,55 @@ def validate_categories(categories: list[dict]) -> None:
     }
 
     for row in categories:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
-                f"Missing category fields: {sorted(missing_fields)}"
+                f"Missing category fields: "
+                f"{sorted(missing_fields)}"
             )
 
-    category_ids = [row["category_id"] for row in categories]
-    category_codes = [row["category_code"] for row in categories]
-    category_names = [row["category_name"] for row in categories]
+    category_ids = [
+        row["category_id"]
+        for row in categories
+    ]
 
-    if len(category_ids) != len(set(category_ids)):
-        raise ValueError("Duplicate category_id found.")
+    category_codes = [
+        row["category_code"]
+        for row in categories
+    ]
 
-    if len(category_codes) != len(set(category_codes)):
-        raise ValueError("Duplicate category_code found.")
+    category_names = [
+        row["category_name"]
+        for row in categories
+    ]
 
-    if len(category_names) != len(set(category_names)):
-        raise ValueError("Duplicate category_name found.")
+    if len(category_ids) != len(
+        set(category_ids)
+    ):
+        raise ValueError(
+            "Duplicate category_id found."
+        )
 
-    if category_ids != sorted(category_ids):
+    if len(category_codes) != len(
+        set(category_codes)
+    ):
+        raise ValueError(
+            "Duplicate category_code found."
+        )
+
+    if len(category_names) != len(
+        set(category_names)
+    ):
+        raise ValueError(
+            "Duplicate category_name found."
+        )
+
+    if category_ids != sorted(
+        category_ids
+    ):
         raise ValueError(
             "Category IDs are not in ascending order."
         )
@@ -2411,7 +4081,9 @@ def validate_sub_categories(
     """Validate sub-category data and category relationships."""
 
     if not sub_categories:
-        raise ValueError("Sub-category data is empty.")
+        raise ValueError(
+            "Sub-category data is empty."
+        )
 
     required_fields = {
         "sub_category_id",
@@ -2423,7 +4095,9 @@ def validate_sub_categories(
     }
 
     for row in sub_categories:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
@@ -2446,17 +4120,23 @@ def validate_sub_categories(
         for row in sub_categories
     ]
 
-    if len(sub_category_ids) != len(set(sub_category_ids)):
+    if len(sub_category_ids) != len(
+        set(sub_category_ids)
+    ):
         raise ValueError(
             "Duplicate sub_category_id found."
         )
 
-    if len(sub_category_codes) != len(set(sub_category_codes)):
+    if len(sub_category_codes) != len(
+        set(sub_category_codes)
+    ):
         raise ValueError(
             "Duplicate sub_category_code found."
         )
 
-    if sub_category_ids != sorted(sub_category_ids):
+    if sub_category_ids != sorted(
+        sub_category_ids
+    ):
         raise ValueError(
             "Sub-category IDs are not in ascending order."
         )
@@ -2477,8 +4157,10 @@ def validate_sub_categories(
 
         if row["category_id"] not in category_ids:
             raise ValueError(
-                f"Invalid category_id {row['category_id']} "
-                f"for sub-category {row['sub_category_code']}"
+                f"Invalid category_id "
+                f"{row['category_id']} "
+                f"for sub-category "
+                f"{row['sub_category_code']}"
             )
 
         if not row["sub_category_code"].strip():
@@ -2506,18 +4188,23 @@ def validate_sub_categories(
 
         if category_name_key in category_name_pairs:
             raise ValueError(
-                "Duplicate sub-category name within category: "
+                "Duplicate sub-category name "
+                "within category: "
                 f"{category_name_key}"
             )
 
-        category_name_pairs.add(category_name_key)
+        category_name_pairs.add(
+            category_name_key
+        )
 
 
 # ============================================================
 # Product validation
 # ============================================================
 
-def validate_products(products: list[dict]) -> None:
+def validate_products(
+    products: list[dict],
+) -> None:
     """Validate product master data and reference integrity."""
 
     if len(products) != PRODUCT_MASTER_COUNT:
@@ -2541,7 +4228,9 @@ def validate_products(products: list[dict]) -> None:
     }
 
     for row in products:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
@@ -2565,19 +4254,26 @@ def validate_products(products: list[dict]) -> None:
     ]
 
     if product_ids != list(
-        range(1, PRODUCT_MASTER_COUNT + 1)
+        range(
+            1,
+            PRODUCT_MASTER_COUNT + 1,
+        )
     ):
         raise ValueError(
             "Product IDs are not sequential from 1 "
             f"to {PRODUCT_MASTER_COUNT}."
         )
 
-    if len(skus) != len(set(skus)):
+    if len(skus) != len(
+        set(skus)
+    ):
         raise ValueError(
             "Duplicate product SKU found."
         )
 
-    if len(product_names) != len(set(product_names)):
+    if len(product_names) != len(
+        set(product_names)
+    ):
         raise ValueError(
             "Duplicate product_name found."
         )
@@ -2601,25 +4297,33 @@ def validate_products(products: list[dict]) -> None:
         SUB_CATEGORY_PRODUCT_TARGETS
     )
 
-    if set(sub_category_map) != target_sub_category_ids:
+    if set(sub_category_map) != (
+        target_sub_category_ids
+    ):
         raise ValueError(
             "Sub-category definitions and product targets "
             "do not cover the same IDs."
         )
 
-    if set(PRODUCT_FAMILY_STEMS) != target_sub_category_ids:
+    if set(PRODUCT_FAMILY_STEMS) != (
+        target_sub_category_ids
+    ):
         raise ValueError(
             "Product family definitions do not cover "
             "all product target sub-categories."
         )
 
-    if set(PRODUCT_GRADE_OPTIONS) != target_sub_category_ids:
+    if set(PRODUCT_GRADE_OPTIONS) != (
+        target_sub_category_ids
+    ):
         raise ValueError(
             "Product grade definitions do not cover "
             "all product target sub-categories."
         )
 
-    if set(PRODUCT_PACKAGE_GROUP) != target_sub_category_ids:
+    if set(PRODUCT_PACKAGE_GROUP) != (
+        target_sub_category_ids
+    ):
         raise ValueError(
             "Product package groups do not cover "
             "all product target sub-categories."
@@ -2632,26 +4336,42 @@ def validate_products(products: list[dict]) -> None:
             "SKU prefixes do not cover all product target categories."
         )
 
-    if sum(SUB_CATEGORY_PRODUCT_TARGETS.values()) != PRODUCT_MASTER_COUNT:
+    if (
+        sum(
+            SUB_CATEGORY_PRODUCT_TARGETS.values()
+        )
+        != PRODUCT_MASTER_COUNT
+    ):
         raise ValueError(
             "Sub-category product targets do not sum "
             f"to {PRODUCT_MASTER_COUNT}."
         )
 
-    if sum(CATEGORY_PRODUCT_TARGETS.values()) != PRODUCT_MASTER_COUNT:
+    if (
+        sum(
+            CATEGORY_PRODUCT_TARGETS.values()
+        )
+        != PRODUCT_MASTER_COUNT
+    ):
         raise ValueError(
             "Category product targets do not sum "
             f"to {PRODUCT_MASTER_COUNT}."
         )
 
-    if sum(PRODUCT_STATUS_TARGETS.values()) != PRODUCT_MASTER_COUNT:
+    if (
+        sum(
+            PRODUCT_STATUS_TARGETS.values()
+        )
+        != PRODUCT_MASTER_COUNT
+    ):
         raise ValueError(
             "Product status targets do not sum "
             f"to {PRODUCT_MASTER_COUNT}."
         )
 
     expected_brand_total = (
-        len(BRAND_DEFINITIONS) * PRODUCT_BRAND_TARGET
+        len(BRAND_DEFINITIONS)
+        * PRODUCT_BRAND_TARGET
     )
 
     if expected_brand_total != PRODUCT_MASTER_COUNT:
@@ -2664,7 +4384,9 @@ def validate_products(products: list[dict]) -> None:
         CATEGORY_PRODUCT_TARGETS
     )
 
-    if category_ids != set(PRODUCT_CATEGORY_NAMES):
+    if category_ids != set(
+        PRODUCT_CATEGORY_NAMES
+    ):
         raise ValueError(
             "Category product targets and category definitions "
             "do not cover the same IDs."
@@ -2695,7 +4417,9 @@ def validate_products(products: list[dict]) -> None:
             "to category product targets."
         )
 
-    allowed_statuses = set(PRODUCT_STATUS_TARGETS)
+    allowed_statuses = set(
+        PRODUCT_STATUS_TARGETS
+    )
 
     category_counts = {
         category_id: 0
@@ -2749,8 +4473,9 @@ def validate_products(products: list[dict]) -> None:
 
         if not valid_packages:
             raise ValueError(
-                f"No package definitions found for package group "
-                f"{package_group} assigned to {product_label}"
+                "No package definitions found for "
+                f"package group {package_group} "
+                f"assigned to {product_label}"
             )
 
         package = (
@@ -2762,8 +4487,9 @@ def validate_products(products: list[dict]) -> None:
 
         if package not in valid_packages:
             raise ValueError(
-                f"Invalid package for sub-category "
-                f"{sub_category_id}: {product_label}: {package}"
+                "Invalid package for sub-category "
+                f"{sub_category_id}: "
+                f"{product_label}: {package}"
             )
 
         if row["base_quantity_per_pac"] <= 0:
@@ -2778,15 +4504,17 @@ def validate_products(products: list[dict]) -> None:
 
         if row["viscosity_grade"] not in valid_grades:
             raise ValueError(
-                f"Invalid viscosity/grade value for sub-category "
-                f"{sub_category_id}: {product_label}: "
+                "Invalid viscosity/grade value for "
+                f"sub-category {sub_category_id}: "
+                f"{product_label}: "
                 f"{row['viscosity_grade']}"
             )
 
         if row["product_status"] not in allowed_statuses:
             raise ValueError(
                 f"Invalid product_status for "
-                f"{product_label}: {row['product_status']}"
+                f"{product_label}: "
+                f"{row['product_status']}"
             )
 
         if not row["sku"].strip():
@@ -2805,10 +4533,21 @@ def validate_products(products: list[dict]) -> None:
             sub_category_id
         ]["category_id"]
 
-        category_counts[expected_category_id] += 1
-        sub_category_counts[sub_category_id] += 1
-        brand_counts[row["brand_id"]] += 1
-        status_counts[row["product_status"]] += 1
+        category_counts[
+            expected_category_id
+        ] += 1
+
+        sub_category_counts[
+            sub_category_id
+        ] += 1
+
+        brand_counts[
+            row["brand_id"]
+        ] += 1
+
+        status_counts[
+            row["product_status"]
+        ] += 1
 
     if category_counts != CATEGORY_PRODUCT_TARGETS:
         raise ValueError(
@@ -2903,7 +4642,9 @@ def validate_warehouses(
     """Validate warehouse master data."""
 
     if not warehouses:
-        raise ValueError("Warehouse data is empty.")
+        raise ValueError(
+            "Warehouse data is empty."
+        )
 
     required_fields = {
         "warehouse_id",
@@ -2922,7 +4663,9 @@ def validate_warehouses(
     }
 
     for row in warehouses:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
@@ -2945,22 +4688,30 @@ def validate_warehouses(
         for row in warehouses
     ]
 
-    if len(warehouse_ids) != len(set(warehouse_ids)):
+    if len(warehouse_ids) != len(
+        set(warehouse_ids)
+    ):
         raise ValueError(
             "Duplicate warehouse_id found."
         )
 
-    if len(warehouse_codes) != len(set(warehouse_codes)):
+    if len(warehouse_codes) != len(
+        set(warehouse_codes)
+    ):
         raise ValueError(
             "Duplicate warehouse_code found."
         )
 
-    if len(warehouse_names) != len(set(warehouse_names)):
+    if len(warehouse_names) != len(
+        set(warehouse_names)
+    ):
         raise ValueError(
             "Duplicate warehouse_name found."
         )
 
-    if warehouse_ids != sorted(warehouse_ids):
+    if warehouse_ids != sorted(
+        warehouse_ids
+    ):
         raise ValueError(
             "Warehouse IDs are not in ascending order."
         )
@@ -3045,7 +4796,9 @@ def generate_locations(
 
     for warehouse in warehouses:
         warehouse_id = warehouse["warehouse_id"]
-        usable_capacity = warehouse["usable_capacity_ltr"]
+        usable_capacity = warehouse[
+            "usable_capacity_ltr"
+        ]
 
         if warehouse_id not in LOCATION_TYPE_COUNTS:
             raise ValueError(
@@ -3096,7 +4849,10 @@ def generate_locations(
                     f"{location_type}"
                 )
 
-            for sequence in range(1, count + 1):
+            for sequence in range(
+                1,
+                count + 1,
+            ):
                 if location_type == "receiving":
                     location_code = (
                         f"REC-{sequence:02d}"
@@ -3124,10 +4880,18 @@ def generate_locations(
 
                     bin_number = 1
 
-                    zone_code = f"Z{zone_number:02d}"
-                    aisle_no = f"A{aisle_number:02d}"
-                    rack_no = f"R{rack_number:02d}"
-                    bin_no = f"B{bin_number:02d}"
+                    zone_code = (
+                        f"Z{zone_number:02d}"
+                    )
+                    aisle_no = (
+                        f"A{aisle_number:02d}"
+                    )
+                    rack_no = (
+                        f"R{rack_number:02d}"
+                    )
+                    bin_no = (
+                        f"B{bin_number:02d}"
+                    )
 
                     location_code = (
                         f"{zone_code}-"
@@ -3158,10 +4922,18 @@ def generate_locations(
 
                     bin_number = 1
 
-                    zone_code = f"P{zone_number:02d}"
-                    aisle_no = f"A{aisle_number:02d}"
-                    rack_no = f"R{rack_number:02d}"
-                    bin_no = f"B{bin_number:02d}"
+                    zone_code = (
+                        f"P{zone_number:02d}"
+                    )
+                    aisle_no = (
+                        f"A{aisle_number:02d}"
+                    )
+                    rack_no = (
+                        f"R{rack_number:02d}"
+                    )
+                    bin_no = (
+                        f"B{bin_number:02d}"
+                    )
 
                     location_code = (
                         f"{zone_code}-"
@@ -3304,7 +5076,9 @@ def validate_locations(
     """Validate generated warehouse locations."""
 
     if not locations:
-        raise ValueError("Location data is empty.")
+        raise ValueError(
+            "Location data is empty."
+        )
 
     warehouse_ids = {
         row["warehouse_id"]
@@ -3312,7 +5086,9 @@ def validate_locations(
     }
 
     warehouse_capacity_map = {
-        row["warehouse_id"]: row["usable_capacity_ltr"]
+        row["warehouse_id"]: row[
+            "usable_capacity_ltr"
+        ]
         for row in warehouses
     }
 
@@ -3332,7 +5108,9 @@ def validate_locations(
     }
 
     for row in locations:
-        missing_fields = required_fields - row.keys()
+        missing_fields = (
+            required_fields - row.keys()
+        )
 
         if missing_fields:
             raise ValueError(
@@ -3345,7 +5123,9 @@ def validate_locations(
         for row in locations
     ]
 
-    if len(location_ids) != len(set(location_ids)):
+    if len(location_ids) != len(
+        set(location_ids)
+    ):
         raise ValueError(
             "Duplicate location_id found."
         )
@@ -3420,7 +5200,9 @@ def validate_locations(
                 f"{pair}"
             )
 
-        warehouse_location_pairs.add(pair)
+        warehouse_location_pairs.add(
+            pair
+        )
 
         capacity_by_warehouse[warehouse_id] = (
             capacity_by_warehouse.get(
@@ -3452,7 +5234,8 @@ def validate_locations(
         actual_count = sum(
             1
             for location in locations
-            if location["warehouse_id"] == warehouse_id
+            if location["warehouse_id"]
+            == warehouse_id
         )
 
         if actual_count != expected_count:
@@ -3474,9 +5257,11 @@ def validate_locations(
             )
         )
 
-        usable_capacity = warehouse_capacity_map[
-            warehouse_id
-        ]
+        usable_capacity = (
+            warehouse_capacity_map[
+                warehouse_id
+            ]
+        )
 
         if location_capacity > usable_capacity:
             warehouse = get_warehouse_by_id(
@@ -3515,7 +5300,8 @@ def validate_master_relationships(
     }
 
     missing_categories = (
-        referenced_category_ids - category_ids
+        referenced_category_ids
+        - category_ids
     )
 
     if missing_categories:
@@ -3535,7 +5321,8 @@ def validate_master_relationships(
     }
 
     missing_warehouses = (
-        referenced_warehouse_ids - warehouse_ids
+        referenced_warehouse_ids
+        - warehouse_ids
     )
 
     if missing_warehouses:
@@ -3561,7 +5348,10 @@ def write_csv(
         exist_ok=True,
     )
 
-    output_file = OUTPUT_DIR / filename
+    output_file = (
+        OUTPUT_DIR
+        / filename
+    )
 
     with output_file.open(
         "w",
@@ -3761,6 +5551,36 @@ def write_products_csv(
     )
 
 
+def write_product_suppliers_csv(
+    product_suppliers: list[dict],
+) -> Path:
+    """Write product-supplier relationship data."""
+
+    return write_csv(
+        rows=product_suppliers,
+        filename="master_product_suppliers.csv",
+        fieldnames=[
+            "product_supplier_id",
+            "product_id",
+            "supplier_id",
+            "supplier_product_code",
+            "supplier_product_name",
+            "purchase_uom_id",
+            "unit_purchase_price",
+            "minimum_order_quantity",
+            "lead_time_days",
+            "is_primary_source",
+            "relationship_status",
+            "effective_from",
+            "effective_to",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
 def write_warehouses_csv(
     warehouses: list[dict],
 ) -> Path:
@@ -3839,6 +5659,11 @@ def main() -> None:
 
         products = generate_products()
 
+        product_suppliers = generate_product_suppliers(
+            products,
+            suppliers,
+        )
+
         locations = generate_locations(
             warehouses
         )
@@ -3869,21 +5694,36 @@ def main() -> None:
             sub_categories,
             categories,
         )
-        print("Sub-category validation: PASSED")
+        print(
+            "Sub-category validation: PASSED"
+        )
 
         validate_products(products)
         print("Product validation: PASSED")
 
+        validate_product_suppliers(
+            product_suppliers,
+            products,
+            suppliers,
+        )
+        print(
+            "Product-supplier validation: PASSED"
+        )
+
         validate_warehouses(
             warehouses
         )
-        print("Warehouse validation: PASSED")
+        print(
+            "Warehouse validation: PASSED"
+        )
 
         validate_locations(
             locations,
             warehouses,
         )
-        print("Location validation: PASSED")
+        print(
+            "Location validation: PASSED"
+        )
 
         validate_master_relationships(
             categories,
@@ -3891,23 +5731,31 @@ def main() -> None:
             warehouses,
             locations,
         )
-        print("Master relationship validation: PASSED")
+        print(
+            "Master relationship validation: PASSED"
+        )
 
         # ----------------------------------------------------
         # CSV generation
         # ----------------------------------------------------
 
-        uom_file = write_uoms_csv(uoms)
+        uom_file = write_uoms_csv(
+            uoms
+        )
 
         payment_term_file = (
-            write_payment_terms_csv(payment_terms)
+            write_payment_terms_csv(
+                payment_terms
+            )
         )
 
         supplier_file = write_suppliers_csv(
             suppliers
         )
 
-        brand_file = write_brands_csv(brands)
+        brand_file = write_brands_csv(
+            brands
+        )
 
         category_file = write_categories_csv(
             categories
@@ -3923,6 +5771,12 @@ def main() -> None:
             products
         )
 
+        product_supplier_file = (
+            write_product_suppliers_csv(
+                product_suppliers
+            )
+        )
+
         warehouse_file = write_warehouses_csv(
             warehouses
         )
@@ -3935,35 +5789,83 @@ def main() -> None:
         # Output summary
         # ----------------------------------------------------
 
-        print(f"Created: {uom_file}")
-        print(f"Rows: {len(uoms)}")
+        print(
+            f"Created: {uom_file}"
+        )
+        print(
+            f"Rows: {len(uoms)}"
+        )
 
-        print(f"Created: {payment_term_file}")
-        print(f"Rows: {len(payment_terms)}")
+        print(
+            f"Created: {payment_term_file}"
+        )
+        print(
+            f"Rows: {len(payment_terms)}"
+        )
 
-        print(f"Created: {supplier_file}")
-        print(f"Rows: {len(suppliers)}")
+        print(
+            f"Created: {supplier_file}"
+        )
+        print(
+            f"Rows: {len(suppliers)}"
+        )
 
-        print(f"Created: {brand_file}")
-        print(f"Rows: {len(brands)}")
+        print(
+            f"Created: {brand_file}"
+        )
+        print(
+            f"Rows: {len(brands)}"
+        )
 
-        print(f"Created: {category_file}")
-        print(f"Rows: {len(categories)}")
+        print(
+            f"Created: {category_file}"
+        )
+        print(
+            f"Rows: {len(categories)}"
+        )
 
-        print(f"Created: {sub_category_file}")
-        print(f"Rows: {len(sub_categories)}")
+        print(
+            f"Created: {sub_category_file}"
+        )
+        print(
+            f"Rows: {len(sub_categories)}"
+        )
 
-        print(f"Created: {product_file}")
-        print(f"Rows: {len(products)}")
+        print(
+            f"Created: {product_file}"
+        )
+        print(
+            f"Rows: {len(products)}"
+        )
 
-        print(f"Created: {warehouse_file}")
-        print(f"Rows: {len(warehouses)}")
+        print(
+            f"Created: {product_supplier_file}"
+        )
+        print(
+            f"Rows: {len(product_suppliers)}"
+        )
 
-        print(f"Created: {location_file}")
-        print(f"Rows: {len(locations)}")
+        print(
+            f"Created: {warehouse_file}"
+        )
+        print(
+            f"Rows: {len(warehouses)}"
+        )
 
-    except (OSError, ValueError) as error:
-        print(f"Generation failed: {error}")
+        print(
+            f"Created: {location_file}"
+        )
+        print(
+            f"Rows: {len(locations)}"
+        )
+
+    except (
+        OSError,
+        ValueError,
+    ) as error:
+        print(
+            f"Generation failed: {error}"
+        )
         raise SystemExit(1)
 
 
