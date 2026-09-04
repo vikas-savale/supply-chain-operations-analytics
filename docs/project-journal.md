@@ -246,12 +246,14 @@ Build a practical end-to-end Supply Chain and Operations Analytics project that 
 - Warehouse master dataset generated
 - Warehouse location master dataset generated
 - Product master dataset generated
+- Product-supplier relationship dataset generated
 - Master-data validation checks added
 - Supplier payment-term references validated
 - Category and sub-category relationships validated
 - Warehouse and location relationships validated
 - Warehouse location capacity consistency validated
 - Product reference and packaging validations added
+- Product-supplier relationship validations added
 - Master datasets generated as CSV files
 
 ### Current Master Dataset Counts
@@ -263,6 +265,7 @@ Build a practical end-to-end Supply Chain and Operations Analytics project that 
 - Sub-categories: 42
 - Suppliers: 24
 - Products: 1,500
+- Product-Supplier Relationships: 3,600
 - Warehouses: 9
 - Warehouse Locations: 500
 
@@ -277,6 +280,7 @@ Build a practical end-to-end Supply Chain and Operations Analytics project that 
 - `datasets/master_warehouses.csv`
 - `datasets/master_locations.csv`
 - `datasets/master_products.csv`
+- `datasets/master_product_suppliers.csv`
 
 ### Generator
 
@@ -343,23 +347,72 @@ The generator validates the generated master data before writing the CSV files.
 
 ---
 
+## Milestone 7 — Product-Supplier Relationship Generation and Validation ✅
+
+### Product-Supplier Dataset
+
+- Product-supplier relationships generated for all 1,500 products
+- Total product-supplier relationships generated: 3,600
+- Supplier count distribution validated:
+  - 1 supplier: 300 products
+  - 2 suppliers: 525 products
+  - 3 suppliers: 450 products
+  - 4 suppliers: 225 products
+- All products have at least one supplier relationship
+- Product-supplier relationship IDs generated sequentially from 1 to 3,600
+- Product-supplier relationship pairs validated as unique
+- Supplier product codes validated as unique within each supplier
+- Purchase UOM references validated
+- Supplier-specific purchase prices validated as positive
+- Minimum order quantities validated as positive
+- Supplier lead times validated as non-negative
+
+### Supplier Sourcing Rules
+
+- Active products use active supplier relationships
+- Inactive and discontinued products use inactive supplier relationships
+- Inactive suppliers do not have active relationships
+- Inactive suppliers are not selected as primary sources
+- Active products have one active primary supplier/source
+- Inactive and discontinued products do not have a primary supplier
+- Active relationships do not have an `effective_to` date
+- Inactive relationships have an `effective_to` date
+- Supplier relationship dates validated
+
+### Purchase UOM Logic
+
+- Packaged products use PAC as the purchase UOM
+- Bulk liquid products use Litre as the purchase UOM
+- Bulk grease products use Kilogram as the purchase UOM
+
+### PostgreSQL Load
+
+- `datasets/master_product_suppliers.csv` loaded into `master.product_suppliers`
+- Product-supplier row count verified: 3,600
+- Product references verified
+- Supplier references verified
+- Purchase UOM references verified
+- Product-supplier relationship uniqueness verified
+- Primary-source rule verified
+- Product-supplier relationship status rules verified
+
+---
+
 ## Current Focus
 
-Complete the remaining master-data relationships and prepare the full master-data network for transaction-data generation.
+Complete the remaining master-data network and prepare it for transaction-data generation.
 
 ---
 
 ## Next
 
-- Generate product-supplier relationships
-- Validate product-supplier relationships
 - Generate customer master data
 - Generate customer location data
 - Generate employee master data
 - Generate transporter master data
 - Generate vehicle master data
 - Validate the complete master-data network
-- Prepare master datasets for database loading
+- Prepare the complete master datasets for database loading
 - Define transaction data generation rules
 - Generate linked procurement, inventory, warehouse, logistics and sales data
 - Validate transaction quantities and business relationships

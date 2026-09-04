@@ -56,9 +56,13 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Synthetic master datasets
 - Supplier master dataset
 - Product master dataset
+- Product-supplier relationship dataset
+- 3,600 product-supplier relationships
 - Master-data validation checks
 - Warehouse and location capacity consistency checks
 - Product packaging and quantity consistency checks
+- Product-supplier relationship validation checks
+- Primary supplier/source rules
 
 ### Current Master Data
 
@@ -69,12 +73,13 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 42 sub-categories
 - 24 suppliers
 - 1,500 products
+- 3,600 product-supplier relationships
 - 9 warehouses
 - 500 warehouse locations
 
 ### Current Focus
 
-Product-supplier relationships and completion of the remaining master-data network.
+Complete the remaining master-data network and prepare it for transaction-data generation.
 
 ## Database Setup
 
@@ -151,7 +156,7 @@ After the warehouse tables, the logistics tables can be created in this order:
 
 ### Sales Tables
 
-After the required inventory and sales order tables are available, the sales tables can be created in this order:
+After the required master tables are available, the sales tables can be created in this order:
 
 35. `35_sales_sales_orders.sql`
 36. `36_sales_sales_order_items.sql`

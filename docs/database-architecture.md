@@ -53,6 +53,7 @@ Synthetic master data has been generated for the current master model.
 - 42 sub-categories
 - 24 suppliers
 - 1,500 products
+- 3,600 product-supplier relationships
 - 9 warehouses
 - 500 warehouse locations
 
