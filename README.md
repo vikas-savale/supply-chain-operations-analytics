@@ -53,16 +53,25 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Customer and ship-to order structure
 - Sales order and stock allocation flow
 - Synthetic master-data generation framework
-- Synthetic master datasets
+- Complete synthetic master datasets
 - Supplier master dataset
 - Product master dataset
 - Product-supplier relationship dataset
+- Customer master dataset
+- Customer location dataset
+- Transporter master dataset
+- Vehicle master dataset
+- Employee master dataset
 - 3,600 product-supplier relationships
 - Master-data validation checks
 - Warehouse and location capacity consistency checks
 - Product packaging and quantity consistency checks
+- Customer and customer-location relationship checks
+- Transporter and vehicle relationship checks
+- Employee and warehouse relationship checks
 - Product-supplier relationship validation checks
 - Primary supplier/source rules
+- Complete master-network relationship validation
 
 ### Current Master Data
 
@@ -74,12 +83,17 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 24 suppliers
 - 1,500 products
 - 3,600 product-supplier relationships
+- 180 customers
+- 360 customer locations
 - 9 warehouses
 - 500 warehouse locations
+- 18 transporters
+- 135 vehicles
+- 110 employees
 
 ### Current Focus
 
-Complete the remaining master-data network and prepare it for transaction-data generation.
+Define transaction data generation rules and prepare linked transaction datasets for procurement, inventory, warehouse, logistics and sales flows.
 
 ## Database Setup
 
@@ -205,8 +219,8 @@ database/
 ├── seed/
 └── setup/
 
-docs/
 datasets/
+docs/
 images/
 powerbi/
 tools/

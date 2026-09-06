@@ -1,0 +1,136 @@
+vehicle_id,transporter_id,vehicle_number,vehicle_type,body_type,capacity_tons,capacity_ltr,registration_state,ownership_type,vehicle_status,created_date,created_by,updated_date,updated_by
+1,1,SYN-MH-0001,Medium Truck,closed,10.13,9559.2,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,14,SYN-KA-0002,Container Truck,container,17.94,16100.7,Karnataka,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,2,SYN-TN-0003,Mini Truck,closed,2.44,1375.42,Tamil Nadu,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,18,SYN-DL-0004,Heavy Truck,closed,16.14,10720.5,Delhi,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,6,SYN-GJ-0005,Heavy Truck,closed,14.73,8259.02,Gujarat,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,8,SYN-MH-0006,LCV,closed,6.86,2511.4,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+7,17,SYN-MH-0007,Mini Truck,closed,2.79,2698.0,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+8,3,SYN-MP-0008,Container Truck,container,13.07,17405.59,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+9,16,SYN-GA-0009,Medium Truck,closed,7.95,9377.18,Goa,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+10,5,SYN-KA-0010,Mini Truck,closed,1.21,2401.83,Karnataka,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+11,12,SYN-MH-0011,LCV,closed,3.02,4428.23,Maharashtra,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+12,9,SYN-GJ-0012,Medium Truck,closed,10.53,8048.79,Gujarat,owned,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+13,10,SYN-GJ-0013,LCV,closed,6.81,5413.03,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+14,13,SYN-RJ-0014,Container Truck,container,17.12,15450.7,Rajasthan,attached,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+15,4,SYN-TS-0015,Heavy Truck,closed,17.42,14670.19,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+16,15,SYN-MH-0016,Medium Truck,closed,9.16,8771.77,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+17,11,SYN-MP-0017,Medium Truck,closed,9.82,5570.87,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+18,7,SYN-TS-0018,Medium Truck,closed,11.33,5736.21,Telangana,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+19,1,SYN-MH-0019,Heavy Truck,closed,17.83,10513.58,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+20,14,SYN-KA-0020,Container Truck,container,16.4,16196.67,Karnataka,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+21,2,SYN-TN-0021,Medium Truck,closed,9.64,9378.45,Tamil Nadu,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+22,18,SYN-DL-0022,Container Truck,container,12.76,20177.13,Delhi,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+23,6,SYN-GJ-0023,Medium Truck,closed,9.12,7242.29,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+24,8,SYN-MH-0024,Mini Truck,closed,2.28,1662.41,Maharashtra,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+25,17,SYN-MH-0025,Tanker,tanker,14.43,13273.05,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+26,3,SYN-MP-0026,Medium Truck,closed,7.13,7190.43,Madhya Pradesh,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+27,16,SYN-GA-0027,LCV,closed,3.56,4444.25,Goa,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+28,5,SYN-KA-0028,LCV,closed,6.0,4687.72,Karnataka,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+29,12,SYN-MH-0029,Medium Truck,closed,8.42,9229.27,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+30,9,SYN-GJ-0030,LCV,closed,4.54,3397.49,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+31,10,SYN-GJ-0031,Tanker,tanker,11.02,18811.27,Gujarat,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+32,13,SYN-RJ-0032,Tanker,tanker,9.26,17368.93,Rajasthan,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+33,4,SYN-TS-0033,Medium Truck,closed,8.58,5153.41,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+34,15,SYN-MH-0034,LCV,closed,6.61,5739.92,Maharashtra,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+35,11,SYN-MP-0035,LCV,closed,6.19,3299.75,Madhya Pradesh,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+36,7,SYN-TS-0036,Medium Truck,closed,6.05,7277.19,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+37,1,SYN-MH-0037,Heavy Truck,closed,18.77,11612.06,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+38,14,SYN-KA-0038,LCV,closed,4.78,5508.84,Karnataka,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+39,2,SYN-TN-0039,LCV,closed,5.1,4888.98,Tamil Nadu,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+40,18,SYN-DL-0040,LCV,closed,3.18,2880.45,Delhi,attached,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+41,6,SYN-GJ-0041,LCV,closed,5.04,5913.69,Gujarat,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+42,8,SYN-MH-0042,Heavy Truck,closed,19.52,13542.42,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+43,17,SYN-MH-0043,LCV,closed,6.4,2951.48,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+44,3,SYN-MP-0044,Heavy Truck,closed,17.39,14447.89,Madhya Pradesh,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+45,16,SYN-GA-0045,Container Truck,container,19.1,13107.16,Goa,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+46,5,SYN-KA-0046,Tanker,tanker,10.58,28281.65,Karnataka,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+47,12,SYN-MH-0047,Mini Truck,closed,2.57,1027.36,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+48,9,SYN-GJ-0048,Mini Truck,closed,2.35,2729.58,Gujarat,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+49,10,SYN-GJ-0049,Heavy Truck,closed,18.61,8811.78,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+50,13,SYN-RJ-0050,Medium Truck,closed,10.42,8388.47,Rajasthan,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+51,4,SYN-TS-0051,Tanker,tanker,13.84,16593.26,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+52,15,SYN-MH-0052,Heavy Truck,closed,19.75,10484.98,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+53,11,SYN-MP-0053,Medium Truck,closed,7.22,7637.73,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+54,7,SYN-TS-0054,Medium Truck,closed,9.34,7440.41,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+55,1,SYN-MH-0055,LCV,closed,5.82,5260.54,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+56,14,SYN-KA-0056,Container Truck,container,13.34,10889.11,Karnataka,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+57,2,SYN-TN-0057,Tanker,tanker,12.1,19664.2,Tamil Nadu,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+58,18,SYN-DL-0058,Medium Truck,closed,8.27,5345.97,Delhi,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+59,6,SYN-GJ-0059,Heavy Truck,closed,14.17,13589.81,Gujarat,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+60,8,SYN-MH-0060,Mini Truck,closed,2.64,1429.95,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+61,17,SYN-MH-0061,Container Truck,container,10.52,14263.03,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+62,3,SYN-MP-0062,Mini Truck,closed,1.36,2438.98,Madhya Pradesh,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+63,16,SYN-GA-0063,Tanker,tanker,8.95,24111.45,Goa,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+64,5,SYN-KA-0064,Mini Truck,closed,1.44,2371.76,Karnataka,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+65,12,SYN-MH-0065,Medium Truck,closed,11.6,5956.49,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+66,9,SYN-GJ-0066,Heavy Truck,closed,17.71,9644.74,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+67,10,SYN-GJ-0067,LCV,closed,5.95,4739.13,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+68,13,SYN-RJ-0068,LCV,closed,4.14,4366.47,Rajasthan,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+69,4,SYN-TS-0069,Mini Truck,closed,2.76,1119.72,Telangana,attached,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+70,15,SYN-MH-0070,Heavy Truck,closed,14.16,13625.43,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+71,11,SYN-MP-0071,Heavy Truck,closed,12.67,13134.57,Madhya Pradesh,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+72,7,SYN-TS-0072,Medium Truck,closed,7.53,6398.52,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+73,1,SYN-MH-0073,LCV,closed,5.18,5891.03,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+74,14,SYN-KA-0074,Tanker,tanker,13.2,20230.72,Karnataka,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+75,2,SYN-TN-0075,Tanker,tanker,17.94,15399.39,Tamil Nadu,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+76,18,SYN-DL-0076,Heavy Truck,closed,17.81,11217.52,Delhi,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+77,6,SYN-GJ-0077,Tanker,tanker,16.39,21011.58,Gujarat,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+78,8,SYN-MH-0078,Medium Truck,closed,7.4,9977.1,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+79,17,SYN-MH-0079,Mini Truck,closed,1.26,1506.25,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+80,3,SYN-MP-0080,LCV,closed,6.21,3549.34,Madhya Pradesh,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+81,16,SYN-GA-0081,LCV,closed,6.11,4204.57,Goa,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+82,5,SYN-KA-0082,Heavy Truck,closed,13.86,13654.37,Karnataka,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+83,12,SYN-MH-0083,Tanker,tanker,9.24,13445.89,Maharashtra,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+84,9,SYN-GJ-0084,Medium Truck,closed,8.68,9494.73,Gujarat,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+85,10,SYN-GJ-0085,Heavy Truck,closed,12.71,11024.28,Gujarat,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+86,13,SYN-RJ-0086,Mini Truck,closed,1.86,2789.56,Rajasthan,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+87,4,SYN-TS-0087,Mini Truck,closed,1.31,1226.17,Telangana,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+88,15,SYN-MH-0088,Tanker,tanker,12.93,14189.22,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+89,11,SYN-MP-0089,LCV,closed,4.35,3681.85,Madhya Pradesh,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+90,7,SYN-TS-0090,Tanker,tanker,14.99,19862.95,Telangana,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+91,1,SYN-MH-0091,Heavy Truck,closed,16.4,11461.53,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+92,14,SYN-KA-0092,Heavy Truck,closed,12.9,10839.63,Karnataka,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+93,2,SYN-TN-0093,Medium Truck,closed,6.87,6929.62,Tamil Nadu,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+94,18,SYN-DL-0094,Heavy Truck,closed,19.19,14871.14,Delhi,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+95,6,SYN-GJ-0095,Mini Truck,closed,1.44,1258.88,Gujarat,owned,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+96,8,SYN-MH-0096,Medium Truck,closed,11.54,9370.51,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+97,17,SYN-MH-0097,LCV,closed,4.16,5865.77,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+98,3,SYN-MP-0098,Heavy Truck,closed,14.79,10812.86,Madhya Pradesh,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+99,16,SYN-GA-0099,LCV,closed,6.23,4698.24,Goa,attached,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+100,5,SYN-KA-0100,Container Truck,container,12.22,18756.32,Karnataka,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+101,12,SYN-MH-0101,LCV,closed,5.61,3211.42,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+102,9,SYN-GJ-0102,LCV,closed,5.54,5124.68,Gujarat,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+103,10,SYN-GJ-0103,LCV,closed,4.56,3410.85,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+104,13,SYN-RJ-0104,LCV,closed,4.13,5028.49,Rajasthan,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+105,4,SYN-TS-0105,Mini Truck,closed,2.45,2408.8,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+106,15,SYN-MH-0106,LCV,closed,6.15,5540.62,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+107,11,SYN-MP-0107,Container Truck,container,15.9,20901.38,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+108,7,SYN-TS-0108,Heavy Truck,closed,17.78,8130.18,Telangana,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+109,1,SYN-MH-0109,Medium Truck,closed,11.7,8021.53,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+110,14,SYN-KA-0110,LCV,closed,4.71,3829.12,Karnataka,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+111,2,SYN-TN-0111,Medium Truck,closed,6.58,9985.9,Tamil Nadu,owned,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+112,18,SYN-DL-0112,Tanker,tanker,11.11,28936.36,Delhi,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+113,6,SYN-GJ-0113,Tanker,tanker,12.98,17788.96,Gujarat,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+114,8,SYN-MH-0114,Tanker,tanker,16.87,16310.53,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+115,17,SYN-MH-0115,Medium Truck,closed,8.01,7762.39,Maharashtra,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+116,3,SYN-MP-0116,Mini Truck,closed,2.43,2208.27,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+117,16,SYN-GA-0117,Medium Truck,closed,9.29,5501.48,Goa,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+118,5,SYN-KA-0118,Mini Truck,closed,2.27,2204.44,Karnataka,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+119,12,SYN-MH-0119,Heavy Truck,closed,16.93,12734.34,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+120,9,SYN-GJ-0120,Heavy Truck,closed,13.86,11886.22,Gujarat,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+121,10,SYN-GJ-0121,Mini Truck,closed,2.0,1597.01,Gujarat,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+122,13,SYN-RJ-0122,Container Truck,container,13.94,13484.96,Rajasthan,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+123,4,SYN-TS-0123,Heavy Truck,closed,12.01,10874.08,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+124,15,SYN-MH-0124,Tanker,tanker,8.95,15951.66,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+125,11,SYN-MP-0125,LCV,closed,4.11,4130.85,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+126,7,SYN-TS-0126,Medium Truck,closed,11.13,8523.91,Telangana,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+127,1,SYN-MH-0127,Mini Truck,closed,2.07,2556.68,Maharashtra,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+128,14,SYN-KA-0128,LCV,closed,6.3,2866.2,Karnataka,owned,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+129,2,SYN-TN-0129,Medium Truck,closed,8.77,8871.18,Tamil Nadu,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+130,18,SYN-DL-0130,Medium Truck,closed,6.45,7318.58,Delhi,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+131,6,SYN-GJ-0131,Mini Truck,closed,2.29,1888.0,Gujarat,hired,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+132,8,SYN-MH-0132,Container Truck,container,18.66,10309.48,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+133,17,SYN-MH-0133,Tanker,tanker,8.46,17692.66,Maharashtra,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+134,3,SYN-MP-0134,Medium Truck,closed,10.26,8109.07,Madhya Pradesh,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+135,16,SYN-GA-0135,Heavy Truck,closed,17.36,12651.93,Goa,attached,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system

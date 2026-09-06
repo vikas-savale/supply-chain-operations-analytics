@@ -254,7 +254,7 @@ The database includes consistency rules for related records.
 
 ## Synthetic Master Data
 
-Synthetic master data has been generated for the current master model.
+Synthetic master data has been generated for the current master model and loaded into PostgreSQL.
 
 - 6 UOMs
 - 8 payment terms
@@ -264,10 +264,17 @@ Synthetic master data has been generated for the current master model.
 - 24 suppliers
 - 1,500 products
 - 3,600 product-supplier relationships
+- 180 customers
+- 360 customer locations
 - 9 warehouses
 - 500 warehouse locations
+- 18 transporters
+- 135 vehicles
+- 110 employees
 
 The generated master data follows the relationships and validation rules defined by the database schema.
+
+Cross-master validation has been completed with zero broken references across the current master network.
 
 ---
 

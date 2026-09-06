@@ -1107,6 +1107,870 @@ SUB_CATEGORY_DEFINITIONS = [
 
 
 # ============================================================
+# Customer master generation
+# ============================================================
+
+CUSTOMER_MASTER_COUNT = 180
+CUSTOMER_RANDOM_SEED = 20260103
+
+# Current controlled project decision.
+# The historical project specification establishes these four
+# broad customer types but does not freeze an exact numerical split.
+CUSTOMER_TYPE_TARGETS = {
+    "Distributor": 60,
+    "Dealer": 45,
+    "Industrial": 40,
+    "OEM / Institutional": 35,
+}
+
+CUSTOMER_STATUS_TARGETS = {
+    "active": 171,
+    "inactive": 9,
+}
+
+# Internal generator-only behavioral profiles.
+# This is intentionally not stored as a database column.
+CUSTOMER_PROFILE_TARGETS = {
+    "high_volume": 36,
+    "medium_volume": 90,
+    "low_volume": 54,
+}
+
+CUSTOMER_PAYMENT_TERM_TARGETS = {
+    1: 12,
+    2: 28,
+    3: 52,
+    4: 34,
+    5: 25,
+    6: 12,
+    7: 11,
+    8: 6,
+}
+
+# India-wide distribution with stronger Western/Central concentration.
+CUSTOMER_GEOGRAPHY_TARGETS = {
+    "Maharashtra": 40,
+    "Gujarat": 30,
+    "Karnataka": 25,
+    "Madhya Pradesh": 20,
+    "Rajasthan": 15,
+    "Telangana": 15,
+    "Tamil Nadu": 12,
+    "Uttar Pradesh": 10,
+    "Delhi": 8,
+    "Goa": 5,
+}
+
+CUSTOMER_STATE_CODES = {
+    "Maharashtra": "27",
+    "Gujarat": "24",
+    "Karnataka": "29",
+    "Madhya Pradesh": "23",
+    "Rajasthan": "08",
+    "Telangana": "36",
+    "Tamil Nadu": "33",
+    "Uttar Pradesh": "09",
+    "Delhi": "07",
+    "Goa": "30",
+}
+
+CUSTOMER_CITY_OPTIONS = {
+    "Maharashtra": [
+        ("Pune", "411"),
+        ("Navi Mumbai", "400"),
+        ("Nashik", "422"),
+        ("Nagpur", "440"),
+        ("Chhatrapati Sambhajinagar", "431"),
+    ],
+    "Gujarat": [
+        ("Ahmedabad", "380"),
+        ("Vadodara", "390"),
+        ("Surat", "395"),
+        ("Rajkot", "360"),
+    ],
+    "Karnataka": [
+        ("Bengaluru", "560"),
+        ("Hubballi", "580"),
+        ("Mysuru", "570"),
+    ],
+    "Madhya Pradesh": [
+        ("Indore", "452"),
+        ("Bhopal", "462"),
+    ],
+    "Rajasthan": [
+        ("Jaipur", "302"),
+        ("Jodhpur", "342"),
+    ],
+    "Telangana": [
+        ("Hyderabad", "500"),
+        ("Warangal", "506"),
+    ],
+    "Tamil Nadu": [
+        ("Chennai", "600"),
+        ("Coimbatore", "641"),
+    ],
+    "Uttar Pradesh": [
+        ("Noida", "201"),
+        ("Lucknow", "226"),
+        ("Kanpur", "208"),
+    ],
+    "Delhi": [
+        ("New Delhi", "110"),
+    ],
+    "Goa": [
+        ("Panaji", "403"),
+        ("Margao", "403"),
+    ],
+}
+
+CUSTOMER_NAME_STEMS = [
+    "Asterline",
+    "Westbridge",
+    "Crestmark",
+    "Pioneer",
+    "Riverton",
+    "Northfield",
+    "Silveroak",
+    "Grandwell",
+    "Summit",
+    "Bluecrest",
+    "Trident",
+    "Everstone",
+    "Harborline",
+    "Primegate",
+    "Stonefield",
+    "Clearpath",
+    "Vertex",
+    "Oakridge",
+    "Redwood",
+    "Meadowline",
+    "Cedarpoint",
+    "Highland",
+    "Brookfield",
+    "Eastmark",
+    "Fairview",
+    "Lakeside",
+    "Greenridge",
+    "Metrocrest",
+    "Ironvale",
+    "Goldcrest",
+    "Sunridge",
+    "Brightfield",
+    "Maplebridge",
+    "Parkstone",
+    "Riveroak",
+    "Crownfield",
+    "Falconridge",
+    "Horizon",
+    "Meridian",
+    "Granite",
+    "Oakfield",
+    "Westgate",
+    "Blueharbor",
+    "Crestwood",
+    "Northstar",
+    "Aspenridge",
+    "Silverline",
+    "Summitgate",
+    "Pinecrest",
+    "Clearbrook",
+    "Evergreen",
+    "Hillmark",
+    "Stonegate",
+    "Ridgefield",
+    "Brightstone",
+    "Grandridge",
+    "Linden",
+    "Redcrest",
+    "Westfield",
+    "Eastbridge",
+    "Oakstone",
+    "Rivercrest",
+    "Highpoint",
+    "Fairmont",
+    "Bluefield",
+    "Cedarcrest",
+    "Northgate",
+    "Greenstone",
+    "Primebridge",
+    "Ironridge",
+    "Silvercrest",
+    "Maplefield",
+    "Crestline",
+    "Pinebridge",
+    "Meadowcrest",
+    "Stonebridge",
+    "Grandfield",
+    "Harborcrest",
+    "Redbridge",
+    "Clearfield",
+    "Westcrest",
+    "Summitfield",
+    "Oakbridge",
+    "Ridgecrest",
+    "Everfield",
+    "Northcrest",
+    "Brightbridge",
+    "Lakecrest",
+    "Hillbridge",
+    "Greenfield",
+    "Parkbridge",
+    "Metrofield",
+]
+
+CUSTOMER_SUFFIX_OPTIONS = {
+    "Distributor": [
+        "Industrial Distribution",
+        "Auto Distribution",
+        "Lubricant Supply",
+    ],
+    "Dealer": [
+        "Auto & Machinery",
+        "Equipment Traders",
+        "Lubricant Services",
+    ],
+    "Industrial": [
+        "Process Industries",
+        "Engineering Works",
+        "Industrial Systems",
+    ],
+    "OEM / Institutional": [
+        "Fleet Systems",
+        "Equipment Manufacturing",
+        "Industrial Solutions",
+    ],
+}
+
+CUSTOMER_CONTACT_PREFIXES = {
+    "Distributor": [
+        "sales",
+        "commercial",
+        "orders",
+    ],
+    "Dealer": [
+        "sales",
+        "commercial",
+        "accounts",
+    ],
+    "Industrial": [
+        "procurement",
+        "commercial",
+        "operations",
+    ],
+    "OEM / Institutional": [
+        "procurement",
+        "commercial",
+        "sourcing",
+    ],
+}
+
+CUSTOMER_PHONE_PREFIXES = {
+    "Maharashtra": ["020", "022", "0253", "0712"],
+    "Gujarat": ["079", "0265", "0261", "0281"],
+    "Karnataka": ["080", "0836", "0821"],
+    "Madhya Pradesh": ["0731", "0755"],
+    "Rajasthan": ["0141", "0291"],
+    "Telangana": ["040", "0870"],
+    "Tamil Nadu": ["044", "0422"],
+    "Uttar Pradesh": ["0120", "0522", "0512"],
+    "Delhi": ["011"],
+    "Goa": ["0832"],
+}
+
+CUSTOMER_CREDIT_LIMIT_RANGES = {
+    "Distributor": {
+        "high_volume": (2500000.0, 7500000.0),
+        "medium_volume": (1000000.0, 3500000.0),
+        "low_volume": (350000.0, 1500000.0),
+    },
+    "Dealer": {
+        "high_volume": (1500000.0, 4500000.0),
+        "medium_volume": (600000.0, 2200000.0),
+        "low_volume": (200000.0, 900000.0),
+    },
+    "Industrial": {
+        "high_volume": (3000000.0, 10000000.0),
+        "medium_volume": (1500000.0, 5000000.0),
+        "low_volume": (500000.0, 2500000.0),
+    },
+    "OEM / Institutional": {
+        "high_volume": (3500000.0, 12000000.0),
+        "medium_volume": (1800000.0, 6000000.0),
+        "low_volume": (750000.0, 3000000.0),
+    },
+}
+
+
+def _build_customer_type_pool() -> list[str]:
+    """Build the configured customer-type population."""
+
+    pool = []
+
+    for customer_type, target in CUSTOMER_TYPE_TARGETS.items():
+        pool.extend(
+            [customer_type] * target
+        )
+
+    if len(pool) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer type targets do not sum "
+            f"to {CUSTOMER_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_customer_status_pool() -> list[str]:
+    """Build the configured customer-status population."""
+
+    pool = []
+
+    for status, target in CUSTOMER_STATUS_TARGETS.items():
+        pool.extend(
+            [status] * target
+        )
+
+    if len(pool) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer status targets do not sum "
+            f"to {CUSTOMER_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_customer_profile_pool() -> list[str]:
+    """Build the internal customer behavior-profile population."""
+
+    pool = []
+
+    for profile, target in CUSTOMER_PROFILE_TARGETS.items():
+        pool.extend(
+            [profile] * target
+        )
+
+    if len(pool) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer profile targets do not sum "
+            f"to {CUSTOMER_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_customer_payment_term_pool() -> list[int]:
+    """Build the configured customer payment-term population."""
+
+    pool = []
+
+    for payment_term_id, target in (
+        CUSTOMER_PAYMENT_TERM_TARGETS.items()
+    ):
+        pool.extend(
+            [payment_term_id] * target
+        )
+
+    if len(pool) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer payment-term targets do not sum "
+            f"to {CUSTOMER_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_customer_geography_pool() -> list[tuple[str, str, str]]:
+    """Build customers from the configured regional mix."""
+
+    pool = []
+
+    for state, target in CUSTOMER_GEOGRAPHY_TARGETS.items():
+        city_options = CUSTOMER_CITY_OPTIONS.get(
+            state
+        )
+
+        if not city_options:
+            raise ValueError(
+                f"No city options defined for customer state: "
+                f"{state}"
+            )
+
+        state_code = CUSTOMER_STATE_CODES.get(
+            state
+        )
+
+        if not state_code:
+            raise ValueError(
+                f"No state code defined for customer state: "
+                f"{state}"
+            )
+
+        for index in range(target):
+            city, postal_prefix = city_options[
+                index
+                % len(city_options)
+            ]
+
+            postal_code = (
+                f"{postal_prefix}"
+                f"{100 + index:03d}"
+            )
+
+            if len(postal_code) != 6:
+                raise ValueError(
+                    "Generated invalid customer postal code: "
+                    f"{postal_code}"
+                )
+
+            pool.append(
+                (
+                    state,
+                    city,
+                    postal_code,
+                )
+            )
+
+    if len(pool) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer geography targets do not sum "
+            f"to {CUSTOMER_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_customer_name(
+    customer_type: str,
+    customer_index: int,
+) -> str:
+    """Build a unique fictional customer name."""
+
+    stem = CUSTOMER_NAME_STEMS[
+        customer_index
+        % len(CUSTOMER_NAME_STEMS)
+    ]
+
+    suffixes = CUSTOMER_SUFFIX_OPTIONS[
+        customer_type
+    ]
+
+    suffix = suffixes[
+        (
+            customer_index
+            // len(CUSTOMER_NAME_STEMS)
+        )
+        % len(suffixes)
+    ]
+
+    return f"{stem} {suffix}"
+
+
+def _build_customer_contact_name(
+    customer_id: int,
+) -> str:
+    """Build a deterministic synthetic contact-person name."""
+
+    first_names = [
+        "Aarav",
+        "Ishaan",
+        "Rohan",
+        "Kunal",
+        "Nikhil",
+        "Arjun",
+        "Vikram",
+        "Siddharth",
+        "Aditya",
+        "Rahul",
+        "Neeraj",
+        "Amit",
+    ]
+
+    last_names = [
+        "Mehta",
+        "Shah",
+        "Kapoor",
+        "Patel",
+        "Joshi",
+        "Verma",
+        "Malhotra",
+        "Nair",
+        "Rao",
+        "Kulkarni",
+        "Bansal",
+        "Menon",
+    ]
+
+    first_name = first_names[
+        (customer_id - 1)
+        % len(first_names)
+    ]
+
+    last_name = last_names[
+        (
+            (customer_id - 1)
+            // len(first_names)
+        )
+        % len(last_names)
+    ]
+
+    return f"{first_name} {last_name}"
+
+
+def _build_customer_phone(
+    state: str,
+    customer_id: int,
+) -> str:
+    """Build a format-consistent synthetic business phone."""
+
+    prefixes = CUSTOMER_PHONE_PREFIXES[
+        state
+    ]
+
+    prefix = prefixes[
+        (customer_id - 1)
+        % len(prefixes)
+    ]
+
+    subscriber = (
+        4108000
+        + customer_id
+    )
+
+    return f"{prefix}-{subscriber:07d}"
+
+
+def generate_customers() -> list[dict]:
+    """Generate the synthetic customer master deterministically."""
+
+    import random
+
+    rng = random.Random(
+        CUSTOMER_RANDOM_SEED
+    )
+
+    customer_types = (
+        _build_customer_type_pool()
+    )
+
+    statuses = (
+        _build_customer_status_pool()
+    )
+
+    profiles = (
+        _build_customer_profile_pool()
+    )
+
+    payment_terms = (
+        _build_customer_payment_term_pool()
+    )
+
+    geography = (
+        _build_customer_geography_pool()
+    )
+
+    rng.shuffle(customer_types)
+    rng.shuffle(statuses)
+    rng.shuffle(profiles)
+    rng.shuffle(payment_terms)
+    rng.shuffle(geography)
+
+    customers = []
+
+    for index in range(
+        CUSTOMER_MASTER_COUNT
+    ):
+        customer_id = index + 1
+
+        customer_type = (
+            customer_types[index]
+        )
+
+        customer_status = (
+            statuses[index]
+        )
+
+        profile = profiles[index]
+
+        payment_term_id = (
+            payment_terms[index]
+        )
+
+        state, city, postal_code = (
+            geography[index]
+        )
+
+        credit_min, credit_max = (
+            CUSTOMER_CREDIT_LIMIT_RANGES[
+                customer_type
+            ][profile]
+        )
+
+        credit_limit = (
+            round(
+                rng.uniform(
+                    credit_min,
+                    credit_max,
+                ) / 1000.0
+            )
+            * 1000.0
+        )
+
+        name = _build_customer_name(
+            customer_type,
+            index,
+        )
+
+        name_token = re.sub(
+            r"[^a-z0-9]+",
+            "",
+            name.lower(),
+        )
+
+        contact_prefixes = (
+            CUSTOMER_CONTACT_PREFIXES[
+                customer_type
+            ]
+        )
+
+        email_prefix = (
+            contact_prefixes[
+                (customer_id - 1)
+                % len(contact_prefixes)
+            ]
+        )
+
+        billing_area_options = [
+            "Industrial Estate",
+            "Logistics Park",
+            "Commercial Zone",
+            "Business Park",
+            "Industrial Area",
+        ]
+
+        billing_area = (
+            billing_area_options[
+                (customer_id - 1)
+                % len(billing_area_options)
+            ]
+        )
+
+        billing_address_line1 = (
+            f"Plot "
+            f"{10 + (customer_id % 70)}, "
+            f"{billing_area}"
+        )
+
+        billing_address_line2 = None
+
+        if customer_id % 4 != 0:
+            billing_address_line2 = (
+                f"Sector "
+                f"{1 + (customer_id % 12)}, "
+                f"{city} Business District"
+            )
+
+        gstin = (
+            f"SYN-"
+            f"{CUSTOMER_STATE_CODES[state]}-"
+            f"{customer_id:06d}"
+        )
+
+        customers.append(
+            {
+                "customer_id": customer_id,
+                "customer_code": (
+                    f"CUST{customer_id:04d}"
+                ),
+                "customer_name": name,
+                "customer_type": customer_type,
+                "contact_person": (
+                    _build_customer_contact_name(
+                        customer_id
+                    )
+                ),
+                "phone": _build_customer_phone(
+                    state,
+                    customer_id,
+                ),
+                "email": (
+                    f"{email_prefix}"
+                    f"@{name_token}.example"
+                ),
+                "gstin": gstin,
+                "state_code": (
+                    CUSTOMER_STATE_CODES[
+                        state
+                    ]
+                ),
+                "billing_address_line1": (
+                    billing_address_line1
+                ),
+                "billing_address_line2": (
+                    billing_address_line2
+                ),
+                "billing_city": city,
+                "billing_state": state,
+                "billing_postal_code": (
+                    postal_code
+                ),
+                "country": "India",
+                "payment_term_id": (
+                    payment_term_id
+                ),
+                "credit_limit": (
+                    credit_limit
+                ),
+                "customer_status": (
+                    customer_status
+                ),
+            }
+        )
+
+    return customers
+
+
+
+
+# ============================================================
+# Employee master generation
+# ============================================================
+
+EMPLOYEE_MASTER_COUNT = 110
+EMPLOYEE_RANDOM_SEED = 20260104
+
+EMPLOYEE_ROLE_TARGETS = {
+    "Warehouse Supervisor": 10,
+    "Store Operator": 25,
+    "Picker": 20,
+    "Loader": 18,
+    "Dispatch Executive": 18,
+    "Warehouse Coordinator": 19,
+}
+
+EMPLOYEE_STATUS_TARGETS = {
+    "active": 104,
+    "inactive": 6,
+}
+
+EMPLOYEE_WAREHOUSE_ASSIGNMENTS = {
+    1: 25,
+    2: 12,
+    3: 12,
+    4: 12,
+    5: 4,
+    6: 4,
+    7: 12,
+    8: 4,
+    9: 5,
+}
+
+EMPLOYEE_DEPARTMENT_BY_ROLE = {
+    "Warehouse Supervisor": "Warehouse Operations",
+    "Store Operator": "Warehouse Operations",
+    "Picker": "Warehouse Operations",
+    "Loader": "Logistics Operations",
+    "Dispatch Executive": "Logistics Operations",
+    "Warehouse Coordinator": "Warehouse Operations",
+}
+
+EMPLOYEE_FIRST_NAMES = [
+    "Aarav", "Ishaan", "Rohan", "Kunal", "Nikhil",
+    "Arjun", "Vikram", "Siddharth", "Aditya", "Rahul",
+    "Neeraj", "Amit", "Manish", "Saurabh", "Varun",
+    "Harsh", "Ankit", "Deepak", "Pankaj", "Gaurav",
+]
+
+EMPLOYEE_LAST_NAMES = [
+    "Mehta", "Shah", "Kapoor", "Patel", "Joshi",
+    "Verma", "Malhotra", "Nair", "Rao", "Kulkarni",
+    "Bansal", "Menon", "Soni", "Desai", "Agarwal",
+    "Trivedi", "Yadav", "Chopra", "Mishra", "Reddy",
+]
+
+def _build_employee_role_pool() -> list[str]:
+    """Build the configured employee-role population."""
+    pool = []
+    for role, target in EMPLOYEE_ROLE_TARGETS.items():
+        pool.extend([role] * target)
+    if len(pool) != EMPLOYEE_MASTER_COUNT:
+        raise ValueError(
+            "Employee role targets do not sum "
+            f"to {EMPLOYEE_MASTER_COUNT}."
+        )
+    return pool
+
+def _build_employee_status_pool() -> list[str]:
+    """Build the configured employee-status population."""
+    pool = []
+    for status, target in EMPLOYEE_STATUS_TARGETS.items():
+        pool.extend([status] * target)
+    if len(pool) != EMPLOYEE_MASTER_COUNT:
+        raise ValueError(
+            "Employee status targets do not sum "
+            f"to {EMPLOYEE_MASTER_COUNT}."
+        )
+    return pool
+
+def _build_employee_warehouse_pool() -> list[int | None]:
+    """Build warehouse-linked employee assignments from warehouse profiles."""
+    pool = []
+    for warehouse_id, target in EMPLOYEE_WAREHOUSE_ASSIGNMENTS.items():
+        pool.extend([warehouse_id] * target)
+    unassigned_count = EMPLOYEE_MASTER_COUNT - sum(EMPLOYEE_WAREHOUSE_ASSIGNMENTS.values())
+    if unassigned_count < 0:
+        raise ValueError(
+            "Employee warehouse assignments exceed the employee target."
+        )
+    pool.extend([None] * unassigned_count)
+    if len(pool) != EMPLOYEE_MASTER_COUNT:
+        raise ValueError(
+            "Employee warehouse assignment targets do not cover "
+            f"{EMPLOYEE_MASTER_COUNT} employees."
+        )
+    return pool
+
+def _build_employee_name(employee_id: int) -> str:
+    """Build a deterministic synthetic employee name."""
+    first_name = EMPLOYEE_FIRST_NAMES[(employee_id - 1) % len(EMPLOYEE_FIRST_NAMES)]
+    last_name = EMPLOYEE_LAST_NAMES[((employee_id - 1) // len(EMPLOYEE_FIRST_NAMES)) % len(EMPLOYEE_LAST_NAMES)]
+    return f"{first_name} {last_name}"
+
+def generate_employees(warehouses: list[dict]) -> list[dict]:
+    """Generate deterministic synthetic operational employee master data."""
+    import random
+    if not warehouses:
+        raise ValueError("Cannot generate employees without warehouses.")
+    warehouse_ids = {row["warehouse_id"] for row in warehouses}
+    rng = random.Random(EMPLOYEE_RANDOM_SEED)
+    roles = _build_employee_role_pool()
+    statuses = _build_employee_status_pool()
+    warehouse_pool = _build_employee_warehouse_pool()
+    rng.shuffle(roles)
+    rng.shuffle(statuses)
+    rng.shuffle(warehouse_pool)
+    employees = []
+    for index in range(EMPLOYEE_MASTER_COUNT):
+        employee_id = index + 1
+        role = roles[index]
+        warehouse_id = warehouse_pool[index]
+        if warehouse_id is not None and warehouse_id not in warehouse_ids:
+            raise ValueError(
+                "Employee references missing warehouse: "
+                f"employee_id={employee_id}, warehouse_id={warehouse_id}"
+            )
+        employees.append({
+            "employee_id": employee_id,
+            "employee_code": f"EMP{employee_id:04d}",
+            "employee_name": _build_employee_name(employee_id),
+            "department": EMPLOYEE_DEPARTMENT_BY_ROLE[role],
+            "role": role,
+            "warehouse_id": warehouse_id,
+            "employee_status": statuses[index],
+        })
+    return employees
+
+
+# ============================================================
 # Product master generation
 # ============================================================
 
@@ -1454,8 +2318,615 @@ UOM_CODES_BY_ID = {
 
 
 # ============================================================
+# Customer location master generation
+# ============================================================
+
+CUSTOMER_LOCATION_MASTER_COUNT = 360
+CUSTOMER_LOCATION_RANDOM_SEED = 20260104
+
+# Controlled expansion across the 180-customer universe:
+# 85 customers have 1 location, 35 have 2, 40 have 3,
+# 15 have 4, and 5 have 5 locations.
+CUSTOMER_LOCATION_COUNT_TARGETS = {
+    1: 85,
+    2: 35,
+    3: 40,
+    4: 15,
+    5: 5,
+}
+
+CUSTOMER_LOCATION_SUFFIXES = [
+    "Distribution Hub",
+    "Service Centre",
+    "Industrial Depot",
+    "Business Park",
+    "Logistics Point",
+]
+
+def _build_customer_location_count_map(
+    customers: list[dict],
+) -> dict[int, int]:
+    """Assign deterministic ship-to location counts across customers."""
+
+    import random
+
+    if len(customers) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer location generation requires exactly "
+            f"{CUSTOMER_MASTER_COUNT} customers, "
+            f"got {len(customers)}."
+        )
+
+    if sum(
+        CUSTOMER_LOCATION_COUNT_TARGETS.values()
+    ) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer location count targets must cover exactly "
+            f"{CUSTOMER_MASTER_COUNT} customers."
+        )
+
+    location_total = sum(
+        location_count * customer_count
+        for location_count, customer_count
+        in CUSTOMER_LOCATION_COUNT_TARGETS.items()
+    )
+
+    if location_total != CUSTOMER_LOCATION_MASTER_COUNT:
+        raise ValueError(
+            "Customer location count targets do not produce "
+            f"{CUSTOMER_LOCATION_MASTER_COUNT} locations; "
+            f"got {location_total}."
+        )
+
+    customer_ids = [
+        row["customer_id"]
+        for row in customers
+    ]
+
+    rng = random.Random(
+        CUSTOMER_LOCATION_RANDOM_SEED
+    )
+    rng.shuffle(customer_ids)
+
+    count_map = {}
+    cursor = 0
+
+    for location_count in sorted(
+        CUSTOMER_LOCATION_COUNT_TARGETS
+    ):
+        customer_count = (
+            CUSTOMER_LOCATION_COUNT_TARGETS[
+                location_count
+            ]
+        )
+
+        for customer_id in customer_ids[
+            cursor:cursor + customer_count
+        ]:
+            count_map[customer_id] = location_count
+
+        cursor += customer_count
+
+    return count_map
+
+
+def _build_customer_location_city(
+    customer: dict,
+    location_sequence: int,
+) -> tuple[str, str]:
+    """Return a deterministic city and postal prefix for a ship-to location."""
+
+    state = customer["billing_state"]
+    city_options = CUSTOMER_CITY_OPTIONS[state]
+
+    option_index = (
+        customer["customer_id"]
+        + location_sequence
+        - 2
+    ) % len(city_options)
+
+    return city_options[option_index]
+
+
+def generate_customer_locations(
+    customers: list[dict],
+) -> list[dict]:
+    """Generate deterministic customer ship-to locations."""
+
+    count_map = _build_customer_location_count_map(
+        customers
+    )
+
+    customer_by_id = {
+        row["customer_id"]: row
+        for row in customers
+    }
+
+    customer_locations = []
+    customer_location_id = 1
+
+    for customer_id in sorted(customer_by_id):
+        customer = customer_by_id[customer_id]
+
+        for location_sequence in range(
+            1,
+            count_map[customer_id] + 1,
+        ):
+            city, postal_prefix = (
+                _build_customer_location_city(
+                    customer,
+                    location_sequence,
+                )
+            )
+
+            if location_sequence == 1:
+                location_name = (
+                    f"{customer['customer_name']} "
+                    "Primary Ship-To"
+                )
+                address_line1 = customer[
+                    "billing_address_line1"
+                ]
+                address_line2 = customer[
+                    "billing_address_line2"
+                ]
+                city = customer["billing_city"]
+                postal_code = customer[
+                    "billing_postal_code"
+                ]
+                is_default = True
+            else:
+                location_suffix = (
+                    CUSTOMER_LOCATION_SUFFIXES[
+                        (location_sequence - 2)
+                        % len(CUSTOMER_LOCATION_SUFFIXES)
+                    ]
+                )
+                location_name = (
+                    f"{customer['customer_name']} "
+                    f"{location_suffix} {location_sequence}"
+                )
+                address_line1 = (
+                    f"Plot "
+                    f"{20 + ((customer_id * 3 + location_sequence) % 80)}, "
+                    f"{location_suffix}"
+                )
+                address_line2 = (
+                    f"Sector "
+                    f"{1 + ((customer_id + location_sequence) % 12)}, "
+                    f"{city} Logistics District"
+                )
+                postal_code = (
+                    f"{postal_prefix}"
+                    f"{200 + ((customer_id + location_sequence * 7) % 700):03d}"
+                )
+                is_default = False
+
+            customer_locations.append(
+                {
+                    "customer_location_id": customer_location_id,
+                    "customer_id": customer_id,
+                    "location_code": (
+                        f"{customer['customer_code']}-"
+                        f"SHIP-{location_sequence:02d}"
+                    ),
+                    "location_name": location_name,
+                    "contact_person": customer["contact_person"],
+                    "phone": customer["phone"],
+                    "address_line1": address_line1,
+                    "address_line2": address_line2,
+                    "city": city,
+                    "state": customer["billing_state"],
+                    "postal_code": postal_code,
+                    "country": "India",
+                    "is_default": is_default,
+                    "location_status": "active",
+                }
+            )
+
+            customer_location_id += 1
+
+    return customer_locations
+
+
+# ============================================================
+# Transporter master generation
+# ============================================================
+
+TRANSPORTER_MASTER_COUNT = 18
+TRANSPORTER_RANDOM_SEED = 20260104
+
+TRANSPORTER_TYPE_TARGETS = {
+    "local": 7,
+    "regional": 7,
+    "long_route": 4,
+}
+
+TRANSPORTER_SERVICE_MODE_TARGETS = {
+    "inbound": 3,
+    "outbound": 7,
+    "both": 8,
+}
+
+TRANSPORTER_STATUS_TARGETS = {
+    "active": 16,
+    "inactive": 2,
+}
+
+TRANSPORTER_GEOGRAPHY = [
+    ("Maharashtra", "Pune", "411", "27", "020"),
+    ("Maharashtra", "Mumbai", "400", "27", "022"),
+    ("Maharashtra", "Nashik", "422", "27", "0253"),
+    ("Maharashtra", "Nagpur", "440", "27", "0712"),
+    ("Maharashtra", "Thane", "400", "27", "022"),
+    ("Gujarat", "Ahmedabad", "380", "24", "079"),
+    ("Gujarat", "Vadodara", "390", "24", "0265"),
+    ("Gujarat", "Surat", "395", "24", "0261"),
+    ("Karnataka", "Bengaluru", "560", "29", "080"),
+    ("Karnataka", "Hubballi", "580", "29", "0836"),
+    ("Madhya Pradesh", "Indore", "452", "23", "0731"),
+    ("Madhya Pradesh", "Bhopal", "462", "23", "0755"),
+    ("Telangana", "Hyderabad", "500", "36", "040"),
+    ("Telangana", "Warangal", "506", "36", "0870"),
+    ("Delhi", "New Delhi", "110", "07", "011"),
+    ("Rajasthan", "Jaipur", "302", "08", "0141"),
+    ("Tamil Nadu", "Chennai", "600", "33", "044"),
+    ("Goa", "Panaji", "403", "30", "0832"),
+]
+
+TRANSPORTER_NAME_STEMS = [
+    "SwiftLine Logistics",
+    "RoadLink Carriers",
+    "PrimeRoute Transport",
+    "Western Freight Services",
+    "Northstar Roadways",
+    "Deccan Carrier Network",
+    "MetroRoute Logistics",
+    "BluePeak Transport",
+    "CentralTrack Carriers",
+    "SouthGate Logistics",
+    "HarborRoute Transport",
+    "Ridgeway Freight",
+    "EastWest Carrier Services",
+    "Crestline Road Transport",
+    "UrbanHaul Logistics",
+    "GrandRoute Carriers",
+    "ClearPath Transport",
+    "IronBridge Logistics",
+]
+
+TRANSPORTER_ROLE_LABELS = {
+    "local": "Local Transport Services",
+    "regional": "Regional Transport Services",
+    "long_route": "Long Route Transport Services",
+}
+
+
+def _build_transporter_type_pool() -> list[str]:
+    pool = []
+    for transporter_type, target in TRANSPORTER_TYPE_TARGETS.items():
+        pool.extend([transporter_type] * target)
+    if len(pool) != TRANSPORTER_MASTER_COUNT:
+        raise ValueError(
+            "Transporter type targets do not sum "
+            f"to {TRANSPORTER_MASTER_COUNT}."
+        )
+    return pool
+
+
+def _build_transporter_service_mode_pool() -> list[str]:
+    pool = []
+    for service_mode, target in TRANSPORTER_SERVICE_MODE_TARGETS.items():
+        pool.extend([service_mode] * target)
+    if len(pool) != TRANSPORTER_MASTER_COUNT:
+        raise ValueError(
+            "Transporter service-mode targets do not sum "
+            f"to {TRANSPORTER_MASTER_COUNT}."
+        )
+    return pool
+
+
+def _build_transporter_status_pool() -> list[str]:
+    pool = []
+    for status, target in TRANSPORTER_STATUS_TARGETS.items():
+        pool.extend([status] * target)
+    if len(pool) != TRANSPORTER_MASTER_COUNT:
+        raise ValueError(
+            "Transporter status targets do not sum "
+            f"to {TRANSPORTER_MASTER_COUNT}."
+        )
+    return pool
+
+
+def generate_transporters() -> list[dict]:
+    """Generate the synthetic transporter master deterministically."""
+
+    import random
+
+    rng = random.Random(TRANSPORTER_RANDOM_SEED)
+
+    transporter_types = _build_transporter_type_pool()
+    service_modes = _build_transporter_service_mode_pool()
+    statuses = _build_transporter_status_pool()
+    geography = list(TRANSPORTER_GEOGRAPHY)
+
+    rng.shuffle(transporter_types)
+    rng.shuffle(service_modes)
+    rng.shuffle(statuses)
+    rng.shuffle(geography)
+
+    transporters = []
+
+    for index in range(TRANSPORTER_MASTER_COUNT):
+        transporter_id = index + 1
+        transporter_type = transporter_types[index]
+        service_mode = service_modes[index]
+        transporter_status = statuses[index]
+        state, city, postal_prefix, state_code, phone_prefix = geography[index]
+
+        name = TRANSPORTER_NAME_STEMS[index]
+        role_label = TRANSPORTER_ROLE_LABELS[transporter_type]
+
+        phone = f"{phone_prefix}-{5200000 + transporter_id:07d}"
+        email_token = re.sub(r"[^a-z0-9]+", "", name.lower())
+        email = f"operations@{email_token}.example"
+        gstin = f"SYN-{state_code}-TR-{transporter_id:06d}"
+
+        postal_code = f"{postal_prefix}{100 + transporter_id:03d}"
+
+        address_line1 = (
+            f"Plot {15 + transporter_id}, Transport Service Area"
+        )
+
+        address_line2 = None
+        if transporter_id % 3 != 0:
+            address_line2 = (
+                f"Logistics Corridor, {city}"
+            )
+
+        contract_start_date = date(
+            2024,
+            1,
+            1,
+        ) + timedelta(days=30 * (transporter_id % 18))
+
+        contract_end_date = None
+        if transporter_status == "inactive":
+            contract_end_date = date(
+                2025,
+                12,
+                31,
+            ) - timedelta(days=30 * ((transporter_id + 2) % 6))
+
+        transporters.append(
+            {
+                "transporter_id": transporter_id,
+                "transporter_code": f"TRN{transporter_id:03d}",
+                "transporter_name": f"{name} {role_label}",
+                "transporter_type": transporter_type,
+                "contact_person": _build_customer_contact_name(transporter_id),
+                "phone": phone,
+                "email": email,
+                "gstin": gstin,
+                "state_code": state_code,
+                "address_line1": address_line1,
+                "address_line2": address_line2,
+                "city": city,
+                "state": state,
+                "postal_code": postal_code,
+                "country": "India",
+                "service_mode": service_mode,
+                "contract_start_date": contract_start_date,
+                "contract_end_date": contract_end_date,
+                "transporter_status": transporter_status,
+            }
+        )
+
+    return transporters
+
+
+
+# ============================================================
+# Vehicle master generation
+# ============================================================
+
+VEHICLE_MASTER_COUNT = 135
+VEHICLE_RANDOM_SEED = 20260105
+
+VEHICLE_TYPE_TARGETS = {
+    "Mini Truck": 20,
+    "LCV": 30,
+    "Medium Truck": 30,
+    "Heavy Truck": 25,
+    "Tanker": 18,
+    "Container Truck": 12,
+}
+
+VEHICLE_OWNERSHIP_TARGETS = {
+    "owned": 40,
+    "attached": 70,
+    "hired": 25,
+}
+
+VEHICLE_STATUS_TARGETS = {
+    "active": 128,
+    "inactive": 7,
+}
+
+VEHICLE_TYPE_SPECS = {
+    "Mini Truck": {
+        "body_type": "closed",
+        "capacity_tons": (1.0, 3.0),
+        "capacity_ltr": (1000.0, 3000.0),
+    },
+    "LCV": {
+        "body_type": "closed",
+        "capacity_tons": (3.0, 7.0),
+        "capacity_ltr": (2500.0, 6000.0),
+    },
+    "Medium Truck": {
+        "body_type": "closed",
+        "capacity_tons": (6.0, 12.0),
+        "capacity_ltr": (5000.0, 10000.0),
+    },
+    "Heavy Truck": {
+        "body_type": "closed",
+        "capacity_tons": (12.0, 20.0),
+        "capacity_ltr": (8000.0, 15000.0),
+    },
+    "Tanker": {
+        "body_type": "tanker",
+        "capacity_tons": (8.0, 18.0),
+        "capacity_ltr": (12000.0, 30000.0),
+    },
+    "Container Truck": {
+        "body_type": "container",
+        "capacity_tons": (10.0, 20.0),
+        "capacity_ltr": (10000.0, 24000.0),
+    },
+}
+
+VEHICLE_STATE_CODES = {
+    "Maharashtra": "MH",
+    "Gujarat": "GJ",
+    "Karnataka": "KA",
+    "Madhya Pradesh": "MP",
+    "Telangana": "TS",
+    "Delhi": "DL",
+    "Rajasthan": "RJ",
+    "Tamil Nadu": "TN",
+    "Goa": "GA",
+}
+
+
+def _build_vehicle_type_pool() -> list[str]:
+    pool = []
+    for vehicle_type, target in VEHICLE_TYPE_TARGETS.items():
+        pool.extend([vehicle_type] * target)
+
+    if len(pool) != VEHICLE_MASTER_COUNT:
+        raise ValueError(
+            "Vehicle type targets do not sum "
+            f"to {VEHICLE_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_vehicle_ownership_pool() -> list[str]:
+    pool = []
+    for ownership_type, target in VEHICLE_OWNERSHIP_TARGETS.items():
+        pool.extend([ownership_type] * target)
+
+    if len(pool) != VEHICLE_MASTER_COUNT:
+        raise ValueError(
+            "Vehicle ownership targets do not sum "
+            f"to {VEHICLE_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def _build_vehicle_status_pool() -> list[str]:
+    pool = []
+    for status, target in VEHICLE_STATUS_TARGETS.items():
+        pool.extend([status] * target)
+
+    if len(pool) != VEHICLE_MASTER_COUNT:
+        raise ValueError(
+            "Vehicle status targets do not sum "
+            f"to {VEHICLE_MASTER_COUNT}."
+        )
+
+    return pool
+
+
+def generate_vehicles(
+    transporters: list[dict],
+) -> list[dict]:
+    """Generate deterministic synthetic vehicle master data."""
+
+    import random
+
+    if not transporters:
+        raise ValueError(
+            "Cannot generate vehicles without transporters."
+        )
+
+    rng = random.Random(VEHICLE_RANDOM_SEED)
+
+    vehicle_types = _build_vehicle_type_pool()
+    ownership_types = _build_vehicle_ownership_pool()
+    statuses = _build_vehicle_status_pool()
+
+    transporter_pool = list(transporters)
+
+    rng.shuffle(vehicle_types)
+    rng.shuffle(ownership_types)
+    rng.shuffle(statuses)
+    rng.shuffle(transporter_pool)
+
+    vehicles = []
+
+    for index in range(VEHICLE_MASTER_COUNT):
+        vehicle_id = index + 1
+        transporter = transporter_pool[index % len(transporter_pool)]
+        vehicle_type = vehicle_types[index]
+        ownership_type = ownership_types[index]
+        vehicle_status = statuses[index]
+
+        spec = VEHICLE_TYPE_SPECS[vehicle_type]
+
+        capacity_tons = round(
+            rng.uniform(
+                spec["capacity_tons"][0],
+                spec["capacity_tons"][1],
+            ),
+            2,
+        )
+
+        capacity_ltr = round(
+            rng.uniform(
+                spec["capacity_ltr"][0],
+                spec["capacity_ltr"][1],
+            ),
+            2,
+        )
+
+        state = transporter["state"]
+        state_code = VEHICLE_STATE_CODES.get(state)
+
+        if state_code is None:
+            raise ValueError(
+                f"No vehicle registration code defined for state: {state}"
+            )
+
+        vehicle_number = (
+            f"SYN-{state_code}-{vehicle_id:04d}"
+        )
+
+        vehicles.append(
+            {
+                "vehicle_id": vehicle_id,
+                "transporter_id": transporter["transporter_id"],
+                "vehicle_number": vehicle_number,
+                "vehicle_type": vehicle_type,
+                "body_type": spec["body_type"],
+                "capacity_tons": capacity_tons,
+                "capacity_ltr": capacity_ltr,
+                "registration_state": state,
+                "ownership_type": ownership_type,
+                "vehicle_status": vehicle_status,
+            }
+        )
+
+    return vehicles
+
+
+# ============================================================
 # Product-supplier relationship generation
 # ============================================================
+
 
 PRODUCT_SUPPLIER_RANDOM_SEED = 20260102
 
@@ -3854,8 +5325,1031 @@ def validate_suppliers(
 
 
 # ============================================================
+# Customer validation
+# ============================================================
+
+CUSTOMER_EMAIL_PATTERN = re.compile(
+    r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+"
+    r"@"
+    r"[A-Za-z0-9.-]+\.example$"
+)
+
+CUSTOMER_PHONE_PATTERN = re.compile(
+    r"^[0-9]+-[0-9]+$"
+)
+
+CUSTOMER_GSTIN_PATTERN = re.compile(
+    r"^SYN-[0-9]{2}-[0-9]{6}$"
+)
+
+
+def validate_customers(
+    customers: list[dict],
+    payment_terms: list[dict],
+) -> None:
+    """Validate customer master data."""
+
+    if len(customers) != CUSTOMER_MASTER_COUNT:
+        raise ValueError(
+            "Customer count mismatch: expected "
+            f"{CUSTOMER_MASTER_COUNT}, "
+            f"got {len(customers)}"
+        )
+
+    required_fields = {
+        "customer_id",
+        "customer_code",
+        "customer_name",
+        "customer_type",
+        "contact_person",
+        "phone",
+        "email",
+        "gstin",
+        "state_code",
+        "billing_address_line1",
+        "billing_address_line2",
+        "billing_city",
+        "billing_state",
+        "billing_postal_code",
+        "country",
+        "payment_term_id",
+        "credit_limit",
+        "customer_status",
+    }
+
+    for row in customers:
+        missing_fields = (
+            required_fields - row.keys()
+        )
+
+        if missing_fields:
+            raise ValueError(
+                "Missing customer fields: "
+                f"{sorted(missing_fields)}"
+            )
+
+    customer_ids = [
+        row["customer_id"]
+        for row in customers
+    ]
+
+    customer_codes = [
+        row["customer_code"]
+        for row in customers
+    ]
+
+    customer_names = [
+        row["customer_name"]
+        for row in customers
+    ]
+
+    customer_emails = [
+        row["email"].lower()
+        for row in customers
+    ]
+
+    customer_gstins = [
+        row["gstin"]
+        for row in customers
+    ]
+
+    if customer_ids != list(
+        range(
+            1,
+            CUSTOMER_MASTER_COUNT + 1,
+        )
+    ):
+        raise ValueError(
+            "Customer IDs are not sequential."
+        )
+
+    if len(customer_codes) != len(
+        set(customer_codes)
+    ):
+        raise ValueError(
+            "Duplicate customer_code found."
+        )
+
+    if len(customer_names) != len(
+        set(customer_names)
+    ):
+        raise ValueError(
+            "Duplicate customer_name found."
+        )
+
+    if len(customer_emails) != len(
+        set(customer_emails)
+    ):
+        raise ValueError(
+            "Duplicate customer email found."
+        )
+
+    if len(customer_gstins) != len(
+        set(customer_gstins)
+    ):
+        raise ValueError(
+            "Duplicate customer GSTIN found."
+        )
+
+    payment_term_ids = {
+        row["payment_term_id"]
+        for row in payment_terms
+    }
+
+    allowed_types = set(
+        CUSTOMER_TYPE_TARGETS
+    )
+
+    allowed_statuses = set(
+        CUSTOMER_STATUS_TARGETS
+    )
+
+    type_counts = {
+        key: 0
+        for key in CUSTOMER_TYPE_TARGETS
+    }
+
+    status_counts = {
+        key: 0
+        for key in CUSTOMER_STATUS_TARGETS
+    }
+
+    payment_term_counts = {
+        key: 0
+        for key in CUSTOMER_PAYMENT_TERM_TARGETS
+    }
+
+    geography_counts = {
+        key: 0
+        for key in CUSTOMER_GEOGRAPHY_TARGETS
+    }
+
+    for row in customers:
+        code = row[
+            "customer_code"
+        ]
+
+        customer_type = row[
+            "customer_type"
+        ]
+
+        customer_status = row[
+            "customer_status"
+        ]
+
+        state = row[
+            "billing_state"
+        ]
+
+        if customer_type not in allowed_types:
+            raise ValueError(
+                f"Invalid customer type for "
+                f"{code}: {customer_type}"
+            )
+
+        if customer_status not in allowed_statuses:
+            raise ValueError(
+                f"Invalid customer status for "
+                f"{code}: {customer_status}"
+            )
+
+        if row[
+            "payment_term_id"
+        ] not in payment_term_ids:
+            raise ValueError(
+                f"Invalid payment_term_id "
+                f"{row['payment_term_id']} "
+                f"for {code}"
+            )
+
+        if row[
+            "credit_limit"
+        ] < 0:
+            raise ValueError(
+                f"Negative credit limit for {code}"
+            )
+
+        if not row[
+            "customer_code"
+        ].strip():
+            raise ValueError(
+                f"Customer code cannot be empty: "
+                f"{code}"
+            )
+
+        if not row[
+            "customer_name"
+        ].strip():
+            raise ValueError(
+                f"Customer name cannot be empty: "
+                f"{code}"
+            )
+
+        if not row[
+            "contact_person"
+        ].strip():
+            raise ValueError(
+                f"Customer contact person cannot be empty: "
+                f"{code}"
+            )
+
+        phone = row[
+            "phone"
+        ].strip()
+
+        if not CUSTOMER_PHONE_PATTERN.fullmatch(
+            phone
+        ):
+            raise ValueError(
+                f"Invalid customer phone format: "
+                f"{code}"
+            )
+
+        email = row[
+            "email"
+        ].strip()
+
+        if not CUSTOMER_EMAIL_PATTERN.fullmatch(
+            email
+        ):
+            raise ValueError(
+                f"Invalid customer email format: "
+                f"{code}"
+            )
+
+        gstin = row[
+            "gstin"
+        ]
+
+        if not CUSTOMER_GSTIN_PATTERN.fullmatch(
+            gstin
+        ):
+            raise ValueError(
+                f"Invalid synthetic customer GSTIN: "
+                f"{code}"
+            )
+
+        expected_state_code = (
+            CUSTOMER_STATE_CODES.get(
+                state
+            )
+        )
+
+        if expected_state_code is None:
+            raise ValueError(
+                f"Invalid customer state for "
+                f"{code}: {state}"
+            )
+
+        if row[
+            "state_code"
+        ] != expected_state_code:
+            raise ValueError(
+                f"Customer state_code mismatch for "
+                f"{code}"
+            )
+
+        postal_code = row[
+            "billing_postal_code"
+        ]
+
+        if not re.fullmatch(
+            r"[0-9]{6}",
+            postal_code,
+        ):
+            raise ValueError(
+                f"Invalid customer postal code for "
+                f"{code}: {postal_code}"
+            )
+
+        city_options = CUSTOMER_CITY_OPTIONS[
+            state
+        ]
+
+        valid_city_prefixes = dict(
+            city_options
+        )
+
+        city = row[
+            "billing_city"
+        ]
+
+        if city not in valid_city_prefixes:
+            raise ValueError(
+                f"Invalid customer city for "
+                f"{code}: {city}"
+            )
+
+        if not postal_code.startswith(
+            valid_city_prefixes[city]
+        ):
+            raise ValueError(
+                f"Customer postal-code prefix mismatch "
+                f"for {code}"
+            )
+
+        if not row[
+            "billing_address_line1"
+        ].strip():
+            raise ValueError(
+                f"Customer billing address cannot be empty: "
+                f"{code}"
+            )
+
+        if not row[
+            "billing_city"
+        ].strip():
+            raise ValueError(
+                f"Customer billing city cannot be empty: "
+                f"{code}"
+            )
+
+        if row[
+            "country"
+        ] != "India":
+            raise ValueError(
+                f"Customer country must be India: "
+                f"{code}"
+            )
+
+        type_counts[
+            customer_type
+        ] += 1
+
+        status_counts[
+            customer_status
+        ] += 1
+
+        payment_term_counts[
+            row["payment_term_id"]
+        ] += 1
+
+        geography_counts[
+            state
+        ] += 1
+
+    if type_counts != CUSTOMER_TYPE_TARGETS:
+        raise ValueError(
+            "Customer type distribution mismatch: "
+            f"{type_counts}"
+        )
+
+    if status_counts != CUSTOMER_STATUS_TARGETS:
+        raise ValueError(
+            "Customer status distribution mismatch: "
+            f"{status_counts}"
+        )
+
+    if (
+        payment_term_counts
+        != CUSTOMER_PAYMENT_TERM_TARGETS
+    ):
+        raise ValueError(
+            "Customer payment-term distribution mismatch: "
+            f"{payment_term_counts}"
+        )
+
+    if (
+        geography_counts
+        != CUSTOMER_GEOGRAPHY_TARGETS
+    ):
+        raise ValueError(
+            "Customer geography distribution mismatch: "
+            f"{geography_counts}"
+        )
+
+
+# ============================================================
+# Customer location validation
+# ============================================================
+
+
+def validate_customer_locations(
+    customer_locations: list[dict],
+    customers: list[dict],
+) -> None:
+    """Validate customer ship-to location master data."""
+
+    if len(customer_locations) != CUSTOMER_LOCATION_MASTER_COUNT:
+        raise ValueError(
+            "Customer location count mismatch: expected "
+            f"{CUSTOMER_LOCATION_MASTER_COUNT}, "
+            f"got {len(customer_locations)}"
+        )
+
+    required_fields = {
+        "customer_location_id",
+        "customer_id",
+        "location_code",
+        "location_name",
+        "contact_person",
+        "phone",
+        "address_line1",
+        "address_line2",
+        "city",
+        "state",
+        "postal_code",
+        "country",
+        "is_default",
+        "location_status",
+    }
+
+    customer_ids = {
+        row["customer_id"]
+        for row in customers
+    }
+
+    location_ids = [
+        row["customer_location_id"]
+        for row in customer_locations
+    ]
+    location_codes = [
+        row["location_code"]
+        for row in customer_locations
+    ]
+
+    if location_ids != list(range(1, CUSTOMER_LOCATION_MASTER_COUNT + 1)):
+        raise ValueError(
+            "Customer location IDs are not sequential."
+        )
+
+    if len(location_codes) != len(set(location_codes)):
+        raise ValueError(
+            "Duplicate customer location_code found."
+        )
+
+    per_customer_counts = {}
+    active_default_counts = {}
+
+    for row in customer_locations:
+        missing_fields = required_fields - row.keys()
+        if missing_fields:
+            raise ValueError(
+                "Missing customer location fields: "
+                f"{sorted(missing_fields)}"
+            )
+
+        customer_id = row["customer_id"]
+        if customer_id not in customer_ids:
+            raise ValueError(
+                "Customer location references missing customer: "
+                f"{row['customer_location_id']}"
+            )
+
+        if row["location_status"] not in {
+            "active",
+            "inactive",
+        }:
+            raise ValueError(
+                f"Invalid customer location status: {row['location_status']}"
+            )
+
+        if row["country"] != "India":
+            raise ValueError(
+                "Customer location country must be India: "
+                f"{row['customer_location_id']}"
+            )
+
+        if not row["location_name"].strip():
+            raise ValueError(
+                "Customer location name cannot be empty: "
+                f"{row['customer_location_id']}"
+            )
+
+        if not row["address_line1"].strip():
+            raise ValueError(
+                "Customer location address cannot be empty: "
+                f"{row['customer_location_id']}"
+            )
+
+        if not re.fullmatch(r"[0-9]{6}", row["postal_code"]):
+            raise ValueError(
+                "Invalid customer location postal code: "
+                f"{row['customer_location_id']}"
+            )
+
+        city_options = CUSTOMER_CITY_OPTIONS.get(row["state"])
+        if not city_options:
+            raise ValueError(
+                "Invalid customer location state: "
+                f"{row['state']}"
+            )
+
+        valid_prefixes = dict(city_options)
+        if row["city"] not in valid_prefixes:
+            raise ValueError(
+                "Invalid customer location city: "
+                f"{row['customer_location_id']}"
+            )
+
+        if not row["postal_code"].startswith(valid_prefixes[row["city"]]):
+            raise ValueError(
+                "Customer location postal-code prefix mismatch: "
+                f"{row['customer_location_id']}"
+            )
+
+        per_customer_counts[customer_id] = per_customer_counts.get(customer_id, 0) + 1
+
+        if row["is_default"] and row["location_status"] == "active":
+            active_default_counts[customer_id] = (
+                active_default_counts.get(customer_id, 0) + 1
+            )
+
+    if set(per_customer_counts) != customer_ids:
+        missing_customer_ids = customer_ids - set(per_customer_counts)
+        raise ValueError(
+            "Customers without ship-to locations: "
+            f"{sorted(missing_customer_ids)}"
+        )
+
+    for customer_id in customer_ids:
+        if active_default_counts.get(customer_id, 0) != 1:
+            raise ValueError(
+                "Customer must have exactly one active default "
+                "ship-to location: "
+                f"{customer_id}"
+            )
+
+
+# ============================================================
+# Transporter validation
+# ============================================================
+
+TRANSPORTER_EMAIL_PATTERN = re.compile(
+    r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+"
+    r"@"
+    r"[A-Za-z0-9.-]+\.example$"
+)
+
+TRANSPORTER_PHONE_PATTERN = re.compile(
+    r"^[0-9]+-[0-9]+$"
+)
+
+TRANSPORTER_GSTIN_PATTERN = re.compile(
+    r"^SYN-[0-9]{2}-TR-[0-9]{6}$"
+)
+
+
+def validate_transporters(
+    transporters: list[dict],
+) -> None:
+    """Validate transporter master data."""
+
+    if len(transporters) != TRANSPORTER_MASTER_COUNT:
+        raise ValueError(
+            "Transporter count mismatch: expected "
+            f"{TRANSPORTER_MASTER_COUNT}, "
+            f"got {len(transporters)}"
+        )
+
+    required_fields = {
+        "transporter_id",
+        "transporter_code",
+        "transporter_name",
+        "transporter_type",
+        "contact_person",
+        "phone",
+        "email",
+        "gstin",
+        "state_code",
+        "address_line1",
+        "address_line2",
+        "city",
+        "state",
+        "postal_code",
+        "country",
+        "service_mode",
+        "contract_start_date",
+        "contract_end_date",
+        "transporter_status",
+    }
+
+    transporter_ids = [row["transporter_id"] for row in transporters]
+    transporter_codes = [row["transporter_code"] for row in transporters]
+    transporter_names = [row["transporter_name"] for row in transporters]
+    transporter_emails = [row["email"].lower() for row in transporters]
+    transporter_gstins = [row["gstin"] for row in transporters]
+
+    if transporter_ids != list(range(1, TRANSPORTER_MASTER_COUNT + 1)):
+        raise ValueError("Transporter IDs are not sequential.")
+
+    if len(transporter_codes) != len(set(transporter_codes)):
+        raise ValueError("Duplicate transporter_code found.")
+
+    if len(transporter_names) != len(set(transporter_names)):
+        raise ValueError("Duplicate transporter_name found.")
+
+    if len(transporter_emails) != len(set(transporter_emails)):
+        raise ValueError("Duplicate transporter email found.")
+
+    if len(transporter_gstins) != len(set(transporter_gstins)):
+        raise ValueError("Duplicate transporter GSTIN found.")
+
+    allowed_types = set(TRANSPORTER_TYPE_TARGETS)
+    allowed_modes = set(TRANSPORTER_SERVICE_MODE_TARGETS)
+    allowed_statuses = set(TRANSPORTER_STATUS_TARGETS)
+
+    type_counts = {key: 0 for key in TRANSPORTER_TYPE_TARGETS}
+    mode_counts = {key: 0 for key in TRANSPORTER_SERVICE_MODE_TARGETS}
+    status_counts = {key: 0 for key in TRANSPORTER_STATUS_TARGETS}
+
+    for row in transporters:
+        missing_fields = required_fields - row.keys()
+        if missing_fields:
+            raise ValueError(
+                "Missing transporter fields: "
+                f"{sorted(missing_fields)}"
+            )
+
+        code = row["transporter_code"]
+        transporter_type = row["transporter_type"]
+        service_mode = row["service_mode"]
+        transporter_status = row["transporter_status"]
+
+        if transporter_type not in allowed_types:
+            raise ValueError(
+                f"Invalid transporter type for {code}: {transporter_type}"
+            )
+
+        if service_mode not in allowed_modes:
+            raise ValueError(
+                f"Invalid transporter service mode for {code}: {service_mode}"
+            )
+
+        if transporter_status not in allowed_statuses:
+            raise ValueError(
+                f"Invalid transporter status for {code}: {transporter_status}"
+            )
+
+        for field in (
+            "transporter_code",
+            "transporter_name",
+            "contact_person",
+            "address_line1",
+            "city",
+            "state",
+            "postal_code",
+            "country",
+        ):
+            if not row[field].strip():
+                raise ValueError(
+                    f"Transporter {field} cannot be empty: {code}"
+                )
+
+        if not TRANSPORTER_PHONE_PATTERN.fullmatch(row["phone"].strip()):
+            raise ValueError(
+                f"Invalid transporter phone format: {code}"
+            )
+
+        if not TRANSPORTER_EMAIL_PATTERN.fullmatch(row["email"].strip()):
+            raise ValueError(
+                f"Invalid transporter email format: {code}"
+            )
+
+        if not TRANSPORTER_GSTIN_PATTERN.fullmatch(row["gstin"]):
+            raise ValueError(
+                f"Invalid synthetic transporter GSTIN: {code}"
+            )
+
+        state_code = row["state_code"]
+        if not re.fullmatch(r"[0-9]{2}", state_code):
+            raise ValueError(
+                f"Invalid transporter state_code: {code}"
+            )
+
+        if not re.fullmatch(r"[0-9]{6}", row["postal_code"]):
+            raise ValueError(
+                f"Invalid transporter postal code: {code}"
+            )
+
+        if row["contract_start_date"] is None:
+            raise ValueError(
+                f"Transporter contract_start_date cannot be NULL: {code}"
+            )
+
+        if (
+            row["contract_end_date"] is not None
+            and row["contract_end_date"] < row["contract_start_date"]
+        ):
+            raise ValueError(
+                f"Transporter contract dates are invalid: {code}"
+            )
+
+        if transporter_status == "inactive" and row["contract_end_date"] is None:
+            raise ValueError(
+                f"Inactive transporter must have a contract_end_date: {code}"
+            )
+
+        if transporter_status == "active" and row["contract_end_date"] is not None:
+            raise ValueError(
+                f"Active transporter should have an open-ended contract: {code}"
+            )
+
+        if row["country"] != "India":
+            raise ValueError(
+                f"Transporter country must be India: {code}"
+            )
+
+        type_counts[transporter_type] += 1
+        mode_counts[service_mode] += 1
+        status_counts[transporter_status] += 1
+
+    if type_counts != TRANSPORTER_TYPE_TARGETS:
+        raise ValueError(
+            f"Transporter type distribution mismatch: {type_counts}"
+        )
+
+    if mode_counts != TRANSPORTER_SERVICE_MODE_TARGETS:
+        raise ValueError(
+            f"Transporter service-mode distribution mismatch: {mode_counts}"
+        )
+
+    if status_counts != TRANSPORTER_STATUS_TARGETS:
+        raise ValueError(
+            f"Transporter status distribution mismatch: {status_counts}"
+        )
+
+
+
+# ============================================================
+# Vehicle validation
+# ============================================================
+
+VEHICLE_NUMBER_PATTERN = re.compile(
+    r"^SYN-[A-Z]{2}-[0-9]{4}$"
+)
+
+
+def validate_vehicles(
+    vehicles: list[dict],
+    transporters: list[dict],
+) -> None:
+    """Validate vehicle master data."""
+
+    if len(vehicles) != VEHICLE_MASTER_COUNT:
+        raise ValueError(
+            "Vehicle count mismatch: expected "
+            f"{VEHICLE_MASTER_COUNT}, got {len(vehicles)}"
+        )
+
+    required_fields = {
+        "vehicle_id",
+        "transporter_id",
+        "vehicle_number",
+        "vehicle_type",
+        "body_type",
+        "capacity_tons",
+        "capacity_ltr",
+        "registration_state",
+        "ownership_type",
+        "vehicle_status",
+    }
+
+    transporter_ids = {
+        row["transporter_id"]
+        for row in transporters
+    }
+
+    vehicle_ids = [
+        row["vehicle_id"]
+        for row in vehicles
+    ]
+
+    vehicle_numbers = [
+        row["vehicle_number"]
+        for row in vehicles
+    ]
+
+    if vehicle_ids != list(
+        range(1, VEHICLE_MASTER_COUNT + 1)
+    ):
+        raise ValueError(
+            "Vehicle IDs are not sequential."
+        )
+
+    if len(vehicle_numbers) != len(set(vehicle_numbers)):
+        raise ValueError(
+            "Duplicate vehicle_number found."
+        )
+
+    allowed_types = set(VEHICLE_TYPE_TARGETS)
+    allowed_ownership = set(VEHICLE_OWNERSHIP_TARGETS)
+    allowed_statuses = set(VEHICLE_STATUS_TARGETS)
+
+    type_counts = {
+        key: 0
+        for key in VEHICLE_TYPE_TARGETS
+    }
+
+    ownership_counts = {
+        key: 0
+        for key in VEHICLE_OWNERSHIP_TARGETS
+    }
+
+    status_counts = {
+        key: 0
+        for key in VEHICLE_STATUS_TARGETS
+    }
+
+    for row in vehicles:
+        missing_fields = required_fields - row.keys()
+        if missing_fields:
+            raise ValueError(
+                "Missing vehicle fields: "
+                f"{sorted(missing_fields)}"
+            )
+
+        vehicle_id = row["vehicle_id"]
+        vehicle_number = row["vehicle_number"]
+        vehicle_type = row["vehicle_type"]
+        ownership_type = row["ownership_type"]
+        vehicle_status = row["vehicle_status"]
+        transporter_id = row["transporter_id"]
+
+        if transporter_id not in transporter_ids:
+            raise ValueError(
+                f"Vehicle {vehicle_number} references missing transporter: "
+                f"{transporter_id}"
+            )
+
+        if vehicle_type not in allowed_types:
+            raise ValueError(
+                f"Invalid vehicle type for {vehicle_number}: "
+                f"{vehicle_type}"
+            )
+
+        if ownership_type not in allowed_ownership:
+            raise ValueError(
+                f"Invalid vehicle ownership for {vehicle_number}: "
+                f"{ownership_type}"
+            )
+
+        if vehicle_status not in allowed_statuses:
+            raise ValueError(
+                f"Invalid vehicle status for {vehicle_number}: "
+                f"{vehicle_status}"
+            )
+
+        if not VEHICLE_NUMBER_PATTERN.fullmatch(vehicle_number):
+            raise ValueError(
+                f"Invalid synthetic vehicle number: {vehicle_number}"
+            )
+
+        if not row["body_type"].strip():
+            raise ValueError(
+                f"Vehicle body_type cannot be empty: {vehicle_number}"
+            )
+
+        if not row["registration_state"].strip():
+            raise ValueError(
+                "Vehicle registration_state cannot be empty: "
+                f"{vehicle_number}"
+            )
+
+        if float(row["capacity_tons"]) < 0:
+            raise ValueError(
+                f"Negative vehicle capacity_tons: {vehicle_number}"
+            )
+
+        if float(row["capacity_ltr"]) < 0:
+            raise ValueError(
+                f"Negative vehicle capacity_ltr: {vehicle_number}"
+            )
+
+        expected_state = next(
+            (
+                transporter["state"]
+                for transporter in transporters
+                if transporter["transporter_id"] == transporter_id
+            ),
+            None,
+        )
+
+        if expected_state != row["registration_state"]:
+            raise ValueError(
+                "Vehicle registration_state does not match its "
+                f"transporter state: {vehicle_number}"
+            )
+
+        type_counts[vehicle_type] += 1
+        ownership_counts[ownership_type] += 1
+        status_counts[vehicle_status] += 1
+
+    if type_counts != VEHICLE_TYPE_TARGETS:
+        raise ValueError(
+            "Vehicle type distribution mismatch: "
+            f"{type_counts}"
+        )
+
+    if ownership_counts != VEHICLE_OWNERSHIP_TARGETS:
+        raise ValueError(
+            "Vehicle ownership distribution mismatch: "
+            f"{ownership_counts}"
+        )
+
+    if status_counts != VEHICLE_STATUS_TARGETS:
+        raise ValueError(
+            "Vehicle status distribution mismatch: "
+            f"{status_counts}"
+        )
+
+
+
+
+# ============================================================
+# Employee validation
+# ============================================================
+
+def validate_employees(employees: list[dict], warehouses: list[dict]) -> None:
+    """Validate operational employee master data."""
+    if len(employees) != EMPLOYEE_MASTER_COUNT:
+        raise ValueError(
+            "Employee count mismatch: expected "
+            f"{EMPLOYEE_MASTER_COUNT}, got {len(employees)}"
+        )
+    required_fields = {
+        "employee_id", "employee_code", "employee_name",
+        "department", "role", "warehouse_id", "employee_status",
+    }
+    for row in employees:
+        missing_fields = required_fields - row.keys()
+        if missing_fields:
+            raise ValueError(
+                "Missing employee fields: "
+                f"{sorted(missing_fields)}"
+            )
+    warehouse_ids = {row["warehouse_id"] for row in warehouses}
+    employee_ids = [row["employee_id"] for row in employees]
+    employee_codes = [row["employee_code"] for row in employees]
+    employee_names = [row["employee_name"] for row in employees]
+    if employee_ids != list(range(1, EMPLOYEE_MASTER_COUNT + 1)):
+        raise ValueError("Employee IDs are not sequential.")
+    if len(employee_codes) != len(set(employee_codes)):
+        raise ValueError("Duplicate employee_code found.")
+    if len(employee_names) != len(set(employee_names)):
+        raise ValueError("Duplicate employee_name found.")
+    role_counts = {key: 0 for key in EMPLOYEE_ROLE_TARGETS}
+    status_counts = {key: 0 for key in EMPLOYEE_STATUS_TARGETS}
+    warehouse_counts = {key: 0 for key in EMPLOYEE_WAREHOUSE_ASSIGNMENTS}
+    unassigned_count = 0
+    for row in employees:
+        code = row["employee_code"]
+        role = row["role"]
+        status = row["employee_status"]
+        warehouse_id = row["warehouse_id"]
+        if not row["employee_name"].strip():
+            raise ValueError(f"Employee name cannot be empty: {code}")
+        if not row["department"].strip():
+            raise ValueError(f"Employee department cannot be empty: {code}")
+        if role not in EMPLOYEE_ROLE_TARGETS:
+            raise ValueError(f"Invalid employee role for {code}: {role}")
+        if row["department"] != EMPLOYEE_DEPARTMENT_BY_ROLE[role]:
+            raise ValueError(
+                f"Employee department mismatch for {code}: "
+                f"expected {EMPLOYEE_DEPARTMENT_BY_ROLE[role]}, got {row['department']}"
+            )
+        if status not in EMPLOYEE_STATUS_TARGETS:
+            raise ValueError(f"Invalid employee status for {code}: {status}")
+        if warehouse_id is not None:
+            if warehouse_id not in warehouse_ids:
+                raise ValueError(
+                    f"Employee references missing warehouse for {code}: {warehouse_id}"
+                )
+            warehouse_counts[warehouse_id] += 1
+        else:
+            unassigned_count += 1
+        role_counts[role] += 1
+        status_counts[status] += 1
+    if role_counts != EMPLOYEE_ROLE_TARGETS:
+        raise ValueError(
+            "Employee role distribution mismatch: "
+            f"{role_counts}"
+        )
+    if status_counts != EMPLOYEE_STATUS_TARGETS:
+        raise ValueError(
+            "Employee status distribution mismatch: "
+            f"{status_counts}"
+        )
+    if warehouse_counts != EMPLOYEE_WAREHOUSE_ASSIGNMENTS:
+        raise ValueError(
+            "Employee warehouse distribution mismatch: "
+            f"{warehouse_counts}"
+        )
+    expected_unassigned = (
+        EMPLOYEE_MASTER_COUNT
+        - sum(EMPLOYEE_WAREHOUSE_ASSIGNMENTS.values())
+    )
+    if unassigned_count != expected_unassigned:
+        raise ValueError(
+            "Employee unassigned warehouse count mismatch: "
+            f"expected {expected_unassigned}, got {unassigned_count}"
+        )
+
+
+# ============================================================
 # Brand validation
 # ============================================================
+
 
 def validate_brands(
     brands: list[dict],
@@ -5286,6 +7780,12 @@ def validate_master_relationships(
     sub_categories: list[dict],
     warehouses: list[dict],
     locations: list[dict],
+    customers: list[dict] | None = None,
+    payment_terms: list[dict] | None = None,
+    customer_locations: list[dict] | None = None,
+    vehicles: list[dict] | None = None,
+    transporters: list[dict] | None = None,
+    employees: list[dict] | None = None,
 ) -> None:
     """Validate relationships between generated masters."""
 
@@ -5330,6 +7830,91 @@ def validate_master_relationships(
             "Locations reference missing warehouses: "
             f"{sorted(missing_warehouses)}"
         )
+
+    if customers is not None and payment_terms is not None:
+        payment_term_ids = {
+            row["payment_term_id"]
+            for row in payment_terms
+        }
+
+        referenced_payment_term_ids = {
+            row["payment_term_id"]
+            for row in customers
+        }
+
+        missing_payment_terms = (
+            referenced_payment_term_ids
+            - payment_term_ids
+        )
+
+        if missing_payment_terms:
+            raise ValueError(
+                "Customers reference missing payment terms: "
+                f"{sorted(missing_payment_terms)}"
+            )
+
+    if customers is not None and customer_locations is not None:
+        customer_ids = {
+            row["customer_id"]
+            for row in customers
+        }
+
+        referenced_customer_ids = {
+            row["customer_id"]
+            for row in customer_locations
+        }
+
+        missing_customers = (
+            referenced_customer_ids
+            - customer_ids
+        )
+
+        if missing_customers:
+            raise ValueError(
+                "Customer locations reference missing customers: "
+                f"{sorted(missing_customers)}"
+            )
+
+
+
+    if employees is not None:
+        referenced_employee_warehouse_ids = {
+            row["warehouse_id"]
+            for row in employees
+            if row["warehouse_id"] is not None
+        }
+        missing_employee_warehouses = (
+            referenced_employee_warehouse_ids
+            - warehouse_ids
+        )
+        if missing_employee_warehouses:
+            raise ValueError(
+                "Employees reference missing warehouses: "
+                f"{sorted(missing_employee_warehouses)}"
+            )
+
+
+    if vehicles is not None and transporters is not None:
+        transporter_ids = {
+            row["transporter_id"]
+            for row in transporters
+        }
+
+        referenced_vehicle_transporter_ids = {
+            row["transporter_id"]
+            for row in vehicles
+        }
+
+        missing_vehicle_transporters = (
+            referenced_vehicle_transporter_ids
+            - transporter_ids
+        )
+
+        if missing_vehicle_transporters:
+            raise ValueError(
+                "Vehicles reference missing transporters: "
+                f"{sorted(missing_vehicle_transporters)}"
+            )
 
 
 # ============================================================
@@ -5449,6 +8034,158 @@ def write_suppliers_csv(
             "lead_time_days",
             "payment_term_id",
             "supplier_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+def write_customers_csv(
+    customers: list[dict],
+) -> Path:
+    """Write customer master data."""
+
+    return write_csv(
+        rows=customers,
+        filename="master_customers.csv",
+        fieldnames=[
+            "customer_id",
+            "customer_code",
+            "customer_name",
+            "customer_type",
+            "contact_person",
+            "phone",
+            "email",
+            "gstin",
+            "state_code",
+            "billing_address_line1",
+            "billing_address_line2",
+            "billing_city",
+            "billing_state",
+            "billing_postal_code",
+            "country",
+            "payment_term_id",
+            "credit_limit",
+            "customer_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+def write_customer_locations_csv(
+    customer_locations: list[dict],
+) -> Path:
+    """Write customer ship-to location master data."""
+
+    return write_csv(
+        rows=customer_locations,
+        filename="master_customer_locations.csv",
+        fieldnames=[
+            "customer_location_id",
+            "customer_id",
+            "location_code",
+            "location_name",
+            "contact_person",
+            "phone",
+            "address_line1",
+            "address_line2",
+            "city",
+            "state",
+            "postal_code",
+            "country",
+            "is_default",
+            "location_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+def write_transporters_csv(
+    transporters: list[dict],
+) -> Path:
+    """Write transporter master data."""
+
+    return write_csv(
+        rows=transporters,
+        filename="master_transporters.csv",
+        fieldnames=[
+            "transporter_id",
+            "transporter_code",
+            "transporter_name",
+            "transporter_type",
+            "contact_person",
+            "phone",
+            "email",
+            "gstin",
+            "state_code",
+            "address_line1",
+            "address_line2",
+            "city",
+            "state",
+            "postal_code",
+            "country",
+            "service_mode",
+            "contract_start_date",
+            "contract_end_date",
+            "transporter_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+def write_vehicles_csv(
+    vehicles: list[dict],
+) -> Path:
+    """Write vehicle master data."""
+
+    return write_csv(
+        rows=vehicles,
+        filename="master_vehicles.csv",
+        fieldnames=[
+            "vehicle_id",
+            "transporter_id",
+            "vehicle_number",
+            "vehicle_type",
+            "body_type",
+            "capacity_tons",
+            "capacity_ltr",
+            "registration_state",
+            "ownership_type",
+            "vehicle_status",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+
+
+def write_employees_csv(employees: list[dict]) -> Path:
+    """Write employee master data."""
+    return write_csv(
+        rows=employees,
+        filename="master_employees.csv",
+        fieldnames=[
+            "employee_id",
+            "employee_code",
+            "employee_name",
+            "department",
+            "role",
+            "warehouse_id",
+            "employee_status",
             "created_date",
             "created_by",
             "updated_date",
@@ -5652,10 +8389,17 @@ def main() -> None:
         uoms = UOM_DEFINITIONS
         payment_terms = PAYMENT_TERM_DEFINITIONS
         suppliers = SUPPLIER_DEFINITIONS
+        customers = generate_customers()
+        customer_locations = generate_customer_locations(
+            customers
+        )
+        transporters = generate_transporters()
+        vehicles = generate_vehicles(transporters)
         brands = BRAND_DEFINITIONS
         categories = CATEGORY_DEFINITIONS
         sub_categories = SUB_CATEGORY_DEFINITIONS
         warehouses = WAREHOUSE_DEFINITIONS
+        employees = generate_employees(warehouses)
 
         products = generate_products()
 
@@ -5683,6 +8427,26 @@ def main() -> None:
             payment_terms,
         )
         print("Supplier validation: PASSED")
+
+        validate_customers(
+            customers,
+            payment_terms,
+        )
+        print("Customer validation: PASSED")
+
+        validate_customer_locations(
+            customer_locations,
+            customers,
+        )
+        print(
+            "Customer location validation: PASSED"
+        )
+
+        validate_transporters(transporters)
+        print("Transporter validation: PASSED")
+
+        validate_vehicles(vehicles, transporters)
+        print("Vehicle validation: PASSED")
 
         validate_brands(brands)
         print("Brand validation: PASSED")
@@ -5725,11 +8489,25 @@ def main() -> None:
             "Location validation: PASSED"
         )
 
+        validate_employees(
+            employees,
+            warehouses,
+        )
+        print(
+            "Employee validation: PASSED"
+        )
+
         validate_master_relationships(
             categories,
             sub_categories,
             warehouses,
             locations,
+            customers,
+            payment_terms,
+            customer_locations,
+            vehicles,
+            transporters,
+            employees,
         )
         print(
             "Master relationship validation: PASSED"
@@ -5751,6 +8529,26 @@ def main() -> None:
 
         supplier_file = write_suppliers_csv(
             suppliers
+        )
+
+        customer_file = write_customers_csv(
+            customers
+        )
+
+        customer_location_file = write_customer_locations_csv(
+            customer_locations
+        )
+
+        transporter_file = write_transporters_csv(
+            transporters
+        )
+
+        vehicle_file = write_vehicles_csv(
+            vehicles
+        )
+
+        employee_file = write_employees_csv(
+            employees
         )
 
         brand_file = write_brands_csv(
@@ -5808,6 +8606,41 @@ def main() -> None:
         )
         print(
             f"Rows: {len(suppliers)}"
+        )
+
+        print(
+            f"Created: {customer_file}"
+        )
+        print(
+            f"Rows: {len(customers)}"
+        )
+
+        print(
+            f"Created: {customer_location_file}"
+        )
+        print(
+            f"Rows: {len(customer_locations)}"
+        )
+
+        print(
+            f"Created: {transporter_file}"
+        )
+        print(
+            f"Rows: {len(transporters)}"
+        )
+
+        print(
+            f"Created: {vehicle_file}"
+        )
+        print(
+            f"Rows: {len(vehicles)}"
+        )
+
+        print(
+            f"Created: {employee_file}"
+        )
+        print(
+            f"Rows: {len(employees)}"
         )
 
         print(

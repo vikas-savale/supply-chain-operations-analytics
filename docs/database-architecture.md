@@ -44,7 +44,7 @@ The `products` table stores material-level packaging attributes including pack t
 
 ## Synthetic Master Data
 
-Synthetic master data has been generated for the current master model.
+Synthetic master data has been generated and loaded for the current master model.
 
 - 6 UOMs
 - 8 payment terms
@@ -54,8 +54,13 @@ Synthetic master data has been generated for the current master model.
 - 24 suppliers
 - 1,500 products
 - 3,600 product-supplier relationships
+- 180 customers
+- 360 customer locations
 - 9 warehouses
 - 500 warehouse locations
+- 18 transporters
+- 135 vehicles
+- 110 employees
 
 The generated data is stored as CSV files under the `datasets/` directory.
 
@@ -64,6 +69,8 @@ The data-generation logic is maintained in:
 `tools/generate_master_data.py`
 
 The generator includes validation checks for master-data values and relationships.
+
+Cross-master validation has been completed with zero broken references across the current master network.
 
 ---
 

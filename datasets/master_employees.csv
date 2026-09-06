@@ -1,0 +1,111 @@
+employee_id,employee_code,employee_name,department,role,warehouse_id,employee_status,created_date,created_by,updated_date,updated_by
+1,EMP0001,Aarav Mehta,Warehouse Operations,Warehouse Coordinator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+2,EMP0002,Ishaan Mehta,Warehouse Operations,Warehouse Coordinator,3,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+3,EMP0003,Rohan Mehta,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+4,EMP0004,Kunal Mehta,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+5,EMP0005,Nikhil Mehta,Warehouse Operations,Warehouse Coordinator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+6,EMP0006,Arjun Mehta,Warehouse Operations,Warehouse Supervisor,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+7,EMP0007,Vikram Mehta,Warehouse Operations,Picker,8,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+8,EMP0008,Siddharth Mehta,Logistics Operations,Loader,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+9,EMP0009,Aditya Mehta,Logistics Operations,Dispatch Executive,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+10,EMP0010,Rahul Mehta,Logistics Operations,Dispatch Executive,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+11,EMP0011,Neeraj Mehta,Logistics Operations,Loader,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+12,EMP0012,Amit Mehta,Warehouse Operations,Warehouse Coordinator,9,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+13,EMP0013,Manish Mehta,Logistics Operations,Dispatch Executive,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+14,EMP0014,Saurabh Mehta,Warehouse Operations,Warehouse Supervisor,6,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+15,EMP0015,Varun Mehta,Logistics Operations,Dispatch Executive,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+16,EMP0016,Harsh Mehta,Warehouse Operations,Warehouse Coordinator,9,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+17,EMP0017,Ankit Mehta,Warehouse Operations,Store Operator,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+18,EMP0018,Deepak Mehta,Warehouse Operations,Warehouse Supervisor,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+19,EMP0019,Pankaj Mehta,Logistics Operations,Dispatch Executive,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+20,EMP0020,Gaurav Mehta,Logistics Operations,Dispatch Executive,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+21,EMP0021,Aarav Shah,Warehouse Operations,Picker,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+22,EMP0022,Ishaan Shah,Warehouse Operations,Warehouse Coordinator,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+23,EMP0023,Rohan Shah,Warehouse Operations,Picker,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+24,EMP0024,Kunal Shah,Logistics Operations,Dispatch Executive,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+25,EMP0025,Nikhil Shah,Logistics Operations,Loader,8,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+26,EMP0026,Arjun Shah,Warehouse Operations,Picker,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+27,EMP0027,Vikram Shah,Warehouse Operations,Store Operator,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+28,EMP0028,Siddharth Shah,Logistics Operations,Loader,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+29,EMP0029,Aditya Shah,Logistics Operations,Dispatch Executive,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+30,EMP0030,Rahul Shah,Warehouse Operations,Warehouse Coordinator,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+31,EMP0031,Neeraj Shah,Warehouse Operations,Warehouse Supervisor,5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+32,EMP0032,Amit Shah,Warehouse Operations,Store Operator,9,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+33,EMP0033,Manish Shah,Warehouse Operations,Store Operator,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+34,EMP0034,Saurabh Shah,Logistics Operations,Dispatch Executive,5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+35,EMP0035,Varun Shah,Warehouse Operations,Picker,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+36,EMP0036,Harsh Shah,Warehouse Operations,Picker,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+37,EMP0037,Ankit Shah,Logistics Operations,Loader,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+38,EMP0038,Deepak Shah,Logistics Operations,Loader,3,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+39,EMP0039,Pankaj Shah,Warehouse Operations,Warehouse Coordinator,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+40,EMP0040,Gaurav Shah,Warehouse Operations,Warehouse Coordinator,4,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+41,EMP0041,Aarav Kapoor,Warehouse Operations,Warehouse Coordinator,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+42,EMP0042,Ishaan Kapoor,Logistics Operations,Loader,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+43,EMP0043,Rohan Kapoor,Warehouse Operations,Picker,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+44,EMP0044,Kunal Kapoor,Warehouse Operations,Warehouse Supervisor,5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+45,EMP0045,Nikhil Kapoor,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+46,EMP0046,Arjun Kapoor,Warehouse Operations,Picker,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+47,EMP0047,Vikram Kapoor,Warehouse Operations,Store Operator,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+48,EMP0048,Siddharth Kapoor,Warehouse Operations,Warehouse Coordinator,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+49,EMP0049,Aditya Kapoor,Warehouse Operations,Store Operator,6,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+50,EMP0050,Rahul Kapoor,Logistics Operations,Dispatch Executive,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+51,EMP0051,Neeraj Kapoor,Warehouse Operations,Warehouse Coordinator,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+52,EMP0052,Amit Kapoor,Warehouse Operations,Store Operator,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+53,EMP0053,Manish Kapoor,Logistics Operations,Dispatch Executive,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+54,EMP0054,Saurabh Kapoor,Warehouse Operations,Picker,8,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+55,EMP0055,Varun Kapoor,Warehouse Operations,Warehouse Supervisor,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+56,EMP0056,Harsh Kapoor,Logistics Operations,Loader,5,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+57,EMP0057,Ankit Kapoor,Warehouse Operations,Picker,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+58,EMP0058,Deepak Kapoor,Logistics Operations,Dispatch Executive,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+59,EMP0059,Pankaj Kapoor,Warehouse Operations,Store Operator,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+60,EMP0060,Gaurav Kapoor,Warehouse Operations,Warehouse Supervisor,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+61,EMP0061,Aarav Patel,Logistics Operations,Dispatch Executive,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+62,EMP0062,Ishaan Patel,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+63,EMP0063,Rohan Patel,Warehouse Operations,Picker,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+64,EMP0064,Kunal Patel,Warehouse Operations,Store Operator,9,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+65,EMP0065,Nikhil Patel,Logistics Operations,Loader,1,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+66,EMP0066,Arjun Patel,Warehouse Operations,Warehouse Supervisor,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+67,EMP0067,Vikram Patel,Logistics Operations,Loader,2,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+68,EMP0068,Siddharth Patel,Warehouse Operations,Warehouse Coordinator,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+69,EMP0069,Aditya Patel,Warehouse Operations,Warehouse Coordinator,9,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+70,EMP0070,Rahul Patel,Warehouse Operations,Store Operator,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+71,EMP0071,Neeraj Patel,Logistics Operations,Loader,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+72,EMP0072,Amit Patel,Warehouse Operations,Warehouse Supervisor,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+73,EMP0073,Manish Patel,Warehouse Operations,Warehouse Supervisor,6,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+74,EMP0074,Saurabh Patel,Warehouse Operations,Picker,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+75,EMP0075,Varun Patel,Warehouse Operations,Store Operator,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+76,EMP0076,Harsh Patel,Warehouse Operations,Picker,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+77,EMP0077,Ankit Patel,Warehouse Operations,Store Operator,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+78,EMP0078,Deepak Patel,Logistics Operations,Loader,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+79,EMP0079,Pankaj Patel,Warehouse Operations,Picker,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+80,EMP0080,Gaurav Patel,Logistics Operations,Dispatch Executive,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+81,EMP0081,Aarav Joshi,Warehouse Operations,Warehouse Coordinator,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+82,EMP0082,Ishaan Joshi,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+83,EMP0083,Rohan Joshi,Logistics Operations,Loader,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+84,EMP0084,Kunal Joshi,Logistics Operations,Loader,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+85,EMP0085,Nikhil Joshi,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+86,EMP0086,Arjun Joshi,Warehouse Operations,Picker,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+87,EMP0087,Vikram Joshi,Warehouse Operations,Store Operator,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+88,EMP0088,Siddharth Joshi,Warehouse Operations,Store Operator,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+89,EMP0089,Aditya Joshi,Warehouse Operations,Warehouse Coordinator,6,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+90,EMP0090,Rahul Joshi,Logistics Operations,Dispatch Executive,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+91,EMP0091,Neeraj Joshi,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+92,EMP0092,Amit Joshi,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+93,EMP0093,Manish Joshi,Warehouse Operations,Store Operator,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+94,EMP0094,Saurabh Joshi,Logistics Operations,Dispatch Executive,4,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+95,EMP0095,Varun Joshi,Logistics Operations,Dispatch Executive,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+96,EMP0096,Harsh Joshi,Warehouse Operations,Picker,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+97,EMP0097,Ankit Joshi,Warehouse Operations,Picker,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+98,EMP0098,Deepak Joshi,Logistics Operations,Loader,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+99,EMP0099,Pankaj Joshi,Warehouse Operations,Warehouse Coordinator,3,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+100,EMP0100,Gaurav Joshi,Warehouse Operations,Warehouse Coordinator,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+101,EMP0101,Aarav Verma,Warehouse Operations,Store Operator,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+102,EMP0102,Ishaan Verma,Warehouse Operations,Picker,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+103,EMP0103,Rohan Verma,Logistics Operations,Dispatch Executive,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+104,EMP0104,Kunal Verma,Logistics Operations,Loader,1,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+105,EMP0105,Nikhil Verma,Logistics Operations,Loader,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+106,EMP0106,Arjun Verma,Warehouse Operations,Picker,7,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+107,EMP0107,Vikram Verma,Warehouse Operations,Warehouse Coordinator,,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+108,EMP0108,Siddharth Verma,Warehouse Operations,Picker,2,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+109,EMP0109,Aditya Verma,Warehouse Operations,Store Operator,4,inactive,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
+110,EMP0110,Rahul Verma,Logistics Operations,Loader,8,active,2026-01-01 00:00:00,system,2026-01-01 00:00:00,system
