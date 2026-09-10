@@ -27,7 +27,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - PostgreSQL migrations and validation
 - Procurement transaction model
 - 4 procurement transaction tables
-- Purchase order and goods receipt flow
+- Purchase order transaction flow
 - Procurement PAC and base quantity model
 - Inventory transaction model
 - 3 inventory tables
@@ -72,6 +72,18 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Product-supplier relationship validation checks
 - Primary supplier/source rules
 - Complete master-network relationship validation
+- Purchase order transaction generation
+- Purchase order item transaction generation
+- 1,500 purchase orders
+- 6,534 purchase order items
+- Purchase order status distribution validation
+- Purchase order line-count distribution validation
+- Purchase order PAC/base quantity validation
+- Purchase order supplier/product relationship validation
+- Purchase order MOQ validation
+- Purchase order PostgreSQL load
+- Purchase order database relational validation
+- Purchase order post-commit verification
 
 ### Current Master Data
 
@@ -91,9 +103,33 @@ The objective is to design, build and analyze a supply chain system covering mas
 - 135 vehicles
 - 110 employees
 
-### Current Focus
+### Current Procurement Data
 
-Define transaction data generation rules and prepare linked transaction datasets for procurement, inventory, warehouse, logistics and sales flows.
+- 1,500 purchase orders
+- 6,534 purchase order items
+- PO date range: 2026-01-01 to 2026-06-30
+- Expected dates generated using supplier lead-time logic
+- Purchase order status distribution validated
+- Purchase order line-count distribution validated
+- Purchase order and item relational validation completed with zero errors
+- PostgreSQL purchase order load completed and verified
+
+## Current Focus
+
+Continue transaction-data generation through the inbound procurement flow.
+
+Next:
+
+- Goods receipt generation
+- Goods receipt item generation
+- Procurement receiving validation
+- Inventory transaction generation
+- Warehouse transaction generation
+- Logistics transaction generation
+- Sales transaction generation
+- Cross-module transaction validation
+- PostgreSQL transaction verification
+- Preparation of the completed dataset for SQL analysis and Power BI reporting
 
 ## Database Setup
 
@@ -170,7 +206,7 @@ After the warehouse tables, the logistics tables can be created in this order:
 
 ### Sales Tables
 
-After the required master tables are available, the sales tables can be created in this order:
+After the required preceding tables are available, the sales tables can be created in this order:
 
 35. `35_sales_sales_orders.sql`
 36. `36_sales_sales_order_items.sql`

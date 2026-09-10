@@ -1,6 +1,8 @@
 from datetime import date, datetime, timedelta
 from pathlib import Path
 import csv
+import math
+import random
 import re
 
 
@@ -17,6 +19,56 @@ MASTER_DATA_DATE = datetime(2026, 1, 1, 0, 0, 0)
 
 COMPANY_NAME = "Northridge Industrial Products"
 
+
+# ============================================================
+# Procurement transaction generation configuration
+# ============================================================
+
+PROCUREMENT_RANDOM_SEED = 20260110
+
+PURCHASE_ORDER_COUNT = 1500
+
+PURCHASE_ORDER_DATE_START = date(
+    2026,
+    1,
+    1,
+)
+
+PURCHASE_ORDER_DATE_END = date(
+    2026,
+    6,
+    30,
+)
+
+PURCHASE_ORDER_STATUS_TARGETS = {
+    "draft": 60,
+    "approved": 120,
+    "sent": 150,
+    "partially_received": 300,
+    "received": 810,
+    "cancelled": 60,
+}
+
+PURCHASE_ORDER_LINE_BUCKET_TARGETS = {
+    "1": 300,
+    "2-3": 450,
+    "4-6": 450,
+    "7-10": 225,
+    "11-15": 75,
+}
+
+PURCHASE_ORDER_LINE_BUCKET_RANGES = {
+    "1": (1, 1),
+    "2-3": (2, 3),
+    "4-6": (4, 6),
+    "7-10": (7, 10),
+    "11-15": (11, 15),
+}
+
+PURCHASE_ORDER_QUANTITY_MULTIPLIER_RANGE = {
+    "packaged": (1, 5),
+    "bulk": (1, 4),
+}
 
 # ============================================================
 # UOM master definitions
@@ -7918,6 +7970,1260 @@ def validate_master_relationships(
 
 
 # ============================================================
+# Procurement transaction generation
+# ============================================================
+
+def _build_purchase_order_status_pool() -> list[str]:
+    """Build an exact deterministic PO status distribution."""
+
+    total_target = sum(
+        PURCHASE_ORDER_STATUS_TARGETS.values()
+    )
+
+    if total_target != PURCHASE_ORDER_COUNT:
+        raise ValueError(
+            "Purchase order status targets do not equal "
+            f"the PO count: target={total_target}, "
+            f"po_count={PURCHASE_ORDER_COUNT}"
+        )
+
+    status_pool = []
+
+    for status, count in (
+        PURCHASE_ORDER_STATUS_TARGETS.items()
+    ):
+        status_pool.extend(
+            [status] * count
+        )
+
+    rng = random.Random(
+        PROCUREMENT_RANDOM_SEED + 1
+    )
+
+    rng.shuffle(status_pool)
+
+    return status_pool
+
+
+def _build_purchase_order_line_count_pool() -> list[int]:
+    """Build an exact deterministic PO line-count distribution."""
+
+    total_target = sum(
+        PURCHASE_ORDER_LINE_BUCKET_TARGETS.values()
+    )
+
+    if total_target != PURCHASE_ORDER_COUNT:
+        raise ValueError(
+            "Purchase order line bucket targets do not equal "
+            f"the PO count: target={total_target}, "
+            f"po_count={PURCHASE_ORDER_COUNT}"
+        )
+
+    rng = random.Random(
+        PROCUREMENT_RANDOM_SEED + 2
+    )
+
+    line_counts = []
+
+    for bucket_name, po_count in (
+        PURCHASE_ORDER_LINE_BUCKET_TARGETS.items()
+    ):
+        minimum, maximum = (
+            PURCHASE_ORDER_LINE_BUCKET_RANGES[
+                bucket_name
+            ]
+        )
+
+        if minimum > maximum:
+            raise ValueError(
+                f"Invalid line bucket range: {bucket_name}"
+            )
+
+        for _ in range(po_count):
+            line_counts.append(
+                rng.randint(
+                    minimum,
+                    maximum,
+                )
+            )
+
+    rng.shuffle(line_counts)
+
+    return line_counts
+
+
+def _build_po_date(
+    rng,
+) -> date:
+    """Return a deterministic PO date inside the configured period."""
+
+    total_days = (
+        PURCHASE_ORDER_DATE_END
+        - PURCHASE_ORDER_DATE_START
+    ).days
+
+    offset_days = rng.randint(
+        0,
+        total_days,
+    )
+
+    return (
+        PURCHASE_ORDER_DATE_START
+        + timedelta(
+            days=offset_days
+        )
+    )
+
+
+def _build_transaction_audit_timestamp(
+    transaction_date: date,
+) -> str:
+    """Return a deterministic transaction audit timestamp."""
+
+    timestamp = datetime.combine(
+        transaction_date,
+        datetime.min.time(),
+    ) + timedelta(
+        hours=8
+    )
+
+    return timestamp.strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+
+
+def _get_active_supplier_product_relationships(
+    product_suppliers: list[dict],
+    products: list[dict],
+) -> dict[int, list[dict]]:
+    """Build supplier -> active product-supplier relationship lookup."""
+
+    active_product_ids = {
+        row["product_id"]
+        for row in products
+        if row["product_status"] == "active"
+    }
+
+    relationships_by_supplier = {}
+
+    for relationship in product_suppliers:
+        if (
+            relationship["relationship_status"]
+            != "active"
+        ):
+            continue
+
+        product_id = relationship[
+            "product_id"
+        ]
+
+        if product_id not in active_product_ids:
+            continue
+
+        supplier_id = relationship[
+            "supplier_id"
+        ]
+
+        relationships_by_supplier.setdefault(
+            supplier_id,
+            [],
+        ).append(
+            relationship
+        )
+
+    return relationships_by_supplier
+
+
+def _select_supplier_for_purchase_order(
+    suppliers: list[dict],
+    supplier_relationships: dict[int, list[dict]],
+    rng,
+) -> dict:
+    """Select an active supplier with usable active product relationships."""
+
+    candidates = []
+
+    for supplier in suppliers:
+        if (
+            supplier["supplier_status"]
+            != "active"
+        ):
+            continue
+
+        relationship_count = len(
+            supplier_relationships.get(
+                supplier["supplier_id"],
+                [],
+            )
+        )
+
+        if relationship_count <= 0:
+            continue
+
+        supplier_type = supplier[
+            "supplier_type"
+        ]
+
+        weight = SUPPLIER_SELECTION_WEIGHTS.get(
+            supplier_type,
+            1.0,
+        )
+
+        candidates.append(
+            (
+                supplier,
+                weight,
+                relationship_count,
+            )
+        )
+
+    if not candidates:
+        raise ValueError(
+            "No active suppliers with active "
+            "product-supplier relationships are available."
+        )
+
+    weighted_candidates = [
+        candidate[1]
+        * max(
+            candidate[2],
+            1,
+        )
+        for candidate in candidates
+    ]
+
+    total_weight = sum(
+        weighted_candidates
+    )
+
+    threshold = (
+        rng.random()
+        * total_weight
+    )
+
+    cumulative = 0.0
+
+    for index, weight in enumerate(
+        weighted_candidates
+    ):
+        cumulative += weight
+
+        if threshold <= cumulative:
+            return candidates[index][0]
+
+    return candidates[-1][0]
+
+
+def _build_purchase_order_item_quantity(
+    product: dict,
+    relationship: dict,
+    rng,
+) -> tuple[float, float]:
+    """
+    Return ordered PAC quantity and ordered base quantity.
+
+    Packaged products:
+        MOQ is expressed in PAC.
+
+    Bulk products:
+        MOQ is expressed in the product base UOM.
+        Ordering is converted to whole PAC quantities.
+    """
+
+    purchase_uom_id = relationship[
+        "purchase_uom_id"
+    ]
+
+    minimum_order_quantity = float(
+        relationship[
+            "minimum_order_quantity"
+        ]
+    )
+
+    base_quantity_per_pac = float(
+        product[
+            "base_quantity_per_pac"
+        ]
+    )
+
+    if base_quantity_per_pac <= 0:
+        raise ValueError(
+            "Product has invalid base_quantity_per_pac: "
+            f"product_id={product['product_id']}"
+        )
+
+    if purchase_uom_id == 6:
+        multiplier = rng.randint(
+            *PURCHASE_ORDER_QUANTITY_MULTIPLIER_RANGE[
+                "packaged"
+            ]
+        )
+
+        ordered_pac_quantity = (
+            minimum_order_quantity
+            * multiplier
+        )
+
+    elif purchase_uom_id in {1, 3}:
+        minimum_pac_quantity = math.ceil(
+            minimum_order_quantity
+            / base_quantity_per_pac
+        )
+
+        multiplier = rng.randint(
+            *PURCHASE_ORDER_QUANTITY_MULTIPLIER_RANGE[
+                "bulk"
+            ]
+        )
+
+        ordered_pac_quantity = (
+            minimum_pac_quantity
+            * multiplier
+        )
+
+    else:
+        raise ValueError(
+            "Unsupported purchase UOM for PO item quantity: "
+            f"product_id={product['product_id']}, "
+            f"purchase_uom_id={purchase_uom_id}"
+        )
+
+    ordered_base_quantity = (
+        ordered_pac_quantity
+        * base_quantity_per_pac
+    )
+
+    return (
+        round(
+            float(ordered_pac_quantity),
+            3,
+        ),
+        round(
+            float(ordered_base_quantity),
+            3,
+        ),
+    )
+
+
+def generate_purchase_orders(
+    suppliers: list[dict],
+    warehouses: list[dict],
+    payment_terms: list[dict],
+    products: list[dict],
+    product_suppliers: list[dict],
+) -> tuple[list[dict], list[dict]]:
+    """
+    Generate deterministic purchase-order headers and lines.
+
+    Business rules:
+    - one PO = one supplier
+    - one PO = one warehouse
+    - one PO = one payment-term reference
+    - products come only from the selected supplier's
+      active product-supplier relationships
+    - a product appears at most once per PO
+    - purchase UOM and unit cost come from the
+      product-supplier relationship
+    - ordered_base_quantity = ordered_pac_quantity
+      * product.base_quantity_per_pac
+    """
+
+    rng = random.Random(
+        PROCUREMENT_RANDOM_SEED
+    )
+
+    status_pool = (
+        _build_purchase_order_status_pool()
+    )
+
+    line_count_pool = (
+        _build_purchase_order_line_count_pool()
+    )
+
+    supplier_relationships = (
+        _get_active_supplier_product_relationships(
+            product_suppliers,
+            products,
+        )
+    )
+
+    product_lookup = {
+        row["product_id"]: row
+        for row in products
+    }
+
+    warehouse_candidates = [
+        warehouse
+        for warehouse in warehouses
+        if warehouse["warehouse_status"]
+        == "active"
+    ]
+
+    payment_term_ids = {
+        row["payment_term_id"]
+        for row in payment_terms
+    }
+
+    if not warehouse_candidates:
+        raise ValueError(
+            "No active warehouses are available for PO generation."
+        )
+
+    purchase_orders = []
+    purchase_order_items = []
+
+    purchase_order_id = 1
+    purchase_order_item_id = 1
+
+    for index in range(
+        PURCHASE_ORDER_COUNT
+    ):
+        supplier = (
+            _select_supplier_for_purchase_order(
+                suppliers,
+                supplier_relationships,
+                rng,
+            )
+        )
+
+        supplier_id = supplier[
+            "supplier_id"
+        ]
+
+        warehouse = rng.choice(
+            warehouse_candidates
+        )
+
+        warehouse_id = warehouse[
+            "warehouse_id"
+        ]
+
+        payment_term_id = supplier[
+            "payment_term_id"
+        ]
+
+        if payment_term_id not in payment_term_ids:
+            raise ValueError(
+                "Supplier references missing payment term: "
+                f"supplier_id={supplier_id}, "
+                f"payment_term_id={payment_term_id}"
+            )
+
+        po_date = _build_po_date(
+            rng
+        )
+
+        relationships = list(
+            supplier_relationships[
+                supplier_id
+            ]
+        )
+
+        line_count = line_count_pool[
+            index
+        ]
+
+        if len(relationships) < line_count:
+            raise ValueError(
+                "Supplier does not have enough unique "
+                "active products for PO lines: "
+                f"supplier_id={supplier_id}, "
+                f"required={line_count}, "
+                f"available={len(relationships)}"
+            )
+
+        selected_relationships = rng.sample(
+            relationships,
+            line_count,
+        )
+
+        maximum_lead_time = 0
+        line_records = []
+
+        for line_number, relationship in enumerate(
+            selected_relationships,
+            start=1,
+        ):
+            product = product_lookup[
+                relationship["product_id"]
+            ]
+
+            (
+                ordered_pac_quantity,
+                ordered_base_quantity,
+            ) = _build_purchase_order_item_quantity(
+                product,
+                relationship,
+                rng,
+            )
+
+            lead_time_days = int(
+                relationship["lead_time_days"]
+            )
+
+            maximum_lead_time = max(
+                maximum_lead_time,
+                lead_time_days,
+            )
+
+            line_records.append(
+                {
+                    "purchase_order_item_id": (
+                        purchase_order_item_id
+                    ),
+                    "purchase_order_id": (
+                        purchase_order_id
+                    ),
+                    "line_number": line_number,
+                    "product_id": (
+                        product["product_id"]
+                    ),
+                    "purchase_uom_id": (
+                        relationship[
+                            "purchase_uom_id"
+                        ]
+                    ),
+                    "ordered_pac_quantity": (
+                        ordered_pac_quantity
+                    ),
+                    "unit_cost": round(
+                        float(
+                            relationship[
+                                "unit_purchase_price"
+                            ]
+                        ),
+                        2,
+                    ),
+                    "notes": None,
+                    "ordered_base_quantity": (
+                        ordered_base_quantity
+                    ),
+                    "created_date": None,
+                    "created_by": None,
+                    "updated_date": None,
+                    "updated_by": None,
+                }
+            )
+
+            purchase_order_item_id += 1
+
+        expected_date = (
+            po_date
+            + timedelta(
+                days=maximum_lead_time
+            )
+        )
+
+        transaction_timestamp = (
+            _build_transaction_audit_timestamp(
+                po_date
+            )
+        )
+
+        status = status_pool[
+            index
+        ]
+
+        purchase_orders.append(
+            {
+                "purchase_order_id": (
+                    purchase_order_id
+                ),
+                "po_number": (
+                    f"PO2026"
+                    f"{purchase_order_id:06d}"
+                ),
+                "supplier_id": (
+                    supplier_id
+                ),
+                "warehouse_id": (
+                    warehouse_id
+                ),
+                "payment_term_id": (
+                    payment_term_id
+                ),
+                "po_date": (
+                    po_date.isoformat()
+                ),
+                "expected_date": (
+                    expected_date.isoformat()
+                ),
+                "status": status,
+                "notes": None,
+                "created_date": (
+                    transaction_timestamp
+                ),
+                "created_by": (
+                    DEFAULT_CREATED_BY
+                ),
+                "updated_date": (
+                    transaction_timestamp
+                ),
+                "updated_by": (
+                    DEFAULT_UPDATED_BY
+                ),
+            }
+        )
+
+        for item in line_records:
+            item["created_date"] = (
+                transaction_timestamp
+            )
+            item["created_by"] = (
+                DEFAULT_CREATED_BY
+            )
+            item["updated_date"] = (
+                transaction_timestamp
+            )
+            item["updated_by"] = (
+                DEFAULT_UPDATED_BY
+            )
+
+        purchase_order_items.extend(
+            line_records
+        )
+
+        purchase_order_id += 1
+
+    return (
+        purchase_orders,
+        purchase_order_items,
+    )
+
+
+def _get_purchase_order_line_bucket(
+    line_count: int,
+) -> str:
+    """Return the configured line-count bucket."""
+
+    for bucket_name, (
+        minimum,
+        maximum,
+    ) in PURCHASE_ORDER_LINE_BUCKET_RANGES.items():
+
+        if (
+            minimum
+            <= line_count
+            <= maximum
+        ):
+            return bucket_name
+
+    raise ValueError(
+        "Purchase order line count is outside "
+        f"configured buckets: {line_count}"
+    )
+
+
+def validate_purchase_orders(
+    purchase_orders: list[dict],
+    purchase_order_items: list[dict],
+    suppliers: list[dict],
+    warehouses: list[dict],
+    payment_terms: list[dict],
+    products: list[dict],
+    product_suppliers: list[dict],
+) -> None:
+    """Validate purchase-order header and line integrity."""
+
+    if len(purchase_orders) != PURCHASE_ORDER_COUNT:
+        raise ValueError(
+            "Purchase order count mismatch: "
+            f"expected={PURCHASE_ORDER_COUNT}, "
+            f"got={len(purchase_orders)}"
+        )
+
+    expected_ids = list(
+        range(
+            1,
+            PURCHASE_ORDER_COUNT + 1,
+        )
+    )
+
+    actual_ids = [
+        row["purchase_order_id"]
+        for row in purchase_orders
+    ]
+
+    if actual_ids != expected_ids:
+        raise ValueError(
+            "Purchase order IDs are not sequential."
+        )
+
+    po_numbers = [
+        row["po_number"]
+        for row in purchase_orders
+    ]
+
+    if len(po_numbers) != len(
+        set(po_numbers)
+    ):
+        raise ValueError(
+            "Duplicate PO number found."
+        )
+
+    supplier_map = {
+        row["supplier_id"]: row
+        for row in suppliers
+    }
+
+    warehouse_map = {
+        row["warehouse_id"]: row
+        for row in warehouses
+    }
+
+    payment_term_map = {
+        row["payment_term_id"]: row
+        for row in payment_terms
+    }
+
+    product_map = {
+        row["product_id"]: row
+        for row in products
+    }
+
+    relationship_map = {
+        (
+            row["supplier_id"],
+            row["product_id"],
+        ): row
+        for row in product_suppliers
+        if (
+            row["relationship_status"]
+            == "active"
+        )
+    }
+
+    status_distribution = {}
+
+    for purchase_order in purchase_orders:
+        purchase_order_id = (
+            purchase_order["purchase_order_id"]
+        )
+
+        supplier_id = (
+            purchase_order["supplier_id"]
+        )
+
+        warehouse_id = (
+            purchase_order["warehouse_id"]
+        )
+
+        payment_term_id = (
+            purchase_order["payment_term_id"]
+        )
+
+        if supplier_id not in supplier_map:
+            raise ValueError(
+                "PO references missing supplier: "
+                f"po_id={purchase_order_id}"
+            )
+
+        if (
+            supplier_map[supplier_id][
+                "supplier_status"
+            ]
+            != "active"
+        ):
+            raise ValueError(
+                "PO references inactive supplier: "
+                f"po_id={purchase_order_id}, "
+                f"supplier_id={supplier_id}"
+            )
+
+        if warehouse_id not in warehouse_map:
+            raise ValueError(
+                "PO references missing warehouse: "
+                f"po_id={purchase_order_id}"
+            )
+
+        if (
+            warehouse_map[warehouse_id][
+                "warehouse_status"
+            ]
+            != "active"
+        ):
+            raise ValueError(
+                "PO references inactive warehouse: "
+                f"po_id={purchase_order_id}"
+            )
+
+        if payment_term_id not in payment_term_map:
+            raise ValueError(
+                "PO references missing payment term: "
+                f"po_id={purchase_order_id}"
+            )
+
+        expected_supplier_payment_term = (
+            supplier_map[supplier_id][
+                "payment_term_id"
+            ]
+        )
+
+        if (
+            payment_term_id
+            != expected_supplier_payment_term
+        ):
+            raise ValueError(
+                "PO payment term does not match supplier default: "
+                f"po_id={purchase_order_id}"
+            )
+
+        po_date = date.fromisoformat(
+            purchase_order["po_date"]
+        )
+
+        expected_date = date.fromisoformat(
+            purchase_order["expected_date"]
+        )
+
+        if not (
+            PURCHASE_ORDER_DATE_START
+            <= po_date
+            <= PURCHASE_ORDER_DATE_END
+        ):
+            raise ValueError(
+                "PO date outside configured period: "
+                f"po_id={purchase_order_id}"
+            )
+
+        if expected_date < po_date:
+            raise ValueError(
+                "Expected date is before PO date: "
+                f"po_id={purchase_order_id}"
+            )
+
+        status = purchase_order[
+            "status"
+        ]
+
+        if status not in (
+            PURCHASE_ORDER_STATUS_TARGETS
+        ):
+            raise ValueError(
+                "Invalid PO status: "
+                f"po_id={purchase_order_id}, "
+                f"status={status}"
+            )
+
+        status_distribution[
+            status
+        ] = (
+            status_distribution.get(
+                status,
+                0,
+            )
+            + 1
+        )
+
+    if (
+        status_distribution
+        != PURCHASE_ORDER_STATUS_TARGETS
+    ):
+        raise ValueError(
+            "PO status distribution mismatch: "
+            f"{status_distribution}"
+        )
+
+    items_by_po = {}
+
+    for item in purchase_order_items:
+        po_id = item[
+            "purchase_order_id"
+        ]
+
+        items_by_po.setdefault(
+            po_id,
+            [],
+        ).append(
+            item
+        )
+
+    if set(items_by_po) != set(
+        actual_ids
+    ):
+        raise ValueError(
+            "Every purchase order must have exactly "
+            "one or more items."
+        )
+
+    expected_item_ids = list(
+        range(
+            1,
+            len(purchase_order_items) + 1,
+        )
+    )
+
+    actual_item_ids = [
+        row["purchase_order_item_id"]
+        for row in purchase_order_items
+    ]
+
+    if actual_item_ids != expected_item_ids:
+        raise ValueError(
+            "Purchase order item IDs are not sequential."
+        )
+
+    actual_bucket_distribution = {}
+
+    for purchase_order in purchase_orders:
+        po_id = purchase_order[
+            "purchase_order_id"
+        ]
+
+        items = items_by_po[
+            po_id
+        ]
+
+        line_numbers = sorted(
+            item["line_number"]
+            for item in items
+        )
+
+        expected_line_numbers = list(
+            range(
+                1,
+                len(items) + 1,
+            )
+        )
+
+        if line_numbers != expected_line_numbers:
+            raise ValueError(
+                "PO line numbers are not sequential: "
+                f"po_id={po_id}"
+            )
+
+        product_ids = [
+            item["product_id"]
+            for item in items
+        ]
+
+        if len(product_ids) != len(
+            set(product_ids)
+        ):
+            raise ValueError(
+                "Duplicate product within PO: "
+                f"po_id={po_id}"
+            )
+
+        bucket = _get_purchase_order_line_bucket(
+            len(items)
+        )
+
+        actual_bucket_distribution[
+            bucket
+        ] = (
+            actual_bucket_distribution.get(
+                bucket,
+                0,
+            )
+            + 1
+        )
+
+        supplier_id = (
+            purchase_order["supplier_id"]
+        )
+
+        po_date = date.fromisoformat(
+            purchase_order["po_date"]
+        )
+
+        expected_date = date.fromisoformat(
+            purchase_order["expected_date"]
+        )
+
+        maximum_lead_time = 0
+
+        for item in items:
+            product_id = item[
+                "product_id"
+            ]
+
+            relationship_key = (
+                supplier_id,
+                product_id,
+            )
+
+            if product_id not in product_map:
+                raise ValueError(
+                    "PO item references missing product: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            if (
+                product_map[product_id][
+                    "product_status"
+                ]
+                != "active"
+            ):
+                raise ValueError(
+                    "PO item references inactive product: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            if relationship_key not in relationship_map:
+                raise ValueError(
+                    "PO item has no matching active "
+                    "supplier relationship: "
+                    f"po_id={po_id}, "
+                    f"supplier_id={supplier_id}, "
+                    f"product_id={product_id}"
+                )
+
+            relationship = relationship_map[
+                relationship_key
+            ]
+
+            if (
+                item["purchase_uom_id"]
+                != relationship[
+                    "purchase_uom_id"
+                ]
+            ):
+                raise ValueError(
+                    "PO item purchase UOM does not match "
+                    "product-supplier relationship: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            expected_unit_cost = round(
+                float(
+                    relationship[
+                        "unit_purchase_price"
+                    ]
+                ),
+                2,
+            )
+
+            if (
+                round(
+                    float(
+                        item["unit_cost"]
+                    ),
+                    2,
+                )
+                != expected_unit_cost
+            ):
+                raise ValueError(
+                    "PO item unit cost does not match "
+                    "product-supplier relationship: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            ordered_pac_quantity = float(
+                item[
+                    "ordered_pac_quantity"
+                ]
+            )
+
+            ordered_base_quantity = float(
+                item[
+                    "ordered_base_quantity"
+                ]
+            )
+
+            base_quantity_per_pac = float(
+                product_map[product_id][
+                    "base_quantity_per_pac"
+                ]
+            )
+
+            calculated_base_quantity = (
+                ordered_pac_quantity
+                * base_quantity_per_pac
+            )
+
+            if not math.isclose(
+                ordered_base_quantity,
+                calculated_base_quantity,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            ):
+                raise ValueError(
+                    "PO PAC/base quantity reconciliation failed: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            if ordered_pac_quantity <= 0:
+                raise ValueError(
+                    "PO PAC quantity must be positive: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            if ordered_base_quantity <= 0:
+                raise ValueError(
+                    "PO base quantity must be positive: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}"
+                )
+
+            minimum_order_quantity = float(
+                relationship[
+                    "minimum_order_quantity"
+                ]
+            )
+
+            purchase_uom_id = item[
+                "purchase_uom_id"
+            ]
+
+            if purchase_uom_id == 6:
+                if (
+                    ordered_pac_quantity
+                    < minimum_order_quantity
+                ):
+                    raise ValueError(
+                        "Packaged PO quantity violates MOQ: "
+                        f"po_id={po_id}, "
+                        f"product_id={product_id}"
+                    )
+
+            elif purchase_uom_id in {1, 3}:
+                if (
+                    ordered_base_quantity
+                    < minimum_order_quantity
+                ):
+                    raise ValueError(
+                        "Bulk PO base quantity violates MOQ: "
+                        f"po_id={po_id}, "
+                        f"product_id={product_id}"
+                    )
+
+            else:
+                raise ValueError(
+                    "Unsupported PO purchase UOM: "
+                    f"po_id={po_id}, "
+                    f"product_id={product_id}, "
+                    f"purchase_uom_id={purchase_uom_id}"
+                )
+
+            maximum_lead_time = max(
+                maximum_lead_time,
+                int(
+                    relationship[
+                        "lead_time_days"
+                    ]
+                ),
+            )
+
+        minimum_expected_date = (
+            po_date
+            + timedelta(
+                days=maximum_lead_time
+            )
+        )
+
+        if expected_date < minimum_expected_date:
+            raise ValueError(
+                "PO expected date is earlier than "
+                "maximum item lead time: "
+                f"po_id={po_id}"
+            )
+
+    if (
+        actual_bucket_distribution
+        != PURCHASE_ORDER_LINE_BUCKET_TARGETS
+    ):
+        raise ValueError(
+            "PO line-count bucket distribution mismatch: "
+            f"{actual_bucket_distribution}"
+        )
+
+
+def write_transaction_csv(
+    rows: list[dict],
+    filename: str,
+    fieldnames: list[str],
+) -> Path:
+    """Write transaction CSV rows."""
+
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    output_file = (
+        OUTPUT_DIR
+        / filename
+    )
+
+    with output_file.open(
+        "w",
+        newline="",
+        encoding="utf-8",
+    ) as csv_file:
+        writer = csv.DictWriter(
+            csv_file,
+            fieldnames=fieldnames,
+        )
+
+        writer.writeheader()
+
+        for row in rows:
+            writer.writerow(
+                row
+            )
+
+    return output_file
+
+
+def write_purchase_orders_csv(
+    purchase_orders: list[dict],
+) -> Path:
+    """Write procurement purchase-order headers."""
+
+    return write_transaction_csv(
+        rows=purchase_orders,
+        filename="procurement_purchase_orders.csv",
+        fieldnames=[
+            "purchase_order_id",
+            "po_number",
+            "supplier_id",
+            "warehouse_id",
+            "payment_term_id",
+            "po_date",
+            "expected_date",
+            "status",
+            "notes",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+def write_purchase_order_items_csv(
+    purchase_order_items: list[dict],
+) -> Path:
+    """Write procurement purchase-order items."""
+
+    return write_transaction_csv(
+        rows=purchase_order_items,
+        filename="procurement_purchase_order_items.csv",
+        fieldnames=[
+            "purchase_order_item_id",
+            "purchase_order_id",
+            "line_number",
+            "product_id",
+            "purchase_uom_id",
+            "ordered_pac_quantity",
+            "ordered_base_quantity",
+            "unit_cost",
+            "notes",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+# ============================================================
 # Generic CSV writer
 # ============================================================
 
@@ -8383,7 +9689,7 @@ def write_locations_csv(
 # ============================================================
 
 def main() -> None:
-    """Generate and validate current master datasets."""
+    """Generate and validate current master and procurement datasets."""
 
     try:
         uoms = UOM_DEFINITIONS
@@ -8410,6 +9716,16 @@ def main() -> None:
 
         locations = generate_locations(
             warehouses
+        )
+
+        purchase_orders, purchase_order_items = (
+            generate_purchase_orders(
+                suppliers,
+                warehouses,
+                payment_terms,
+                products,
+                product_suppliers,
+            )
         )
 
         # ----------------------------------------------------
@@ -8513,6 +9829,19 @@ def main() -> None:
             "Master relationship validation: PASSED"
         )
 
+        validate_purchase_orders(
+            purchase_orders,
+            purchase_order_items,
+            suppliers,
+            warehouses,
+            payment_terms,
+            products,
+            product_suppliers,
+        )
+        print(
+            "Purchase order validation: PASSED"
+        )
+
         # ----------------------------------------------------
         # CSV generation
         # ----------------------------------------------------
@@ -8581,6 +9910,18 @@ def main() -> None:
 
         location_file = write_locations_csv(
             locations
+        )
+
+        purchase_order_file = (
+            write_purchase_orders_csv(
+                purchase_orders
+            )
+        )
+
+        purchase_order_item_file = (
+            write_purchase_order_items_csv(
+                purchase_order_items
+            )
         )
 
         # ----------------------------------------------------
@@ -8690,6 +10031,20 @@ def main() -> None:
         )
         print(
             f"Rows: {len(locations)}"
+        )
+
+        print(
+            f"Created: {purchase_order_file}"
+        )
+        print(
+            f"Rows: {len(purchase_orders)}"
+        )
+
+        print(
+            f"Created: {purchase_order_item_file}"
+        )
+        print(
+            f"Rows: {len(purchase_order_items)}"
         )
 
     except (

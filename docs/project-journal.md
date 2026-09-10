@@ -487,22 +487,119 @@ The generator validates the generated master data before writing the CSV files.
 
 ---
 
-## Current Focus
+## Milestone 9 — Procurement Purchase Order Generation and Database Load ✅
 
-Define transaction-data generation rules and prepare linked transaction datasets for procurement, inventory, warehouse, logistics and sales flows.
+### Purchase Order Generation
+
+- Purchase order generation rules finalized
+- Purchase order CSV generation added to the synthetic-data generator
+- Purchase order item CSV generation added to the synthetic-data generator
+- Procurement generation uses the existing master-data relationships
+- Master-data generation logic remains reusable and deterministic
+- Purchase order IDs generated sequentially from 1 to 1,500
+- Purchase order item IDs generated sequentially from 1 to 6,534
+- Unique PO numbers validated
+- Product duplication within a PO prevented and validated
+- Exact purchase order status distribution generated
+- Exact purchase order line-count distribution generated
+
+### Purchase Order Dataset
+
+- Purchase orders generated: 1,500
+- Purchase order items generated: 6,534
+- PO date range: 2026-01-01 to 2026-06-30
+- Expected dates generated from supplier lead-time logic
+- Expected dates allowed to extend beyond the PO date range
+
+### Status Distribution
+
+- Draft: 60
+- Approved: 120
+- Sent: 150
+- Partially Received: 300
+- Received: 810
+- Cancelled: 60
+
+### Line Count Distribution
+
+- 1 line: 300 purchase orders
+- 2–3 lines: 450 purchase orders
+- 4–6 lines: 450 purchase orders
+- 7–10 lines: 225 purchase orders
+- 11–15 lines: 75 purchase orders
+
+### Quantity Model
+
+- Packaged purchase relationships use PAC
+- Bulk liquid purchase relationships use Litre
+- Current active product-supplier relationships contain no active KG purchase-UOM relationships
+- Ordered base quantity reconciles to ordered PAC quantity using `base_quantity_per_pac`
+- Packaged and bulk minimum order quantities were validated
+
+### CSV Validation
+
+- Purchase order count validated: 1,500
+- Purchase order item count validated: 6,534
+- Status distribution validated
+- Line-count distribution validated
+- PO date range validated
+- Expected date consistency validated
+- PO numbers validated as unique
+- Product uniqueness within each PO validated
+- Purchase order line numbering validated
+- Required values validated
+- Sequential IDs validated
+
+### Cross-Master Relational Validation
+
+- Supplier references validated
+- Warehouse references validated
+- Payment-term references validated
+- Supplier/payment-term consistency validated
+- Product references validated
+- Active product-supplier relationships validated
+- Purchase UOM consistency validated
+- Unit cost consistency validated
+- PAC/base quantity reconciliation validated
+- MOQ compliance validated
+- Active supplier usage validated
+- Active product usage validated
+
+Total relational QA errors: 0
+
+### PostgreSQL Purchase Order Load
+
+- `datasets/procurement_purchase_orders.csv` loaded into `procurement.purchase_orders`
+- `datasets/procurement_purchase_order_items.csv` loaded into `procurement.purchase_order_items`
+- Purchase order database row count verified: 1,500
+- Purchase order item database row count verified: 6,534
+- Database foreign keys verified
+- Database check constraints verified
+- Database unique constraints verified
+- PAC/base quantity rules verified
+- Expected date rule verified
+- Database-side consolidated QA returned zero errors
+- PostgreSQL transaction committed successfully
+- Post-commit row counts verified
+
+### Current Procurement Status
+
+Purchase orders and purchase order items are now generated, validated and loaded into PostgreSQL.
+
+Goods receipt generation and downstream inbound transaction generation remain pending.
 
 ---
 
-## Next
+## Current Focus
 
-- Define transaction data generation rules
-- Generate procurement transaction data
-- Generate inventory transaction data
-- Generate warehouse transaction data
-- Generate logistics transaction data
-- Generate sales transaction data
-- Validate transaction quantities and business relationships
-- Validate cross-module transaction references
-- Load transaction datasets into PostgreSQL
-- Verify transaction data in PostgreSQL
-- Prepare the completed dataset for SQL analysis
+Generate and validate the remaining linked transaction datasets for the procurement, inventory, warehouse, logistics and sales flows, starting with goods receipts.
+
+### Next Transaction Focus
+
+- Define goods receipt generation rules
+- Generate goods receipt transaction data
+- Generate goods receipt item data
+- Link receipts to purchase orders and purchase order items
+- Validate received, accepted and rejected PAC/base quantities
+- Load goods receipt datasets into PostgreSQL
+- Verify procurement end-to-end flow before moving into inventory transactions

@@ -65,10 +65,26 @@ PAC quantity is material-specific because different SKUs can have different pack
 - Purchase Orders
 - Purchase Order Items
 
+A purchase order represents a supplier-side procurement requirement for a selected warehouse and payment term.
+
+Business rules include:
+
+- One purchase order uses one supplier
+- One purchase order uses one warehouse
+- One purchase order uses one payment term reference
+- One purchase order can contain multiple purchase order items
+- A product can appear at most once within a purchase order
+- Purchase order items use products available through the selected supplier's active product-supplier relationships
+- Purchase UOM and unit cost are taken from the supplier-product relationship
+
 ### Goods Receipts
 
 - Goods Receipts
 - Goods Receipt Items
+
+A purchase order can have multiple goods receipts.
+
+Goods receipt data will represent physical receiving against purchase orders and their purchase order items.
 
 ### Transaction Quantities
 
@@ -89,6 +105,54 @@ Goods receipt items store:
 - Rejected base quantity
 
 Accepted and rejected quantities are tracked separately for both measures.
+
+For purchase order items:
+
+`Ordered Base Quantity = Ordered PAC Quantity × Base Quantity Per PAC`
+
+The product master defines the quantity represented by one PAC.
+
+---
+
+## Procurement Dataset Status
+
+The current synthetic procurement dataset contains generated and validated purchase orders and purchase order items.
+
+### Purchase Orders
+
+- 1,500 purchase orders
+- PO dates from 2026-01-01 to 2026-06-30
+- Expected dates follow the configured supplier lead-time logic
+- Status distribution:
+  - Draft: 60
+  - Approved: 120
+  - Sent: 150
+  - Partially Received: 300
+  - Received: 810
+  - Cancelled: 60
+
+### Purchase Order Items
+
+- 6,534 purchase order items
+- Multiple lines per purchase order
+- Exact line-count distribution:
+  - 1 line: 300 purchase orders
+  - 2–3 lines: 450 purchase orders
+  - 4–6 lines: 450 purchase orders
+  - 7–10 lines: 225 purchase orders
+  - 11–15 lines: 75 purchase orders
+
+### Procurement Quantity Model
+
+Purchase order item quantities use the established PAC/base quantity model.
+
+- PAC quantity represents the commercial/handling package count
+- Base quantity represents the corresponding normalized material quantity
+- Packaged products use PAC as the purchase UOM
+- Bulk liquid relationships use Litre as the purchase UOM
+- The current active product-supplier dataset contains no active KG purchase-UOM relationships
+
+The current purchase order dataset was validated against the active product-supplier relationships for purchase UOM, supplier-specific unit cost and minimum order quantity.
 
 ---
 
@@ -249,6 +313,10 @@ The database includes consistency rules for related records.
 - A picking item must use the actual location of the selected stock
 - A shipment item must use a dispatch item from the shipment dispatch
 - A delivery item must use a shipment item from the delivery shipment
+- Purchase order items must use an active product-supplier relationship for the purchase order supplier
+- Purchase order purchase UOM must match the supplier-product relationship
+- Purchase order unit cost must match the supplier-product relationship
+- Purchase order base quantity must reconcile to PAC quantity using the product master packaging definition
 
 ---
 
@@ -295,6 +363,10 @@ Supplier
 → Putaway
 
 → Storage / Picking Location
+
+The purchase order stage is currently populated with validated synthetic transaction data.
+
+Goods receipt, receiving and downstream inventory transaction generation remain part of the next transaction-data phase.
 
 ---
 

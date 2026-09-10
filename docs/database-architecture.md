@@ -101,6 +101,108 @@ Purchase order items store ordered PAC and base quantities.
 
 Goods receipt items store received, accepted and rejected quantities in both PAC and base measures.
 
+### Purchase Order Transaction Rules
+
+A purchase order:
+
+- Uses one supplier
+- Uses one warehouse
+- Uses one payment term
+- Can contain multiple purchase order items
+- Uses products available through active supplier-product relationships
+- Does not contain the same product more than once
+
+Purchase order item commercial attributes are sourced from the selected supplier-product relationship:
+
+- Purchase UOM
+- Unit purchase cost
+- Minimum order quantity
+
+Ordered base quantity is reconciled using the product packaging definition:
+
+`Ordered Base Quantity = Ordered PAC Quantity × Base Quantity Per PAC`
+
+---
+
+## Current Procurement Dataset
+
+The current synthetic procurement dataset contains:
+
+- 1,500 purchase orders
+- 6,534 purchase order items
+
+Purchase order creation dates cover:
+
+`2026-01-01` through `2026-06-30`
+
+Expected dates are generated using supplier relationship lead-time logic and may extend beyond the purchase-order date range.
+
+### Purchase Order Status Distribution
+
+- Draft: 60
+- Approved: 120
+- Sent: 150
+- Partially Received: 300
+- Received: 810
+- Cancelled: 60
+
+### Purchase Order Line Distribution
+
+- 1 line: 300 purchase orders
+- 2–3 lines: 450 purchase orders
+- 4–6 lines: 450 purchase orders
+- 7–10 lines: 225 purchase orders
+- 11–15 lines: 75 purchase orders
+
+### Purchase UOM Coverage
+
+Current active product-supplier purchase UOM coverage contains:
+
+- PAC: 2,787 active relationships
+- Litre: 423 active relationships
+- KG: 0 active relationships
+
+The current purchase order dataset therefore contains:
+
+- PAC purchase lines: 5,692
+- Litre purchase lines: 842
+- KG purchase lines: 0
+
+The KG result reflects the current active master relationship population and is not a purchase-order generation error.
+
+### Procurement Validation
+
+The generated purchase orders and purchase order items have been validated for:
+
+- Purchase order count
+- Purchase order item count
+- Status distribution
+- Line-count distribution
+- PO date range
+- Expected-date consistency
+- Unique PO numbers
+- Unique products within each PO
+- Sequential line numbering
+- Supplier references
+- Warehouse references
+- Payment-term references
+- Supplier/payment-term consistency
+- Product references
+- Active product-supplier relationships
+- Purchase UOM consistency
+- Unit cost consistency
+- PAC/base quantity reconciliation
+- Minimum order quantity compliance
+- Active supplier usage
+- Active product usage
+
+Database validation completed with zero relational QA errors.
+
+The generated procurement datasets were loaded into PostgreSQL and post-load row counts were verified:
+
+- `procurement.purchase_orders`: 1,500
+- `procurement.purchase_order_items`: 6,534
+
 ---
 
 ## Inventory Schema
@@ -272,7 +374,7 @@ Sales order allocations are connected to warehouse picking items when allocated 
 
 ## Schema Build Order
 
-The current schema files define 37 business tables and 2 supporting schema files.
+The current schema files define 37 business tables and 2 supporting relationship/integrity files.
 
 They should be created in the following order because some tables depend on others:
 
