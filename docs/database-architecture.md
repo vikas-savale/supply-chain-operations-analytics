@@ -122,14 +122,26 @@ Ordered base quantity is reconciled using the product packaging definition:
 
 `Ordered Base Quantity = Ordered PAC Quantity × Base Quantity Per PAC`
 
----
+### Goods Receipt Transaction Rules
 
-## Current Procurement Dataset
+Goods receipts:
+
+- Reference eligible purchase orders
+- Use the same warehouse as the purchase order
+- Can contain multiple goods receipt items
+- Reference purchase order items from the same purchase order
+- Match the purchase order item product
+- Match the purchase order item purchase UOM
+- Do not cause cumulative received quantity to exceed ordered quantity
+
+### Current Procurement Dataset
 
 The current synthetic procurement dataset contains:
 
 - 1,500 purchase orders
 - 6,534 purchase order items
+- 1,563 goods receipts
+- 6,655 goods receipt items
 
 Purchase order creation dates cover:
 
@@ -196,12 +208,32 @@ The generated purchase orders and purchase order items have been validated for:
 - Active supplier usage
 - Active product usage
 
-Database validation completed with zero relational QA errors.
+Goods receipt data has additionally been validated for:
+
+- Goods receipt count
+- Goods receipt item count
+- Goods receipt references to purchase orders
+- Goods receipt item references to purchase order items
+- Warehouse consistency
+- Product consistency
+- UOM consistency
+- Batch-code presence
+- Receipt status values
+- Line numbering and uniqueness
+- Received, accepted and rejected PAC quantities
+- Received, accepted and rejected base quantities
+- PAC/base quantity reconciliation
+- Cumulative receipt quantity limits
+- Purchase order status reconciliation
+
+Database validation completed with zero true relational or quantity-reconciliation errors.
 
 The generated procurement datasets were loaded into PostgreSQL and post-load row counts were verified:
 
 - `procurement.purchase_orders`: 1,500
 - `procurement.purchase_order_items`: 6,534
+- `procurement.goods_receipts`: 1,563
+- `procurement.goods_receipt_items`: 6,655
 
 ---
 

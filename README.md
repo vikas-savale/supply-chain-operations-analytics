@@ -28,6 +28,7 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Procurement transaction model
 - 4 procurement transaction tables
 - Purchase order transaction flow
+- Goods receipt transaction flow
 - Procurement PAC and base quantity model
 - Inventory transaction model
 - 3 inventory tables
@@ -74,16 +75,30 @@ The objective is to design, build and analyze a supply chain system covering mas
 - Complete master-network relationship validation
 - Purchase order transaction generation
 - Purchase order item transaction generation
+- Goods receipt transaction generation
+- Goods receipt item transaction generation
 - 1,500 purchase orders
 - 6,534 purchase order items
+- 1,563 goods receipts
+- 6,655 goods receipt items
 - Purchase order status distribution validation
 - Purchase order line-count distribution validation
 - Purchase order PAC/base quantity validation
 - Purchase order supplier/product relationship validation
 - Purchase order MOQ validation
+- Goods receipt reference validation
+- Goods receipt warehouse consistency validation
+- Goods receipt product and UOM validation
+- Goods receipt batch tracking validation
+- Goods receipt PAC/base quantity validation
+- Goods receipt cumulative receipt validation
+- Procurement receiving reconciliation validation
 - Purchase order PostgreSQL load
-- Purchase order database relational validation
-- Purchase order post-commit verification
+- Goods receipt PostgreSQL load
+- Procurement database relational validation
+- Procurement end-to-end verification
+- Procurement post-load verification
+- Procurement identity sequence alignment
 
 ### Current Master Data
 
@@ -107,23 +122,30 @@ The objective is to design, build and analyze a supply chain system covering mas
 
 - 1,500 purchase orders
 - 6,534 purchase order items
+- 1,563 goods receipts
+- 6,655 goods receipt items
 - PO date range: 2026-01-01 to 2026-06-30
 - Expected dates generated using supplier lead-time logic
 - Purchase order status distribution validated
 - Purchase order line-count distribution validated
-- Purchase order and item relational validation completed with zero errors
-- PostgreSQL purchase order load completed and verified
+- Goods receipt references validated
+- Goods receipt warehouse, product and UOM consistency validated
+- Goods receipt batch tracking validated
+- Procurement PAC/base quantities validated
+- Cumulative receipt quantities validated
+- Purchase order and goods receipt reconciliation completed with zero true errors
+- PostgreSQL procurement load completed and verified
 
 ## Current Focus
 
-Continue transaction-data generation through the inbound procurement flow.
+Continue transaction-data generation from accepted goods receipts into the inventory and downstream operational flows.
 
 Next:
 
-- Goods receipt generation
-- Goods receipt item generation
-- Procurement receiving validation
-- Inventory transaction generation
+- Inventory stock generation
+- Inventory movement generation
+- Stock audit generation
+- Procurement-to-inventory reconciliation
 - Warehouse transaction generation
 - Logistics transaction generation
 - Sales transaction generation

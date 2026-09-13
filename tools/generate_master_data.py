@@ -71,6 +71,28 @@ PURCHASE_ORDER_QUANTITY_MULTIPLIER_RANGE = {
 }
 
 # ============================================================
+# Goods receipt transaction generation configuration
+# ============================================================
+
+GOODS_RECEIPT_RANDOM_SEED = PROCUREMENT_RANDOM_SEED + 10
+
+GOODS_RECEIPT_ELIGIBLE_PO_STATUSES = {
+    "partially_received",
+    "received",
+}
+
+GOODS_RECEIPT_MIN_EVENTS_PER_PO = 1
+GOODS_RECEIPT_MAX_EVENTS_PER_PO = 3
+
+GOODS_RECEIPT_VEHICLE_USAGE_RATE = 0.70
+
+GOODS_RECEIPT_REJECTION_RATE = 0.08
+
+GOODS_RECEIPT_EARLY_DAY_OFFSET_RANGE = (-2, 2)
+GOODS_RECEIPT_LATE_DAY_OFFSET_RANGE = (1, 5)
+
+
+# ============================================================
 # UOM master definitions
 # ============================================================
 
@@ -8585,10 +8607,108 @@ def generate_purchase_orders(
 
         purchase_order_id += 1
 
+    _rebalance_purchase_order_statuses(
+        purchase_orders,
+        purchase_order_items,
+    )
+
     return (
         purchase_orders,
         purchase_order_items,
     )
+
+
+def _rebalance_purchase_order_statuses(
+    purchase_orders: list[dict],
+    purchase_order_items: list[dict],
+) -> None:
+    """
+    Rebalance status assignments so partially-received POs
+    always have enough whole-PAC quantity for a true partial receipt.
+
+    Business rule:
+    - partially_received PO must have total ordered PAC >= 2
+    - received PO may have any positive ordered PAC quantity
+    - configured PO status counts must remain unchanged
+
+    This helper mutates only the status field of PO headers.
+    """
+    items_by_po = {}
+
+    for item in purchase_order_items:
+        purchase_order_id = item[
+            "purchase_order_id"
+        ]
+
+        items_by_po.setdefault(
+            purchase_order_id,
+            0,
+        )
+
+        items_by_po[
+            purchase_order_id
+        ] += float(
+            item["ordered_pac_quantity"]
+        )
+
+    partial_ineligible = []
+    received_eligible = []
+
+    for purchase_order in purchase_orders:
+        purchase_order_id = purchase_order[
+            "purchase_order_id"
+        ]
+
+        total_ordered_pac = items_by_po.get(
+            purchase_order_id,
+            0.0,
+        )
+
+        if (
+            purchase_order["status"]
+            == "partially_received"
+            and total_ordered_pac < 2
+        ):
+            partial_ineligible.append(
+                purchase_order
+            )
+
+        elif (
+            purchase_order["status"]
+            == "received"
+            and total_ordered_pac >= 2
+        ):
+            received_eligible.append(
+                purchase_order
+            )
+
+    if len(partial_ineligible) > len(
+        received_eligible
+    ):
+        raise ValueError(
+            "Not enough eligible received POs "
+            "to rebalance partially_received status "
+            "for whole-PAC receiving."
+        )
+
+    partial_ineligible.sort(
+        key=lambda row: row[
+            "purchase_order_id"
+        ]
+    )
+
+    received_eligible.sort(
+        key=lambda row: row[
+            "purchase_order_id"
+        ]
+    )
+
+    for partial_po, received_po in zip(
+        partial_ineligible,
+        received_eligible,
+    ):
+        partial_po["status"] = "received"
+        received_po["status"] = "partially_received"
 
 
 def _get_purchase_order_line_bucket(
@@ -8931,6 +9051,24 @@ def validate_purchase_orders(
             purchase_order["expected_date"]
         )
 
+        total_ordered_pac = sum(
+            float(
+                item["ordered_pac_quantity"]
+            )
+            for item in items
+        )
+
+        if (
+            purchase_order["status"]
+            == "partially_received"
+            and total_ordered_pac < 2
+        ):
+            raise ValueError(
+                "Partially-received PO does not have "
+                "enough whole-PAC quantity for a true "
+                f"partial receipt: po_id={po_id}"
+            )
+
         maximum_lead_time = 0
 
         for item in items:
@@ -9135,6 +9273,1063 @@ def validate_purchase_orders(
         )
 
 
+
+def _build_goods_receipt_count(
+    po_status: str,
+    item_count: int,
+    total_ordered_pac: int,
+    rng,
+) -> int:
+    """Return a deterministic 1-3 event count for a PO."""
+
+    if po_status not in GOODS_RECEIPT_ELIGIBLE_PO_STATUSES:
+        raise ValueError(
+            "Goods receipt requested for ineligible PO status: "
+            f"status={po_status}"
+        )
+
+    if item_count <= 0:
+        raise ValueError(
+            "Goods receipt PO must contain at least one item."
+        )
+
+    if total_ordered_pac <= 0:
+        raise ValueError(
+            "Goods receipt PO must have positive ordered PAC quantity."
+        )
+
+    if item_count == 1:
+        desired_count = 1
+    elif item_count <= 3:
+        desired_count = (
+            1
+            if rng.random() < 0.72
+            else 2
+        )
+    elif item_count <= 6:
+        roll = rng.random()
+        if roll < 0.55:
+            desired_count = 1
+        elif roll < 0.97:
+            desired_count = 2
+        else:
+            desired_count = 3
+    elif item_count <= 10:
+        roll = rng.random()
+        if roll < 0.25:
+            desired_count = 1
+        elif roll < 0.90:
+            desired_count = 2
+        else:
+            desired_count = 3
+    else:
+        desired_count = (
+            2
+            if rng.random() < 0.60
+            else 3
+        )
+
+    desired_count = max(
+        GOODS_RECEIPT_MIN_EVENTS_PER_PO,
+        min(
+            desired_count,
+            GOODS_RECEIPT_MAX_EVENTS_PER_PO,
+        ),
+    )
+
+    return min(
+        desired_count,
+        int(total_ordered_pac),
+    )
+
+
+def _build_goods_receipt_totals(
+    total_pac: int,
+    receipt_count: int,
+    rng,
+) -> list[int]:
+    """Split a PO receipt quantity into positive whole-PAC events."""
+
+    if total_pac <= 0:
+        raise ValueError(
+            "Goods receipt total PAC quantity must be positive."
+        )
+
+    if receipt_count <= 0:
+        raise ValueError(
+            "Goods receipt count must be positive."
+        )
+
+    if receipt_count > total_pac:
+        raise ValueError(
+            "Goods receipt count cannot exceed total PAC quantity."
+        )
+
+    totals = [1] * receipt_count
+    remaining = total_pac - receipt_count
+
+    while remaining > 0:
+        index = rng.randrange(receipt_count)
+        totals[index] += 1
+        remaining -= 1
+
+    rng.shuffle(totals)
+    return totals
+
+
+def _build_partial_received_total(
+    total_ordered_pac: int,
+    rng,
+) -> int:
+    """Return a positive whole-PAC partial receipt total below ordered quantity."""
+
+    if total_ordered_pac < 2:
+        raise ValueError(
+            "A partially_received PO must have at least 2 ordered PAC."
+        )
+
+    return rng.randint(
+        1,
+        total_ordered_pac - 1,
+    )
+
+
+def _build_item_receipt_targets(
+    items: list[dict],
+    total_received_pac: int,
+    rng,
+) -> dict[int, int]:
+    """Allocate a PO-level received PAC target across its PO items."""
+
+    capacities = [
+        int(float(item["ordered_pac_quantity"]))
+        for item in items
+    ]
+
+    if any(capacity <= 0 for capacity in capacities):
+        raise ValueError(
+            "PO item ordered PAC quantity must be positive."
+        )
+
+    total_capacity = sum(capacities)
+
+    if not 0 < total_received_pac <= total_capacity:
+        raise ValueError(
+            "Invalid PO-level received PAC target: "
+            f"received={total_received_pac}, "
+            f"ordered={total_capacity}"
+        )
+
+    item_order = list(range(len(items)))
+    rng.shuffle(item_order)
+
+    targets = [0] * len(items)
+    remaining = total_received_pac
+
+    for position, item_index in enumerate(item_order):
+        capacity = capacities[item_index]
+        remaining_capacity_after = sum(
+            capacities[later_index]
+            for later_index in item_order[position + 1:]
+        )
+
+        minimum_for_current = max(
+            0,
+            remaining - remaining_capacity_after,
+        )
+        maximum_for_current = min(
+            capacity,
+            remaining,
+        )
+
+        targets[item_index] = rng.randint(
+            minimum_for_current,
+            maximum_for_current,
+        )
+        remaining -= targets[item_index]
+
+    if remaining != 0:
+        raise ValueError(
+            "Failed to allocate PO-level received PAC target."
+        )
+
+    return {
+        items[index]["purchase_order_item_id"]: targets[index]
+        for index in range(len(items))
+        if targets[index] > 0
+    }
+
+
+def _allocate_item_quantity_to_receipts(
+    item_quantity: int,
+    receipt_totals: list[int],
+    rng,
+) -> list[int]:
+    """Allocate one PO-item receipt quantity across receipt events."""
+
+    if item_quantity <= 0:
+        return [0] * len(receipt_totals)
+
+    remaining = item_quantity
+    allocations = [0] * len(receipt_totals)
+    receipt_order = list(range(len(receipt_totals)))
+    rng.shuffle(receipt_order)
+
+    for position, receipt_index in enumerate(receipt_order):
+        remaining_capacity_after = sum(
+            receipt_totals[later_index]
+            for later_index in receipt_order[position + 1:]
+        )
+        minimum_for_current = max(
+            0,
+            remaining - remaining_capacity_after,
+        )
+        maximum_for_current = min(
+            receipt_totals[receipt_index],
+            remaining,
+        )
+
+        allocations[receipt_index] = rng.randint(
+            minimum_for_current,
+            maximum_for_current,
+        )
+        remaining -= allocations[receipt_index]
+
+    if remaining != 0:
+        raise ValueError(
+            "Failed to allocate PO-item quantity across receipts."
+        )
+
+    return allocations
+
+
+def _build_goods_receipt_dates(
+    po_date: date,
+    expected_date: date,
+    receipt_count: int,
+    rng,
+) -> list[date]:
+    """Build chronologically increasing goods-receipt dates."""
+
+    first_offset = rng.randint(
+        *GOODS_RECEIPT_EARLY_DAY_OFFSET_RANGE
+    )
+
+    first_date = max(
+        po_date,
+        expected_date + timedelta(days=first_offset),
+    )
+
+    dates = [first_date]
+
+    for _ in range(1, receipt_count):
+        delay_days = rng.randint(
+            *GOODS_RECEIPT_LATE_DAY_OFFSET_RANGE
+        )
+        dates.append(
+            dates[-1]
+            + timedelta(days=delay_days)
+        )
+
+    return dates
+
+
+def _select_goods_receipt_vehicle(
+    vehicles: list[dict],
+    rng,
+) -> int | None:
+    """Select an active vehicle for some receipts, otherwise return NULL."""
+
+    active_vehicles = [
+        vehicle
+        for vehicle in vehicles
+        if vehicle["vehicle_status"] == "active"
+    ]
+
+    if not active_vehicles:
+        raise ValueError(
+            "No active vehicles are available for goods receipt generation."
+        )
+
+    if rng.random() > GOODS_RECEIPT_VEHICLE_USAGE_RATE:
+        return None
+
+    return rng.choice(active_vehicles)[
+        "vehicle_id"
+    ]
+
+
+def _build_batch_code(
+    product_id: int,
+    goods_receipt_item_id: int,
+) -> str:
+    """Build a deterministic synthetic batch code."""
+
+    return (
+        f"B26-"
+        f"P{product_id:04d}-"
+        f"{goods_receipt_item_id:06d}"
+    )
+
+
+def _build_acceptance_split(
+    received_pac_quantity: int,
+    rng,
+) -> tuple[int, int]:
+    """Split received quantity into accepted and rejected PAC quantities."""
+
+    if received_pac_quantity <= 0:
+        raise ValueError(
+            "Received PAC quantity must be positive."
+        )
+
+    if (
+        rng.random() < GOODS_RECEIPT_REJECTION_RATE
+    ):
+        rejected_pac_quantity = 1
+    else:
+        rejected_pac_quantity = 0
+
+    accepted_pac_quantity = (
+        received_pac_quantity
+        - rejected_pac_quantity
+    )
+
+    return (
+        accepted_pac_quantity,
+        rejected_pac_quantity,
+    )
+
+
+def generate_goods_receipts(
+    purchase_orders: list[dict],
+    purchase_order_items: list[dict],
+    products: list[dict],
+    vehicles: list[dict],
+) -> tuple[list[dict], list[dict]]:
+    """
+    Generate deterministic historical goods receipts and receipt items.
+
+    Business rules:
+    - goods receipts are generated only for partially_received and received POs
+    - one PO may have multiple goods receipts
+    - a PO item may be received across multiple goods receipts
+    - partially_received POs have positive receipt quantity below ordered quantity
+    - received POs have cumulative receipt quantity equal to ordered quantity
+    - goods receipt warehouse matches the PO warehouse
+    - goods receipt item product matches the referenced PO item product
+    - receipt UOM matches the PO purchase UOM
+    - received = accepted + rejected at PAC and base quantity levels
+    - batch_code is mandatory
+    - vehicle_id is nullable
+    """
+
+    rng = random.Random(
+        GOODS_RECEIPT_RANDOM_SEED
+    )
+
+    items_by_po = {}
+
+    for item in purchase_order_items:
+        items_by_po.setdefault(
+            item["purchase_order_id"],
+            [],
+        ).append(item)
+
+    product_lookup = {
+        row["product_id"]: row
+        for row in products
+    }
+
+    goods_receipts = []
+    goods_receipt_items = []
+
+    goods_receipt_id = 1
+    goods_receipt_item_id = 1
+
+    for purchase_order in purchase_orders:
+        po_status = purchase_order[
+            "status"
+        ]
+
+        if po_status not in GOODS_RECEIPT_ELIGIBLE_PO_STATUSES:
+            continue
+
+        po_id = purchase_order[
+            "purchase_order_id"
+        ]
+        po_items = items_by_po.get(
+            po_id,
+            [],
+        )
+
+        if not po_items:
+            raise ValueError(
+                "Eligible PO has no items for goods receipt generation: "
+                f"po_id={po_id}"
+            )
+
+        total_ordered_pac = int(sum(
+            float(item["ordered_pac_quantity"])
+            for item in po_items
+        ))
+
+        if po_status == "partially_received":
+            total_received_pac = _build_partial_received_total(
+                total_ordered_pac,
+                rng,
+            )
+        else:
+            total_received_pac = total_ordered_pac
+
+        item_receipt_targets = _build_item_receipt_targets(
+            po_items,
+            total_received_pac,
+            rng,
+        )
+
+        receipt_count = _build_goods_receipt_count(
+            po_status,
+            len(po_items),
+            total_received_pac,
+            rng,
+        )
+
+        receipt_totals = _build_goods_receipt_totals(
+            total_received_pac,
+            receipt_count,
+            rng,
+        )
+
+        po_date = date.fromisoformat(
+            purchase_order["po_date"]
+        )
+        expected_date = date.fromisoformat(
+            purchase_order["expected_date"]
+        )
+
+        receipt_dates = _build_goods_receipt_dates(
+            po_date,
+            expected_date,
+            receipt_count,
+            rng,
+        )
+
+        receipt_allocations_by_item = {}
+
+        for item in po_items:
+            item_id = item[
+                "purchase_order_item_id"
+            ]
+            target_quantity = item_receipt_targets.get(
+                item_id,
+                0,
+            )
+            receipt_allocations_by_item[
+                item_id
+            ] = _allocate_item_quantity_to_receipts(
+                target_quantity,
+                receipt_totals,
+                rng,
+            )
+
+        for receipt_index in range(receipt_count):
+            receipt_id = goods_receipt_id
+            receipt_date = receipt_dates[
+                receipt_index
+            ]
+            transaction_timestamp = (
+                _build_transaction_audit_timestamp(
+                    receipt_date
+                )
+            )
+
+            goods_receipts.append(
+                {
+                    "goods_receipt_id": receipt_id,
+                    "grn_number": (
+                        f"GRN2026"
+                        f"{receipt_id:06d}"
+                    ),
+                    "purchase_order_id": po_id,
+                    "warehouse_id": purchase_order[
+                        "warehouse_id"
+                    ],
+                    "vehicle_id": _select_goods_receipt_vehicle(
+                        vehicles,
+                        rng,
+                    ),
+                    "receipt_date": receipt_date.isoformat(),
+                    "receipt_status": "received",
+                    "notes": None,
+                    "created_date": transaction_timestamp,
+                    "created_by": DEFAULT_CREATED_BY,
+                    "updated_date": transaction_timestamp,
+                    "updated_by": DEFAULT_UPDATED_BY,
+                }
+            )
+
+            line_number = 1
+
+            for item in po_items:
+                item_id = item[
+                    "purchase_order_item_id"
+                ]
+                received_pac_quantity = (
+                    receipt_allocations_by_item[item_id][
+                        receipt_index
+                    ]
+                )
+
+                if received_pac_quantity <= 0:
+                    continue
+
+                product_id = item[
+                    "product_id"
+                ]
+
+                if product_id not in product_lookup:
+                    raise ValueError(
+                        "Goods receipt item references missing product: "
+                        f"po_id={po_id}, "
+                        f"product_id={product_id}"
+                    )
+
+                base_quantity_per_pac = float(
+                    product_lookup[product_id][
+                        "base_quantity_per_pac"
+                    ]
+                )
+
+                (
+                    accepted_pac_quantity,
+                    rejected_pac_quantity,
+                ) = _build_acceptance_split(
+                    received_pac_quantity,
+                    rng,
+                )
+
+                received_base_quantity = round(
+                    received_pac_quantity
+                    * base_quantity_per_pac,
+                    3,
+                )
+                accepted_base_quantity = round(
+                    accepted_pac_quantity
+                    * base_quantity_per_pac,
+                    3,
+                )
+                rejected_base_quantity = round(
+                    rejected_pac_quantity
+                    * base_quantity_per_pac,
+                    3,
+                )
+
+                transaction_timestamp = (
+                    _build_transaction_audit_timestamp(
+                        receipt_date
+                    )
+                )
+
+                goods_receipt_items.append(
+                    {
+                        "goods_receipt_item_id": goods_receipt_item_id,
+                        "goods_receipt_id": receipt_id,
+                        "purchase_order_item_id": item_id,
+                        "line_number": line_number,
+                        "product_id": product_id,
+                        "batch_code": _build_batch_code(
+                            product_id,
+                            goods_receipt_item_id,
+                        ),
+                        "receipt_uom_id": item[
+                            "purchase_uom_id"
+                        ],
+                        "received_pac_quantity": round(
+                            float(received_pac_quantity),
+                            3,
+                        ),
+                        "accepted_pac_quantity": round(
+                            float(accepted_pac_quantity),
+                            3,
+                        ),
+                        "rejected_pac_quantity": round(
+                            float(rejected_pac_quantity),
+                            3,
+                        ),
+                        "received_base_quantity": received_base_quantity,
+                        "accepted_base_quantity": accepted_base_quantity,
+                        "rejected_base_quantity": rejected_base_quantity,
+                        "notes": None,
+                        "created_date": transaction_timestamp,
+                        "created_by": DEFAULT_CREATED_BY,
+                        "updated_date": transaction_timestamp,
+                        "updated_by": DEFAULT_UPDATED_BY,
+                    }
+                )
+
+                goods_receipt_item_id += 1
+                line_number += 1
+
+            goods_receipt_id += 1
+
+    return (
+        goods_receipts,
+        goods_receipt_items,
+    )
+
+
+def validate_goods_receipts(
+    purchase_orders: list[dict],
+    purchase_order_items: list[dict],
+    goods_receipts: list[dict],
+    goods_receipt_items: list[dict],
+    products: list[dict],
+    vehicles: list[dict],
+) -> None:
+    """Validate goods receipt header, item, quantity and PO reconciliation."""
+
+    purchase_order_map = {
+        row["purchase_order_id"]: row
+        for row in purchase_orders
+    }
+
+    purchase_order_item_map = {
+        row["purchase_order_item_id"]: row
+        for row in purchase_order_items
+    }
+
+    product_map = {
+        row["product_id"]: row
+        for row in products
+    }
+
+    vehicle_ids = {
+        row["vehicle_id"]
+        for row in vehicles
+        if row["vehicle_status"] == "active"
+    }
+
+    if not goods_receipts:
+        raise ValueError(
+            "Goods receipt generation produced no receipt headers."
+        )
+
+    expected_goods_receipt_ids = list(
+        range(
+            1,
+            len(goods_receipts) + 1,
+        )
+    )
+    actual_goods_receipt_ids = [
+        row["goods_receipt_id"]
+        for row in goods_receipts
+    ]
+
+    if actual_goods_receipt_ids != expected_goods_receipt_ids:
+        raise ValueError(
+            "Goods receipt IDs are not sequential."
+        )
+
+    grn_numbers = [
+        row["grn_number"]
+        for row in goods_receipts
+    ]
+
+    if len(grn_numbers) != len(set(grn_numbers)):
+        raise ValueError(
+            "Duplicate GRN number found."
+        )
+
+    receipt_ids_with_items = set()
+    receipt_line_numbers = {}
+    receipt_by_po = {}
+
+    for receipt in goods_receipts:
+        receipt_id = receipt[
+            "goods_receipt_id"
+        ]
+        po_id = receipt[
+            "purchase_order_id"
+        ]
+
+        if po_id not in purchase_order_map:
+            raise ValueError(
+                "Goods receipt references missing PO: "
+                f"goods_receipt_id={receipt_id}, "
+                f"po_id={po_id}"
+            )
+
+        po = purchase_order_map[po_id]
+
+        if po["status"] not in GOODS_RECEIPT_ELIGIBLE_PO_STATUSES:
+            raise ValueError(
+                "Goods receipt references ineligible PO: "
+                f"goods_receipt_id={receipt_id}, "
+                f"po_id={po_id}, "
+                f"status={po['status']}"
+            )
+
+        if receipt["warehouse_id"] != po["warehouse_id"]:
+            raise ValueError(
+                "Goods receipt warehouse does not match PO warehouse: "
+                f"goods_receipt_id={receipt_id}"
+            )
+
+        if receipt["receipt_status"] != "received":
+            raise ValueError(
+                "Generated goods receipt must have received status: "
+                f"goods_receipt_id={receipt_id}"
+            )
+
+        receipt_date = date.fromisoformat(
+            receipt["receipt_date"]
+        )
+        po_date = date.fromisoformat(
+            po["po_date"]
+        )
+
+        if receipt_date < po_date:
+            raise ValueError(
+                "Goods receipt date is before PO date: "
+                f"goods_receipt_id={receipt_id}"
+            )
+
+        vehicle_id = receipt[
+            "vehicle_id"
+        ]
+
+        if (
+            vehicle_id is not None
+            and vehicle_id not in vehicle_ids
+        ):
+            raise ValueError(
+                "Goods receipt references non-active vehicle: "
+                f"goods_receipt_id={receipt_id}, "
+                f"vehicle_id={vehicle_id}"
+            )
+
+        receipt_by_po.setdefault(
+            po_id,
+            [],
+        ).append(receipt)
+
+    for po_id, receipts in receipt_by_po.items():
+        receipt_dates = [
+            date.fromisoformat(
+                receipt["receipt_date"]
+            )
+            for receipt in receipts
+        ]
+
+        if receipt_dates != sorted(receipt_dates):
+            raise ValueError(
+                "Goods receipt dates are not chronological: "
+                f"po_id={po_id}"
+            )
+
+        if len(receipts) > GOODS_RECEIPT_MAX_EVENTS_PER_PO:
+            raise ValueError(
+                "Goods receipt count exceeds configured maximum: "
+                f"po_id={po_id}"
+            )
+
+    cumulative_by_po_item = {}
+
+    for item in goods_receipt_items:
+        receipt_id = item[
+            "goods_receipt_id"
+        ]
+        po_item_id = item[
+            "purchase_order_item_id"
+        ]
+        product_id = item[
+            "product_id"
+        ]
+
+        if receipt_id not in actual_goods_receipt_ids:
+            raise ValueError(
+                "Goods receipt item references missing receipt: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if po_item_id not in purchase_order_item_map:
+            raise ValueError(
+                "Goods receipt item references missing PO item: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        po_item = purchase_order_item_map[po_item_id]
+
+        po_id = po_item[
+            "purchase_order_id"
+        ]
+
+        receipt = next(
+            row
+            for row in goods_receipts
+            if row["goods_receipt_id"] == receipt_id
+        )
+
+        if receipt["purchase_order_id"] != po_id:
+            raise ValueError(
+                "Goods receipt item PO does not match receipt PO: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if product_id != po_item["product_id"]:
+            raise ValueError(
+                "Goods receipt item product does not match PO item: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if item["receipt_uom_id"] != po_item["purchase_uom_id"]:
+            raise ValueError(
+                "Goods receipt item UOM does not match PO purchase UOM: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if not item["batch_code"]:
+            raise ValueError(
+                "Goods receipt batch code is mandatory: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        received_pac = float(
+            item["received_pac_quantity"]
+        )
+        accepted_pac = float(
+            item["accepted_pac_quantity"]
+        )
+        rejected_pac = float(
+            item["rejected_pac_quantity"]
+        )
+        received_base = float(
+            item["received_base_quantity"]
+        )
+        accepted_base = float(
+            item["accepted_base_quantity"]
+        )
+        rejected_base = float(
+            item["rejected_base_quantity"]
+        )
+
+        if received_pac <= 0:
+            raise ValueError(
+                "Received PAC quantity must be positive: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if accepted_pac < 0 or rejected_pac < 0:
+            raise ValueError(
+                "Accepted/rejected PAC quantities cannot be negative."
+            )
+
+        if not math.isclose(
+            accepted_pac + rejected_pac,
+            received_pac,
+            rel_tol=0.0,
+            abs_tol=0.001,
+        ):
+            raise ValueError(
+                "Goods receipt PAC acceptance reconciliation failed: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if not math.isclose(
+            accepted_base + rejected_base,
+            received_base,
+            rel_tol=0.0,
+            abs_tol=0.001,
+        ):
+            raise ValueError(
+                "Goods receipt base acceptance reconciliation failed: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if product_id not in product_map:
+            raise ValueError(
+                "Goods receipt item references missing product: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        base_quantity_per_pac = float(
+            product_map[product_id][
+                "base_quantity_per_pac"
+            ]
+        )
+
+        calculated_received_base = round(
+            received_pac * base_quantity_per_pac,
+            3,
+        )
+        calculated_accepted_base = round(
+            accepted_pac * base_quantity_per_pac,
+            3,
+        )
+        calculated_rejected_base = round(
+            rejected_pac * base_quantity_per_pac,
+            3,
+        )
+
+        if not math.isclose(
+            received_base,
+            calculated_received_base,
+            rel_tol=0.0,
+            abs_tol=0.001,
+        ):
+            raise ValueError(
+                "Goods receipt received base quantity reconciliation failed: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if not math.isclose(
+            accepted_base,
+            calculated_accepted_base,
+            rel_tol=0.0,
+            abs_tol=0.001,
+        ):
+            raise ValueError(
+                "Goods receipt accepted base quantity reconciliation failed: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        if not math.isclose(
+            rejected_base,
+            calculated_rejected_base,
+            rel_tol=0.0,
+            abs_tol=0.001,
+        ):
+            raise ValueError(
+                "Goods receipt rejected base quantity reconciliation failed: "
+                f"goods_receipt_item_id={item['goods_receipt_item_id']}"
+            )
+
+        cumulative_by_po_item[
+            po_item_id
+        ] = (
+            cumulative_by_po_item.get(
+                po_item_id,
+                0.0,
+            )
+            + received_pac
+        )
+
+        receipt_ids_with_items.add(receipt_id)
+        receipt_line_numbers.setdefault(
+            receipt_id,
+            [],
+        ).append(
+            item["line_number"]
+        )
+
+    eligible_po_ids = {
+        po["purchase_order_id"]
+        for po in purchase_orders
+        if po["status"] in GOODS_RECEIPT_ELIGIBLE_PO_STATUSES
+    }
+    receipt_po_ids = set(receipt_by_po)
+
+    if receipt_po_ids != eligible_po_ids:
+        missing = eligible_po_ids - receipt_po_ids
+        extra = receipt_po_ids - eligible_po_ids
+        raise ValueError(
+            "Goods receipt PO coverage mismatch: "
+            f"missing={sorted(missing)}, "
+            f"extra={sorted(extra)}"
+        )
+
+    for receipt_id, line_numbers in receipt_line_numbers.items():
+        expected_line_numbers = list(
+            range(
+                1,
+                len(line_numbers) + 1,
+            )
+        )
+
+        if sorted(line_numbers) != expected_line_numbers:
+            raise ValueError(
+                "Goods receipt item line numbers are not sequential: "
+                f"goods_receipt_id={receipt_id}"
+            )
+
+    for po_item in purchase_order_items:
+        po_item_id = po_item[
+            "purchase_order_item_id"
+        ]
+        po_id = po_item[
+            "purchase_order_id"
+        ]
+        ordered_pac = float(
+            po_item["ordered_pac_quantity"]
+        )
+        cumulative_received = cumulative_by_po_item.get(
+            po_item_id,
+            0.0,
+        )
+
+        po_status = purchase_order_map[po_id][
+            "status"
+        ]
+
+        if po_status == "received":
+            if not math.isclose(
+                cumulative_received,
+                ordered_pac,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            ):
+                raise ValueError(
+                    "Received PO item is not fully received: "
+                    f"po_item_id={po_item_id}"
+                )
+
+        elif po_status == "partially_received":
+            if cumulative_received > ordered_pac + 0.001:
+                raise ValueError(
+                    "Partially received PO item exceeds ordered quantity: "
+                    f"po_item_id={po_item_id}"
+                )
+
+    for po_id, po in purchase_order_map.items():
+        if po["status"] not in GOODS_RECEIPT_ELIGIBLE_PO_STATUSES:
+            continue
+
+        ordered_total = sum(
+            float(item["ordered_pac_quantity"])
+            for item in purchase_order_items
+            if item["purchase_order_id"] == po_id
+        )
+        received_total = sum(
+            float(item["received_pac_quantity"])
+            for item in goods_receipt_items
+            if item["goods_receipt_id"] in {
+                receipt["goods_receipt_id"]
+                for receipt in receipt_by_po[po_id]
+            }
+        )
+
+        if po["status"] == "received":
+            if not math.isclose(
+                received_total,
+                ordered_total,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            ):
+                raise ValueError(
+                    "Received PO total receipt does not equal ordered total: "
+                    f"po_id={po_id}"
+                )
+        else:
+            if not (
+                0 < received_total < ordered_total
+            ):
+                raise ValueError(
+                    "Partially received PO total receipt is invalid: "
+                    f"po_id={po_id}"
+                )
+
+
 def write_transaction_csv(
     rows: list[dict],
     filename: str,
@@ -9222,6 +10417,63 @@ def write_purchase_order_items_csv(
             "updated_by",
         ],
     )
+
+
+def write_goods_receipts_csv(
+    goods_receipts: list[dict],
+) -> Path:
+    """Write procurement goods-receipt headers."""
+
+    return write_transaction_csv(
+        rows=goods_receipts,
+        filename="procurement_goods_receipts.csv",
+        fieldnames=[
+            "goods_receipt_id",
+            "grn_number",
+            "purchase_order_id",
+            "warehouse_id",
+            "vehicle_id",
+            "receipt_date",
+            "receipt_status",
+            "notes",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
+
+def write_goods_receipt_items_csv(
+    goods_receipt_items: list[dict],
+) -> Path:
+    """Write procurement goods-receipt items."""
+
+    return write_transaction_csv(
+        rows=goods_receipt_items,
+        filename="procurement_goods_receipt_items.csv",
+        fieldnames=[
+            "goods_receipt_item_id",
+            "goods_receipt_id",
+            "purchase_order_item_id",
+            "line_number",
+            "product_id",
+            "batch_code",
+            "receipt_uom_id",
+            "received_pac_quantity",
+            "accepted_pac_quantity",
+            "rejected_pac_quantity",
+            "received_base_quantity",
+            "accepted_base_quantity",
+            "rejected_base_quantity",
+            "notes",
+            "created_date",
+            "created_by",
+            "updated_date",
+            "updated_by",
+        ],
+    )
+
 
 # ============================================================
 # Generic CSV writer
@@ -9728,6 +10980,15 @@ def main() -> None:
             )
         )
 
+        goods_receipts, goods_receipt_items = (
+            generate_goods_receipts(
+                purchase_orders,
+                purchase_order_items,
+                products,
+                vehicles,
+            )
+        )
+
         # ----------------------------------------------------
         # Validation
         # ----------------------------------------------------
@@ -9842,6 +11103,18 @@ def main() -> None:
             "Purchase order validation: PASSED"
         )
 
+        validate_goods_receipts(
+            purchase_orders,
+            purchase_order_items,
+            goods_receipts,
+            goods_receipt_items,
+            products,
+            vehicles,
+        )
+        print(
+            "Goods receipt validation: PASSED"
+        )
+
         # ----------------------------------------------------
         # CSV generation
         # ----------------------------------------------------
@@ -9921,6 +11194,18 @@ def main() -> None:
         purchase_order_item_file = (
             write_purchase_order_items_csv(
                 purchase_order_items
+            )
+        )
+
+        goods_receipt_file = (
+            write_goods_receipts_csv(
+                goods_receipts
+            )
+        )
+
+        goods_receipt_item_file = (
+            write_goods_receipt_items_csv(
+                goods_receipt_items
             )
         )
 
@@ -10045,6 +11330,20 @@ def main() -> None:
         )
         print(
             f"Rows: {len(purchase_order_items)}"
+        )
+
+        print(
+            f"Created: {goods_receipt_file}"
+        )
+        print(
+            f"Rows: {len(goods_receipts)}"
+        )
+
+        print(
+            f"Created: {goods_receipt_item_file}"
+        )
+        print(
+            f"Rows: {len(goods_receipt_items)}"
         )
 
     except (

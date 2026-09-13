@@ -84,7 +84,18 @@ Business rules include:
 
 A purchase order can have multiple goods receipts.
 
-Goods receipt data will represent physical receiving against purchase orders and their purchase order items.
+Goods receipt data represents physical receiving against purchase orders and their purchase order items.
+
+Goods receipt rules include:
+
+- Goods receipts are linked to eligible purchase orders
+- Goods receipt warehouse matches the purchase order warehouse
+- Goods receipt items are linked to purchase order items belonging to the same purchase order
+- Goods receipt item product matches the purchase order item product
+- Goods receipt item UOM matches the purchase order purchase UOM
+- Cumulative received PAC quantity does not exceed the ordered PAC quantity
+- Fully received purchase orders reconcile to their ordered quantity
+- Partially received purchase orders have a positive but incomplete received quantity
 
 ### Transaction Quantities
 
@@ -110,13 +121,21 @@ For purchase order items:
 
 `Ordered Base Quantity = Ordered PAC Quantity × Base Quantity Per PAC`
 
+For goods receipt items:
+
+`Received Base Quantity = Received PAC Quantity × Base Quantity Per PAC`
+
+`Accepted Base Quantity = Accepted PAC Quantity × Base Quantity Per PAC`
+
+`Rejected Base Quantity = Rejected PAC Quantity × Base Quantity Per PAC`
+
 The product master defines the quantity represented by one PAC.
 
 ---
 
 ## Procurement Dataset Status
 
-The current synthetic procurement dataset contains generated and validated purchase orders and purchase order items.
+The current synthetic procurement dataset contains generated, validated and PostgreSQL-loaded purchase orders, purchase order items, goods receipts and goods receipt items.
 
 ### Purchase Orders
 
@@ -124,35 +143,51 @@ The current synthetic procurement dataset contains generated and validated purch
 - PO dates from 2026-01-01 to 2026-06-30
 - Expected dates follow the configured supplier lead-time logic
 - Status distribution:
-  - Draft: 60
-  - Approved: 120
-  - Sent: 150
-  - Partially Received: 300
-  - Received: 810
-  - Cancelled: 60
+
+- Draft: 60
+- Approved: 120
+- Sent: 150
+- Partially Received: 300
+- Received: 810
+- Cancelled: 60
 
 ### Purchase Order Items
 
 - 6,534 purchase order items
 - Multiple lines per purchase order
 - Exact line-count distribution:
-  - 1 line: 300 purchase orders
-  - 2–3 lines: 450 purchase orders
-  - 4–6 lines: 450 purchase orders
-  - 7–10 lines: 225 purchase orders
-  - 11–15 lines: 75 purchase orders
+
+- 1 line: 300 purchase orders
+- 2–3 lines: 450 purchase orders
+- 4–6 lines: 450 purchase orders
+- 7–10 lines: 225 purchase orders
+- 11–15 lines: 75 purchase orders
+
+### Goods Receipts
+
+- 1,563 goods receipts
+- 6,655 goods receipt items
+- Goods receipts are linked to partially received and received purchase orders
+- All current goods receipts have receipt status `received`
+- Goods receipt references were validated against purchase orders and purchase order items
+- Goods receipt warehouse, product and UOM consistency was validated
+- Batch tracking is populated for goods receipt items
 
 ### Procurement Quantity Model
 
-Purchase order item quantities use the established PAC/base quantity model.
+Purchase order item and goods receipt quantities use the established PAC/base quantity model.
 
 - PAC quantity represents the commercial/handling package count
 - Base quantity represents the corresponding normalized material quantity
 - Packaged products use PAC as the purchase UOM
 - Bulk liquid relationships use Litre as the purchase UOM
 - The current active product-supplier dataset contains no active KG purchase-UOM relationships
+- Ordered base quantity reconciles to ordered PAC quantity using `base_quantity_per_pac`
+- Received base quantity reconciles to received PAC quantity using `base_quantity_per_pac`
+- Accepted and rejected quantities reconcile to received quantity
+- Cumulative goods receipt quantity does not exceed ordered quantity
 
-The current purchase order dataset was validated against the active product-supplier relationships for purchase UOM, supplier-specific unit cost and minimum order quantity.
+The current purchase order and goods receipt datasets were validated against the active product-supplier relationships and procurement business rules.
 
 ---
 
@@ -317,6 +352,12 @@ The database includes consistency rules for related records.
 - Purchase order purchase UOM must match the supplier-product relationship
 - Purchase order unit cost must match the supplier-product relationship
 - Purchase order base quantity must reconcile to PAC quantity using the product master packaging definition
+- Goods receipt warehouse must match the purchase order warehouse
+- Goods receipt items must belong to the goods receipt purchase order
+- Goods receipt item product must match the purchase order item product
+- Goods receipt item UOM must match the purchase order item purchase UOM
+- Cumulative goods receipt quantity must not exceed ordered quantity
+- Received and partially received purchase order statuses must reconcile to their cumulative receipt quantities
 
 ---
 
@@ -364,9 +405,9 @@ Supplier
 
 → Storage / Picking Location
 
-The purchase order stage is currently populated with validated synthetic transaction data.
+The purchase order and goods receipt stages are currently populated with validated synthetic transaction data.
 
-Goods receipt, receiving and downstream inventory transaction generation remain part of the next transaction-data phase.
+Receiving / staging inventory, inventory transactions and downstream warehouse transactions remain part of the next transaction-data phase.
 
 ---
 
